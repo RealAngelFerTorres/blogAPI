@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
-  text: { type: String, require: true, maxLength: 100 },
-  timestamp: { type: Date, require: true },
+  text: { type: String, required: true, maxLength: 100 },
+  timestamp: { type: Date, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   fatherPost: { type: Schema.Types.ObjectId, ref: 'Post', required: true },
   upvotes: { type: Number, default: 1 },

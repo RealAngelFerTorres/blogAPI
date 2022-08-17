@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-  username: { type: String, require: true, maxLength: 40, required: true },
-  email: { type: String, require: true, maxLength: 50, required: true },
-  password: { type: String, require: true, maxLength: 100, required: true },
+  username: { type: String, maxLength: 40, required: true },
+  email: { type: String, maxLength: 50, required: true },
+  password: { type: String, maxLength: 100, required: true },
   membershipStatus: {
     type: String,
     required: true,
