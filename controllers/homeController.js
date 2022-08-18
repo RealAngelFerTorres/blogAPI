@@ -1,7 +1,8 @@
-var Post = require('../models/post');
-
-var async = require('async');
 const { body, validationResult } = require('express-validator');
+var async = require('async');
+const jwt = require('jsonwebtoken');
+
+var Post = require('../models/post');
 
 // Index home page
 exports.home_get = function (req, res) {
@@ -12,7 +13,7 @@ exports.home_get = function (req, res) {
       },
     },
     function (err, results) {
-      res.send('index', {
+      res.json({
         title: 'Blog home',
         error: err,
         data: results,
