@@ -8,7 +8,6 @@ var UserSchema = new Schema({
   password: { type: String, maxLength: 100, required: true },
   membershipStatus: {
     type: String,
-    required: true,
     enum: ['Normal', 'Admin'],
     default: 'Normal',
   },
