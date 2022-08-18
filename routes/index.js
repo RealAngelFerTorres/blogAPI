@@ -3,13 +3,14 @@ var router = express.Router();
 
 // Require controller modules.
 var home_controller = require('../controllers/homeController');
+/*
 var post_controller = require('../controllers/postController');
 var message_controller = require('../controllers/messageController');
 var user_controller = require('../controllers/userController');
-
+*/
 // HOME
 router.route('/').get(home_controller.home_get);
-
+/*
 // POSTS ROUTES
 router
   .route('/post/create')
@@ -58,5 +59,5 @@ router
   .post(user_controller.user_signup_post);
 
 router.route('user/:id').get(user_controller.user_profile_get);
-
+*/
 module.exports = router;
