@@ -5,13 +5,13 @@ var router = express.Router();
 var home_controller = require('../controllers/homeController');
 /*
 var post_controller = require('../controllers/postController');
-var message_controller = require('../controllers/messageController');
+var comment_controller = require('../controllers/commentController');
 var user_controller = require('../controllers/userController');
 */
 // HOME
 router.route('/').get(home_controller.home_get);
 /*
-// POSTS ROUTES
+// POST ROUTES
 router
   .route('/post/create')
   .get(post_controller.post_create_get)
@@ -29,21 +29,21 @@ router
   .get(post_controller.post_delete_get)
   .post(post_controller.post_delete_post);
 
-// MESSAGE ROUTES
+// COMMENT ROUTES
 router
-  .route('message/create')
-  .get(message_controller.message_create_get)
-  .post(message_controller.message_create_post);
+  .route('comment/create')
+  .get(comment_controller.comment_create_get)
+  .post(comment_controller.comment_create_post);
 
 router
-  .route('message/:id/edit')
-  .get(message_controller.message_edit_get)
-  .post(message_controller.message_edit_post);
+  .route('comment/:id/edit')
+  .get(comment_controller.comment_edit_get)
+  .post(comment_controller.comment_edit_post);
 
 router
-  .route('message/:id/delete')
-  .get(message_controller.message_delete_get)
-  .post(message_controller.message_delete_post);
+  .route('comment/:id/delete')
+  .get(comment_controller.comment_delete_get)
+  .post(comment_controller.comment_delete_post);
 
 // USER ROUTES
 router
