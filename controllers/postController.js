@@ -62,8 +62,8 @@ exports.post_create_post = [
         if (err) {
           return next(err);
         }
-        //successful - redirect to home.
-        res.redirect('/');
+        //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
+        res.redirect(303, '/');
       });
     }
   },
