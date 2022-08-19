@@ -8,7 +8,7 @@ var PostSchema = new Schema({
   timestamp: { type: Date, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-  published: { type: Boolean, required: true },
+  published: { type: Boolean, default: true, required: true },
   upvotes: { type: Number, default: 1 },
   downvotes: { type: Number, default: 0 },
 });

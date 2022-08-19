@@ -3,20 +3,21 @@ var router = express.Router();
 
 // Require controller modules.
 var home_controller = require('../controllers/homeController');
-/*
+
 var post_controller = require('../controllers/postController');
+/*
 var comment_controller = require('../controllers/commentController');
 var user_controller = require('../controllers/userController');
 */
 // HOME
 router.route('/').get(home_controller.home_get);
-/*
+
 // POST ROUTES
 router
   .route('/post/create')
   .get(post_controller.post_create_get)
   .post(post_controller.post_create_post);
-
+/*
 router.route('/post/:id').get(post_controller.post_read_get);
 
 router
@@ -28,7 +29,7 @@ router
   .route('post/:id/delete')
   .get(post_controller.post_delete_get)
   .post(post_controller.post_delete_post);
-
+/*
 // COMMENT ROUTES
 router
   .route('comment/create')
