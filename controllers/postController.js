@@ -68,32 +68,40 @@ exports.post_create_post = [
     }
   },
 ];
-/*
-// Display Message delete form on GET.
-exports.message_delete_get = function (req, res, next) {
+
+// Handle Post detail on GET.
+exports.post_detail_get = function (req, res, next) {
   async.parallel(
     {
-      message: function (callback) {
-        Message.findById(req.params.id).populate('made_by').exec(callback);
+      post: function (callback) {
+        Post.findById(req.params.id)
+          .populate('author', 'username')
+          .populate('comments')
+          .exec(callback);
       },
     },
     function (err, results) {
       if (err) {
+        var err = new Error('Post not found!');
+        err.status = 404;
+        console.error('Error - Post not found!');
+        // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
-      if (results.message == null) {
+      if (results.post == null) {
         // No results.
-        res.redirect('/');
+        var err = new Error('Post not found');
+        err.status = 404;
+        return next(err);
       }
-      // Successful, so render.
-      res.render('message_delete', {
-        title: 'Delete Message',
-        message: results.message,
+      res.json({
+        title: 'Post detail',
+        data: results,
       });
     }
   );
 };
-
+/*
 // Handle Message delete on POST.
 exports.message_delete_post = function (req, res, next) {
   async.parallel(

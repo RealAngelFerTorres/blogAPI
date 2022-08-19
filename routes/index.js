@@ -17,18 +17,18 @@ router
   .route('/post/create')
   .get(post_controller.post_create_get)
   .post(post_controller.post_create_post);
+
+router.route('/post/:id').get(post_controller.post_detail_get);
 /*
-router.route('/post/:id').get(post_controller.post_read_get);
+router.route('post/:id/delete').post(post_controller.post_delete_post);
+
 
 router
   .route('post/:id/edit')
   .get(post_controller.post_edit_get)
   .post(post_controller.post_edit_post);
 
-router
-  .route('post/:id/delete')
-  .get(post_controller.post_delete_get)
-  .post(post_controller.post_delete_post);
+
 /*
 // COMMENT ROUTES
 router
