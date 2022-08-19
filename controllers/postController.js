@@ -47,7 +47,7 @@ exports.post_create_post = [
       res.json({
         errors: errors.array(),
       });
-      /*
+      /* Delete this later
       // There are errors. Render form again with sanitized values/error messages.
       res.render('message_form', {
         title: 'Create Message',
@@ -88,12 +88,14 @@ exports.post_detail_get = function (req, res, next) {
         // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
+      /* Check if this is necessary later
       if (results.post == null) {
         // No results.
         var err = new Error('Post not found');
         err.status = 404;
         return next(err);
       }
+      */
       res.json({
         title: 'Post detail',
         data: results,
@@ -101,33 +103,37 @@ exports.post_detail_get = function (req, res, next) {
     }
   );
 };
-/*
-// Handle Message delete on POST.
-exports.message_delete_post = function (req, res, next) {
+
+// Handle Post delete on POST.
+exports.post_delete = function (req, res, next) {
   async.parallel(
     {
-      message: function (callback) {
-        Message.findById(req.body.messageID).exec(callback);
+      post: function (callback) {
+        Post.findById(req.params.id).exec(callback);
       },
     },
     function (err, results) {
       if (err) {
+        var err = new Error('Post not found!');
+        err.status = 404;
+        console.error('Error - Post not found!');
         return next(err);
       }
       // Success
 
       // Delete object and redirect to home.
-      Message.findByIdAndRemove(
-        req.body.messageID,
-        function deleteMessage(err) {
-          if (err) {
-            return next(err);
-          }
-          // Success - go to home
-          res.redirect('/');
+      Post.findByIdAndRemove(req.params.id, function deletePost(err) {
+        /* Check if this is necessary later
+        if (err) {
+          var err = new Error('Post not found');
+          err.status = 404;
+          console.error('Error - Post not found');
+          return next(err);
         }
-      );
+        */
+        //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
+        res.redirect(303, '/');
+      });
     }
   );
 };
-*/
