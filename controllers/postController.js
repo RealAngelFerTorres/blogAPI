@@ -88,7 +88,7 @@ exports.post_detail_get = function (req, res, next) {
         // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
-      /* Check if this is necessary later
+      /* Check if this is not necessary later
       if (results.post == null) {
         // No results.
         var err = new Error('Post not found');
@@ -123,7 +123,7 @@ exports.post_delete = function (req, res, next) {
 
       // Delete object and redirect to home.
       Post.findByIdAndRemove(req.params.id, function deletePost(err) {
-        /* Check if this is necessary later
+        /* Check if this is not necessary later
         if (err) {
           var err = new Error('Post not found');
           err.status = 404;
