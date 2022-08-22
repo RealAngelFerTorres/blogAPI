@@ -8,20 +8,16 @@ var Comment = require('../models/comment');
 
 // Home page
 exports.home_get = function (req, res) {
-  async.parallel(
-    {
-      posts: function (callback) {
-        Post.find({}, callback)
-          .populate('author', 'username')
-          .populate('comments');
-      },
-    },
-    function (err, results) {
+  Post.find({})
+    .populate('author', 'username')
+    .populate('comments')
+    .exec(function (err, results) {
+      if (err) {
+        return next(err);
+      }
       res.json({
         title: 'Blog home',
-        error: err + '', // Had to put that '' for error debug
         data: results,
       });
-    }
-  );
+    });
 };
