@@ -6,6 +6,7 @@ var UserSchema = new Schema({
   username: { type: String, maxLength: 40, required: true },
   email: { type: String, maxLength: 50, required: true },
   password: { type: String, maxLength: 100, required: true },
+  createTime: { type: Date },
   membershipStatus: {
     type: String,
     enum: ['Normal', 'Admin'],

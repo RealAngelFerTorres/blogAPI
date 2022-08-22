@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var PostSchema = new Schema({
   title: { type: String, maxLength: 50, required: true },
   text: { type: String, maxLength: 300, required: true },
-  timestamp: { type: Date, required: true },
+  createTime: { type: Date },
+  editTime: { type: Date, default: 'Jan 1, 1970' }, // value equals this should be considered null
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   published: { type: Boolean, default: true, required: true },

@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
   text: { type: String, maxLength: 100, required: true },
-  timestamp: { type: Date, required: true },
-  author: { type: Schema.Types.ObjectId, ref: 'User' },
+  createTime: { type: Date },
+  editTime: { type: Date, default: 'Jan 1, 1970' }, // value equals this should be considered null in the frontend
   fatherPost: { type: Schema.Types.ObjectId, ref: 'Post' },
   upvotes: { type: Number, default: 1 },
   downvotes: { type: Number, default: 0 },

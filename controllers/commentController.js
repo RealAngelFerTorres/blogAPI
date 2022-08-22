@@ -24,7 +24,7 @@ exports.comment_create_post = [
     // Create a Comment object with escaped and trimmed data.
     var comment = new Comment({
       text: req.body.text,
-      timestamp: new Date(),
+      createTime: new Date(),
       author: req.body.author, // UPDATE THIS LATER TO: res.locals.user._id
       fatherPost: req.params.id,
     });
