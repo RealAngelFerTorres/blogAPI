@@ -13,12 +13,15 @@ router.route('/').get(home_controller.home_get);
 // POST ROUTES //
 router.route('/post/:id').get(post_controller.post_detail_get);
 
+router.route('/post/:id/delete').delete(post_controller.post_delete);
+
+router.route('/post/:id/edit').get(post_controller.post_edit_get);
+//.post(post_controller.post_edit_post);
+
 router
   .route('/post/create')
   .get(post_controller.post_create_get)
   .post(post_controller.post_create_post);
-
-router.route('/post/:id/delete').delete(post_controller.post_delete);
 
 // COMMENT ROUTES //
 router
@@ -28,13 +31,6 @@ router
 router
   .route('/post/:id/comment/delete')
   .delete(comment_controller.comment_delete_post);
-
-/*
-router
-  .route('post/:id/edit')
-  .get(post_controller.post_edit_get)
-  .post(post_controller.post_edit_post);
-
 
 /*
 

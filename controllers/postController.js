@@ -98,3 +98,40 @@ exports.post_delete = function (req, res, next) {
     });
   });
 };
+
+// Handle Post edit on GET
+exports.post_edit_get = function (req, res, next) {
+  Post.findById(req.params.id).exec(function (err, results) {
+    if (err || results == null) {
+      var err = new Error('Post not found!');
+      err.status = 404;
+      console.error('Error - Post not found!');
+      // Another way: return res.status(404).send('Error - Post not found!');
+      return next(err);
+    }
+    res.json({
+      title: 'Post editing',
+      data: results,
+    });
+  });
+};
+/*
+// Handle Post detail on POST
+exports.post_edit_post = function (req, res, next) {
+  Post.findById(req.params.id)
+    .populate('author', 'username')
+    .exec(function (err, results) {
+      if (err || results == null) {
+        var err = new Error('Post not found!');
+        err.status = 404;
+        console.error('Error - Post not found!');
+        // Another way: return res.status(404).send('Error - Post not found!');
+        return next(err);
+      }
+      res.json({
+        title: 'Post detail',
+        data: results,
+      });
+    });
+};
+*/
