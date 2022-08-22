@@ -64,6 +64,46 @@ exports.comment_create_post = [
   },
 ];
 
+// Handle Comment delete on POST.
+exports.comment_delete_post = function (req, res, next) {
+  async.parallel(
+    {
+      comment: function (callback) {
+        Comment.findById(req.body.commentID).exec(callback); // commentID will be a hidden value in the frontend
+      },
+    },
+    function (err, results) {
+      if (err || results.comment === null) {
+        var err = new Error('Comment not found!');
+        err.status = 404;
+        console.error('Error - Comment not found!');
+        return next(err);
+      }
+      // Success
+
+      // Delete object and redirect to home.
+      Comment.findByIdAndRemove(
+        req.body.commentID,
+        function deleteComment(err) {
+          if (err) {
+            return next(err);
+          }
+          Post.findByIdAndUpdate(
+            req.params.id,
+            { $pull: { comments: { $in: req.body.commentID } } },
+            function (err, model) {
+              if (err) {
+                return next(err);
+              }
+            }
+          );
+          res.redirect(303, '/post/' + req.params.id);
+        }
+      );
+    }
+  );
+};
+
 /*
 // Index home page
 exports.index = function (req, res) {

@@ -7,23 +7,27 @@ var post_controller = require('../controllers/postController');
 var comment_controller = require('../controllers/commentController');
 // var user_controller = require('../controllers/userController');
 
-// HOME
+// HOME //
 router.route('/').get(home_controller.home_get);
 
-// POST ROUTES
+// POST ROUTES //
+router.route('/post/:id').get(post_controller.post_detail_get);
+
 router
   .route('/post/create')
   .get(post_controller.post_create_get)
   .post(post_controller.post_create_post);
 
-router.route('/post/:id').get(post_controller.post_detail_get);
-
 router.route('/post/:id/delete').delete(post_controller.post_delete);
 
-// COMMENT ROUTES
+// COMMENT ROUTES //
 router
   .route('/post/:id/comment/create')
   .post(comment_controller.comment_create_post);
+
+router
+  .route('/post/:id/comment/delete')
+  .delete(comment_controller.comment_delete_post);
 
 /*
 router
@@ -40,10 +44,6 @@ router
   .get(comment_controller.comment_edit_get)
   .post(comment_controller.comment_edit_post);
 
-router
-  .route('comment/:id/delete')
-  .get(comment_controller.comment_delete_get)
-  .post(comment_controller.comment_delete_post);
 
 // USER ROUTES
 router
