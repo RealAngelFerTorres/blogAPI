@@ -47,14 +47,6 @@ exports.post_create_post = [
       res.json({
         errors: errors.array(),
       });
-      /* Delete this later
-      // There are errors. Render form again with sanitized values/error messages.
-      res.render('message_form', {
-        title: 'Create Message',
-        message: message,
-        errors: errors.array(),
-      });
-      */
       return;
     } else {
       // Data from form is valid. Save post.
@@ -62,7 +54,7 @@ exports.post_create_post = [
         if (err) {
           return next(err);
         }
-        //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
+        // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
         res.redirect(303, '/');
       });
     }
@@ -71,69 +63,38 @@ exports.post_create_post = [
 
 // Handle Post detail on GET.
 exports.post_detail_get = function (req, res, next) {
-  async.parallel(
-    {
-      post: function (callback) {
-        Post.findById(req.params.id)
-          .populate('author', 'username')
-          .populate('comments')
-          .exec(callback);
-      },
-    },
-    function (err, results) {
-      if (err) {
+  Post.findById(req.params.id)
+    .populate('author', 'username')
+    .populate('comments')
+    .exec(function (err, results) {
+      if (err || results == null) {
         var err = new Error('Post not found!');
         err.status = 404;
         console.error('Error - Post not found!');
         // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
-      /* Check if this is not necessary later
-      if (results.post == null) {
-        // No results.
-        var err = new Error('Post not found');
-        err.status = 404;
-        return next(err);
-      }
-      */
       res.json({
         title: 'Post detail',
         data: results,
       });
-    }
-  );
+    });
 };
 
 // Handle Post delete on POST.
 exports.post_delete = function (req, res, next) {
-  async.parallel(
-    {
-      post: function (callback) {
-        Post.findById(req.params.id).exec(callback);
-      },
-    },
-    function (err, results) {
-      if (err) {
-        var err = new Error('Post not found!');
-        err.status = 404;
-        console.error('Error - Post not found!');
-        return next(err);
-      }
-      // Success
-
-      // Delete object and redirect to home.
-      Post.findByIdAndRemove(req.params.id, function deletePost(err) {
-        /* Check if this is not necessary later
-        if (err) {
-          var err = new Error('Post not found');
-          err.status = 404;
-          console.error('Error - Post not found');
-          return next(err);
-        }
-        */
-        //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-        res.redirect(303, '/');
-      });
+  Post.findById(req.params.id).exec(function (err, results) {
+    if (err || results == null) {
+      var err = new Error('Post not found!');
+      err.status = 404;
+      console.error('Error - Post not found!');
+      return next(err);
     }
-  );
+    // Success
+    // Delete object and redirect to home.
+    Post.findByIdAndRemove(req.params.id, function deletePost(err) {
+      // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
+      res.redirect(303, '/');
+    });
+  });
 };
