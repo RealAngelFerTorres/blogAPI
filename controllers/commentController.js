@@ -32,14 +32,6 @@ exports.comment_create_post = [
       res.json({
         errors: errors.array(),
       });
-      /* Delete this later
-      // There are errors. Render form again with sanitized values/error messages.
-      res.render('message_form', {
-        title: 'Create Message',
-        message: message,
-        errors: errors.array(),
-      });
-      */
       return;
     } else {
       // Data from form is valid. Save comment and update post's comments
@@ -51,7 +43,7 @@ exports.comment_create_post = [
           req.params.id,
           { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
           { safe: true },
-          function (err, model) {
+          function (err) {
             if (err) {
               return next(err);
             }
@@ -66,42 +58,35 @@ exports.comment_create_post = [
 
 // Handle Comment delete on POST.
 exports.comment_delete_post = function (req, res, next) {
-  async.parallel(
-    {
-      comment: function (callback) {
-        Comment.findById(req.body.commentID).exec(callback); // commentID will be a hidden value in the frontend
-      },
-    },
-    function (err, results) {
-      if (err || results.comment === null) {
-        var err = new Error('Comment not found!');
-        err.status = 404;
-        console.error('Error - Comment not found!');
+  // commentID will be a hidden value in the frontend
+  Comment.findById(req.body.commentID).exec(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    if (results == null) {
+      var err = new Error('Comment not found!');
+      err.status = 404;
+      console.error('Error - Comment not found!');
+      return next(err);
+    }
+    // Success
+    // Delete object and redirect to home.
+    Comment.findByIdAndRemove(req.body.commentID, function deleteComment(err) {
+      if (err) {
         return next(err);
       }
-      // Success
-
-      // Delete object and redirect to home.
-      Comment.findByIdAndRemove(
-        req.body.commentID,
-        function deleteComment(err) {
+      Post.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { comments: { $in: req.body.commentID } } },
+        function (err) {
           if (err) {
             return next(err);
           }
-          Post.findByIdAndUpdate(
-            req.params.id,
-            { $pull: { comments: { $in: req.body.commentID } } },
-            function (err, model) {
-              if (err) {
-                return next(err);
-              }
-            }
-          );
-          res.redirect(303, '/post/' + req.params.id);
         }
       );
-    }
-  );
+      res.redirect(303, '/post/' + req.params.id);
+    });
+  });
 };
 
 /*
