@@ -44,11 +44,9 @@ exports.post_create_post = [
       published: req.body.published,
     });
     if (!errors.isEmpty()) {
-      // No error status 404 is sent. Check later best approach
-      res.json({
+      return res.status(400).json({
         errors: errors.array(),
       });
-      return;
     } else {
       // Data from form is valid. Save post.
       post.save(function (err) {
@@ -148,15 +146,16 @@ exports.post_edit_post = [
       _id: req.params.id, // This is required, or a new ID will be assigned!
     });
     if (!errors.isEmpty()) {
-      var err = new Error('Validation input failed!');
-      err.status = 404;
-      console.error(errors.array()); // Show validation error in the console
-      return next(err);
+      return res.status(400).json({
+        errors: errors.array(),
+      });
     } else {
       // Data from form is valid. Save post.
-      Post.findByIdAndUpdate(req.params.id, post, {}, function (err) {
-        if (err) {
-          return next(err);
+      Post.findByIdAndUpdate(req.params.id, post, {}, function (err, results) {
+        if (err || results == null) {
+          return res.status(404).json({
+            err,
+          });
         }
         // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
         res.redirect(303, '/post/' + req.params.id);

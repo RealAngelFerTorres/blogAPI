@@ -29,15 +29,16 @@ exports.comment_create_post = [
       fatherPost: req.params.id,
     });
     if (!errors.isEmpty()) {
-      res.json({
+      return res.status(400).json({
         errors: errors.array(),
       });
-      return;
     } else {
       // Data from form is valid. Save comment and update post's comments
       comment.save(function (err) {
         if (err) {
-          return next(err);
+          return res.status(404).json({
+            err,
+          });
         }
         Post.findByIdAndUpdate(
           req.params.id,
@@ -45,7 +46,9 @@ exports.comment_create_post = [
           { safe: true },
           function (err) {
             if (err) {
-              return next(err);
+              return res.status(404).json({
+                err,
+              });
             }
           }
         );
