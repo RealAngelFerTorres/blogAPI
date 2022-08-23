@@ -88,3 +88,64 @@ exports.comment_delete_post = function (req, res, next) {
     });
   });
 };
+
+// Handle Comment edit on GET
+exports.comment_edit_get = function (req, res, next) {
+  Comment.findById(req.body.commentID, 'text').exec(function (err, results) {
+    // req.body.commentID will be a hidden value in the frontend
+    if (err || results == null) {
+      var err = new Error('Comment not found!');
+      err.status = 404;
+      console.error('Error - Comment not found!');
+      return next(err);
+    }
+    res.json({
+      title: 'Comment editing',
+      data: results,
+    });
+  });
+};
+
+// Handle Comment edit on POST
+exports.comment_edit_post = [
+  // Validate and sanitize fields
+  body('text')
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage('Comment content area must not be empty.')
+    .isLength({ max: 100 })
+    .withMessage('Comment content max. characters is 100.')
+    .escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+    // Create a Comment object with escaped and trimmed data.
+    var comment = new Comment({
+      text: req.body.text,
+      editTime: new Date(),
+      _id: req.body.commentID, // This is required, or a new ID will be assigned!
+    });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+      });
+    } else {
+      // Data from form is valid. Save comment.
+      Comment.findByIdAndUpdate(
+        req.body.commentID,
+        comment,
+        {},
+        function (err, results) {
+          if (err || results == null) {
+            return res.status(404).json({
+              err,
+            });
+          }
+          res.redirect(303, '/post/' + req.params.id);
+        }
+      );
+    }
+  },
+];

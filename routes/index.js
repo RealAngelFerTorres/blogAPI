@@ -34,15 +34,12 @@ router
   .route('/post/:id/comment/delete')
   .delete(comment_controller.comment_delete_post);
 
-/*
-
-
 router
-  .route('comment/:id/edit')
+  .route('/post/:id/comment/edit')
   .get(comment_controller.comment_edit_get)
   .post(comment_controller.comment_edit_post);
 
-
+/*
 // USER ROUTES
 router
   .route('user/login')
