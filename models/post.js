@@ -8,10 +8,10 @@ var PostSchema = new Schema({
   createTime: { type: Date },
   editTime: { type: Date, default: 'Jan 1, 1970' }, // value equals this should be considered null
   author: { type: Schema.Types.ObjectId, ref: 'User' },
-  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   published: { type: Boolean, default: true, required: true },
   upvotes: { type: Number, default: 1 },
   downvotes: { type: Number, default: 0 },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 //Virtual for post's karma

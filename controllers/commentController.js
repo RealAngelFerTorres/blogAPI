@@ -40,18 +40,35 @@ exports.comment_create_post = [
             err,
           });
         }
-        Post.findByIdAndUpdate(
-          req.params.id,
-          { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
-          { safe: true },
-          function (err) {
-            if (err) {
-              return res.status(404).json({
-                err,
-              });
+        // Check for parent if it is post or comment.
+        // If commentID is missing that means its a post
+        if (!req.body.commentID) {
+          Post.findByIdAndUpdate(
+            req.params.id,
+            { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
+            { safe: true },
+            function (err) {
+              if (err) {
+                return res.status(404).json({
+                  err,
+                });
+              }
             }
-          }
-        );
+          );
+        } else {
+          Comment.findByIdAndUpdate(
+            req.body.commentID,
+            { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
+            { safe: true },
+            function (err) {
+              if (err) {
+                return res.status(404).json({
+                  err,
+                });
+              }
+            }
+          );
+        }
         //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
         res.redirect(303, '/post/' + req.params.id);
       });
