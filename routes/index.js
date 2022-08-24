@@ -27,8 +27,11 @@ router
 
 // COMMENT ROUTES //
 router
-  .route('/post/:id/comment/create')
-  .post(comment_controller.comment_create_post);
+  .route('/post/:id/comment/onPost') // Comment on post
+  .post(comment_controller.comment_on_post_post);
+router
+  .route('/post/:id/comment/onComment') // Comment on comment
+  .post(comment_controller.comment_on_comment_post);
 
 router
   .route('/post/:id/comment/delete')
