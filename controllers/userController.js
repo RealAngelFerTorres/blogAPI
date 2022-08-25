@@ -112,7 +112,7 @@ exports.user_signup_post = [
       });
 
       if (!errors.isEmpty()) {
-        // There are errors. TODO: Render form again with sanitized values/error messages.
+        // There are errors.
         return res.status(400).json({
           errors: errors.array(),
         });
@@ -136,13 +136,13 @@ exports.user_login_get = function (req, res, next) {
     title: 'User login screen',
   });
 };
-/*
+
 // Handle User login form on POST.
 exports.user_login_post = passport.authenticate('local', {
-  successRedirect: '/messages',
+  successRedirect: '/',
   failureRedirect: '/user/login',
 });
-
+/*
 // Handle User logout form on GET.
 exports.user_logout_get = function (req, res, next) {
   req.logout(function (err) {
@@ -152,51 +152,4 @@ exports.user_logout_get = function (req, res, next) {
     res.redirect('/');
   });
 };
-
-// Display secret form on GET.
-exports.user_club_get = function (req, res, next) {
-  res.render('secret_form', {
-    title: 'Exclusive members only registration',
-  });
-};
-
-// Handle secret form on POST.
-exports.user_club_post = [
-  // Validate and sanitize fields.
-  body('secret').trim().escape(),
-
-  // Process request after validation and sanitization.
-  (req, res, next) => {
-    // Extract the validation errors from a request.
-    const errors = validationResult(req);
-
-    var secret;
-    if (req.body.secret === 'igotthepower') {
-      secret = 'Admin';
-    } else if (req.body.secret === 'givemeaccess') {
-      secret = 'Premium';
-    } else if (req.body.secret === 'normalsizeplease') {
-      secret = 'Normal';
-    } else {
-      res.render('secret_form', {
-        title: 'Exclusive members only registration',
-        errors: errors.array(),
-      });
-      return;
-    }
-    // All ok, update User status
-    var user = new User({
-      membership_status: secret,
-      _id: res.locals.user._id, //This is required, or a new ID will be assigned!
-    });
-
-    User.findByIdAndUpdate(res.locals.user._id, user, {}, function (err) {
-      if (err) {
-        return next(err);
-      }
-      // Successful - redirect to home page.
-      res.redirect('/');
-    });
-  },
-];
 */

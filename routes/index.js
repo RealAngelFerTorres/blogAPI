@@ -44,9 +44,11 @@ router
 
 // USER ROUTES
 
-router.route('/user/login').get(user_controller.user_login_get); /*
+router
+  .route('/user/login')
+  .get(user_controller.user_login_get)
   .post(user_controller.user_login_post);
-
+/*
 router.route('/user/logout').get(user_controller.user_logout_get);
 */
 router
