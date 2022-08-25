@@ -1,7 +1,3 @@
-/*
-var User = require('../models/user');
-var Message = require('../models/message');
-
 const multer = require('multer');
 const upload = multer({ dest: './public/data/uploads/' });
 var async = require('async');
@@ -10,17 +6,18 @@ const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const user = require('../models/user');
+var User = require('../models/user');
+
 // PassportJS Local strategy
 passport.use(
   'local',
   new LocalStrategy((username, password, done) => {
-    User.findOne({ email: username }, (err, user) => {
+    User.findOne({ username: username }, (err, user) => {
       if (err) {
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: 'Incorrect e-mail' });
+        return done(null, false, { message: 'Incorrect username' });
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
@@ -45,29 +42,29 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-// Display User create form on GET.
-exports.user_create_get = function (req, res, next) {
-  res.render('user_form', {
-    title: 'Create new User',
+// Display User signup form on GET.
+exports.user_signup_get = function (req, res, next) {
+  res.json({
+    title: 'Sign up form',
   });
 };
 
-// Handle User create on POST.
-exports.user_create_post = [
+// Handle User signup on POST.
+exports.user_signup_post = [
   // Validate and sanitize fields.
-  body('first_name')
+  body('username')
     .trim()
     .isLength({ min: 1 })
-    .withMessage('First name must not be empty.')
-    .isLength({ max: 15 })
-    .withMessage('First name max. characters is 15.')
-    .escape(),
-  body('last_name')
-    .trim()
-    .isLength({ min: 1 })
-    .withMessage('Last name must not be empty.')
-    .isLength({ max: 15 })
-    .withMessage('Last name max. characters is 15.')
+    .withMessage('Username must not be empty.')
+    .isLength({ max: 40 })
+    .withMessage('Username max. characters is 40.')
+    .custom(async (value) => {
+      const results = await User.find({ username: value });
+      if (results.length > 0) {
+        return Promise.reject();
+      }
+    })
+    .withMessage('Username already exists.')
     .escape(),
   body('email')
     .trim()
@@ -75,13 +72,20 @@ exports.user_create_post = [
     .withMessage('Please input a valid e-mail.')
     .isLength({ max: 50 })
     .withMessage('E-mail max. characters is 50.')
+    .custom(async (value) => {
+      const results = await User.find({ email: value });
+      if (results.length > 0) {
+        return Promise.reject();
+      }
+    })
+    .withMessage('E-mail already in use.')
     .escape(),
   body('password')
     .trim()
-    .isLength({ min: 8 })
-    .withMessage('Password must be at least 8 characters.')
-    .isLength({ max: 50 })
-    .withMessage('Password max. characters is 50.')
+    .isLength({ min: 1 })
+    .withMessage('Password must be at least 1 character.')
+    .isLength({ max: 100 })
+    .withMessage('Password max. characters is 100.')
     .escape(),
   body(
     'confirmPassword',
@@ -101,20 +105,17 @@ exports.user_create_post = [
       const errors = validationResult(req);
       // Create a User object with escaped and trimmed data.
       var user = new User({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        username: req.body.username,
         email: req.body.email,
         password: hashedPassword,
+        createTime: new Date(),
       });
 
       if (!errors.isEmpty()) {
-        // There are errors. Render form again with sanitized values/error messages.
-        res.render('user_form', {
-          title: 'Create User',
-          user: user,
+        // There are errors. TODO: Render form again with sanitized values/error messages.
+        return res.status(400).json({
           errors: errors.array(),
         });
-        return;
       } else {
         // Data from form is valid. Save user.
         user.save(function (err) {
@@ -122,7 +123,7 @@ exports.user_create_post = [
             return next(err);
           }
           //successful - redirect to home.
-          res.redirect('/user/login');
+          res.redirect(303, '/user/login');
         });
       }
     });
@@ -131,11 +132,11 @@ exports.user_create_post = [
 
 // Display User login form on GET.
 exports.user_login_get = function (req, res, next) {
-  res.render('user_login', {
-    title: 'Login',
+  res.json({
+    title: 'User login screen',
   });
 };
-
+/*
 // Handle User login form on POST.
 exports.user_login_post = passport.authenticate('local', {
   successRedirect: '/messages',

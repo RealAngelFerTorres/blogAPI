@@ -5,7 +5,7 @@ var router = express.Router();
 var home_controller = require('../controllers/homeController');
 var post_controller = require('../controllers/postController');
 var comment_controller = require('../controllers/commentController');
-// var user_controller = require('../controllers/userController');
+var user_controller = require('../controllers/userController');
 
 // HOME //
 router.route('/').get(home_controller.home_get);
@@ -42,20 +42,18 @@ router
   .get(comment_controller.comment_edit_get)
   .post(comment_controller.comment_edit_post);
 
-/*
 // USER ROUTES
-router
-  .route('user/login')
-  .get(user_controller.user_login_get)
+
+router.route('/user/login').get(user_controller.user_login_get); /*
   .post(user_controller.user_login_post);
 
 router.route('/user/logout').get(user_controller.user_logout_get);
-
+*/
 router
-  .route('user/signup')
+  .route('/user/signup')
   .get(user_controller.user_signup_get)
   .post(user_controller.user_signup_post);
-
+/*
 router.route('user/:id').get(user_controller.user_profile_get);
 */
 module.exports = router;

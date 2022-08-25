@@ -104,7 +104,7 @@ exports.comment_on_comment_post = [
         { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
         { safe: true },
         function (err, results) {
-          if (err || results == null || results == undefined || !results) {
+          if (err || results == null) {
             return res.status(404).json({
               err,
             });

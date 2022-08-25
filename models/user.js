@@ -3,8 +3,20 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-  username: { type: String, maxLength: 40, required: true },
-  email: { type: String, maxLength: 50, required: true },
+  username: {
+    type: String,
+    maxLength: 40,
+    unique: true,
+    dropDups: true,
+    required: true,
+  },
+  email: {
+    type: String,
+    maxLength: 50,
+    unique: true,
+    dropDups: true,
+    required: true,
+  },
   password: { type: String, maxLength: 100, required: true },
   createTime: { type: Date },
   membershipStatus: {
