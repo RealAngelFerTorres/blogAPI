@@ -8,6 +8,11 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 var User = require('../models/user');
 
+const jwt = require('jsonwebtoken');
+const passportJWT = require('passport-jwt');
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
+
 // PassportJS Local strategy
 passport.use(
   'local',
@@ -22,7 +27,7 @@ passport.use(
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           // passwords match! log user in
-          return done(null, user);
+          return done(null, user, { message: 'Logged in successfully' });
         } else {
           // passwords do not match!
           return done(null, false, { message: 'Incorrect password' });
@@ -30,6 +35,27 @@ passport.use(
       });
     });
   })
+);
+
+// PassportJS JWS strategy
+passport.use(
+  'jwt',
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey: 'your_jwt_secret',
+    },
+    function (jwtPayload, cb) {
+      //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+      return User.findById(jwtPayload._id)
+        .then((user) => {
+          return cb(null, user);
+        })
+        .catch((err) => {
+          return cb(err);
+        });
+    }
+  )
 );
 
 // PassportJS serialization
@@ -138,10 +164,44 @@ exports.user_login_get = function (req, res, next) {
 };
 
 // Handle User login form on POST.
+/*
 exports.user_login_post = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/user/login',
 });
+*/
+exports.user_login_post = function (req, res, next) {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: 'Something is not right',
+        user: user,
+      });
+    }
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        res.send(err);
+      }
+      // generate a signed son web token with the contents of user object and return it in the response
+      const token = jwt.sign(user.toJSON(), 'your_jwt_secret');
+      return res.json({ user, token });
+    });
+  })(req, res);
+};
+
+// Handle User profile on GET.
+exports.user_admin_get = function (req, res, next) {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: 'You must be logged-in to see this page...',
+        user: user,
+      });
+    }
+    return res.status(200).send('YAY! this is a protected ADMIN Route'); // TODO: Change this for a token response
+  })(req, res);
+};
+
 /*
 // Handle User logout form on GET.
 exports.user_logout_get = function (req, res, next) {

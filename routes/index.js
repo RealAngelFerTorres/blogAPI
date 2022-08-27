@@ -58,4 +58,7 @@ router
 /*
 router.route('user/:id').get(user_controller.user_profile_get);
 */
+
+router.route('/user/admin').get(user_controller.user_admin_get);
+
 module.exports = router;
