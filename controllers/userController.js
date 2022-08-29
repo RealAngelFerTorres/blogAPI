@@ -166,17 +166,11 @@ exports.user_login_get = function (req, res, next) {
 };
 
 // Handle User login form on POST.
-/*
-exports.user_login_post = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/user/login',
-});
-*/
 exports.user_login_post = function (req, res, next) {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
-        message: 'Something is not right',
+        message: 'Invalid username and/or password.',
         user: user,
       });
     }
@@ -185,13 +179,15 @@ exports.user_login_post = function (req, res, next) {
         res.send(err);
       }
       // generate a signed son web token with the contents of user object and return it in the response
-      const token = jwt.sign(user.toJSON(), SESSION_SECRET);
+      const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
+        expiresIn: '2m',
+      });
       return res.json({ user, token });
     });
   })(req, res);
 };
 
-// Handle User profile on GET.
+// Handle User admin path on GET.
 exports.user_admin_get = function (req, res, next) {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err || !user) {
