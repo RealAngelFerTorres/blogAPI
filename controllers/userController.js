@@ -200,14 +200,9 @@ exports.user_admin_get = function (req, res, next) {
   })(req, res);
 };
 
-/*
 // Handle User logout form on GET.
 exports.user_logout_get = function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect('/');
+  res.json({
+    title: 'User attempted to logout.',
   });
 };
-*/
