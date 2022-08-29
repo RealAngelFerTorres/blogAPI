@@ -13,6 +13,8 @@ const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
+var SESSION_SECRET = process.env.SESSION_SECRET;
+
 // PassportJS Local strategy
 passport.use(
   'local',
@@ -43,7 +45,7 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'your_jwt_secret',
+      secretOrKey: SESSION_SECRET,
     },
     function (jwtPayload, cb) {
       //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
@@ -183,7 +185,7 @@ exports.user_login_post = function (req, res, next) {
         res.send(err);
       }
       // generate a signed son web token with the contents of user object and return it in the response
-      const token = jwt.sign(user.toJSON(), 'your_jwt_secret');
+      const token = jwt.sign(user.toJSON(), SESSION_SECRET);
       return res.json({ user, token });
     });
   })(req, res);
