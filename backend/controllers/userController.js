@@ -118,7 +118,7 @@ exports.user_login_post = function (req, res, next) {
       }
       // generate a signed son web token with the contents of user object and return it in the response
       const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
-        expiresIn: '30s',
+        expiresIn: '2min',
       });
       return res.json({ user, token });
     });
