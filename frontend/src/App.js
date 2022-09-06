@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './styles/style.css';
+import Home from './components/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
+  const [data, setData] = useState([]);
+
+  async function getDB() {
+    console.log('LOADING...');
+
+    // GET FORECAST WEATHER DATA FROM THAT LOCATION USING latitude and longitude
+    try {
+      const response = await fetch(`http://localhost:5000/`, {
+        mode: 'cors',
+      });
+      setData(await response.json());
+    } catch (error) {
+      console.log('There was a problem fetching the data:', error);
+    }
+  }
+  setData(getDB());
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div>
+        <Routes>
+          <Route path='/' element={<Home data={data} />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
