@@ -9,7 +9,7 @@ var user_controller = require('../controllers/userController');
 
 // HOME //
 
-router.route('/').get(home_controller.home_get);
+router.route('/home').get(home_controller.home_get);
 
 // POST ROUTES
 
