@@ -9,8 +9,8 @@ function App() {
 
   useEffect(() => {
     getDB().then((e) => {
-      console.log(e);
-      setData(e);
+      console.log(e.data[0].text);
+      setData(e.data[0].text);
     });
   }, []);
 

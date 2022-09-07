@@ -1,6 +1,5 @@
 export async function getDB() {
   const response = await fetch('/home');
-  console.log(response);
   return await response.json();
 }
 /*
