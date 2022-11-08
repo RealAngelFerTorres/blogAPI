@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/style.css';
+import Comment from './Comment';
 
 function SinglePost(props) {
   const { post } = props;
@@ -15,7 +16,14 @@ function SinglePost(props) {
       )}
       <div className='post__title'>Karma: {post.karma}</div>
       <div className='post__text'>{post.text}</div>
-      <div className='post__comments'>TODO: Comments</div>
+      <div className='post__comments'>{post.comments.length} Comments</div>
+
+      <br></br>
+      <div className='post__comments'>
+        {post.comments.map((comment, index) => {
+          return <Comment key={index} comment={comment}></Comment>;
+        })}
+      </div>
       <br></br>
     </div>
   );

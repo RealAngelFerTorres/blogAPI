@@ -10,7 +10,10 @@ var Comment = require('../models/comment');
 exports.home_get = function (req, res) {
   Post.find({})
     .populate('author', 'username')
-    .populate('comments')
+    .populate({
+      path: 'comments',
+      populate: { path: 'comments', populate: { path: 'comments' } },
+    })
     .exec(function (err, results) {
       if (err) {
         return next(err);
