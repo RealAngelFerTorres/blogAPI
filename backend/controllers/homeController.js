@@ -19,7 +19,6 @@ exports.home_get = function (req, res) {
         return next(err);
       }
       res.json({
-        title: 'Blog home',
         data: results,
       });
     });

@@ -64,7 +64,10 @@ exports.post_create_post = [
 exports.post_detail_get = function (req, res, next) {
   Post.findById(req.params.id)
     .populate('author', 'username')
-    .populate('comments')
+    .populate({
+      path: 'comments',
+      populate: { path: 'comments', populate: { path: 'comments' } },
+    })
     .exec(function (err, results) {
       if (err || results == null) {
         var err = new Error('Post not found!');
@@ -74,7 +77,6 @@ exports.post_detail_get = function (req, res, next) {
         return next(err);
       }
       res.json({
-        title: 'Post detail',
         data: results,
       });
     });

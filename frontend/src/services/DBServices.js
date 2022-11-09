@@ -1,6 +1,19 @@
-export async function getDB() {
-  const response = await fetch('/home');
-  return await response.json();
+export async function getAllPosts() {
+  try {
+    const response = await fetch('/home');
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem fetching the data:', error);
+  }
+}
+
+export async function getSinglePost(url) {
+  try {
+    const response = await fetch(`/post/${url}`);
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem fetching the data:', error);
+  }
 }
 /*
 export async function createTask(data) {
