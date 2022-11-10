@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 
 function Comment(props) {
@@ -7,7 +8,7 @@ function Comment(props) {
   return (
     <div className='comment' id={comment.id}>
       <div className='comment__author'>
-        TODO: Populate author {comment.author.username}
+        <Link to={comment.author.url}>{comment.author.username}</Link>
       </div>
       <div className='comment__createTime'>On: {comment.createTime}</div>
       {comment.editTime.includes('1970-01-01') ? null : (

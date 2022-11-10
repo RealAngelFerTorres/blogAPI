@@ -66,7 +66,24 @@ exports.post_detail_get = function (req, res, next) {
     .populate('author', 'username')
     .populate({
       path: 'comments',
-      populate: { path: 'comments', populate: { path: 'comments' } },
+      populate: [
+        { path: 'author' },
+        {
+          path: 'comments',
+          populate: [
+            { path: 'author' },
+            {
+              path: 'comments',
+              populate: [
+                { path: 'author' },
+                {
+                  path: 'comments',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     })
     .exec(function (err, results) {
       if (err || results == null) {
