@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import '../styles/style.css';
 import Comment from './Comment';
 import { getUserDetails } from '../services/DBServices';
@@ -13,7 +15,6 @@ function UserDetails() {
   useEffect(() => {
     getUserDetails(url.id).then((e) => {
       setUser(e.data);
-      console.log(e.data);
     });
   }, []);
 
@@ -23,7 +24,7 @@ function UserDetails() {
     return (
       <div className='user' id={user.id}>
         <div className='user__name'>
-          <a href={user.url}>{user.username}</a>
+          <Link to={user.url}>{user.username}</Link>
         </div>
         <div className='user__createTime'>Member since {user.createTime}</div>
         <div className='user__title'>Karma: {user.karma}</div>

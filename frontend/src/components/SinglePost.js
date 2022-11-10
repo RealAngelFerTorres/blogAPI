@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import '../styles/style.css';
 import Comment from './Comment';
 import { getSinglePost } from '../services/DBServices';
@@ -22,9 +24,11 @@ function SinglePost() {
     return (
       <div className='post' id={post.id} title={post.title}>
         <div className='post__title'>
-          <a href={post.url}>{post.title}</a>
+          <Link to={post.url}>{post.title}</Link>
         </div>
-        <div className='post__author'>Made by {post.author.username}</div>
+        <div className='post__author'>
+          Made by <Link to={post.author.url}>{post.author.username}</Link>
+        </div>
         <div className='post__createTime'>On: {post.createTime}</div>
         {post.editTime.includes('1970-01-01') ? null : (
           // Conditional rendering. 1970-01-01 is considered a null date
