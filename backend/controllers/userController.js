@@ -8,6 +8,23 @@ var SESSION_SECRET = process.env.SESSION_SECRET;
 const passport = require('../services/auth');
 const jwt = require('jsonwebtoken');
 
+// Handle User detail on GET.
+exports.user_detail_get = function (req, res, next) {
+  User.findById(req.params.id)
+  .exec(function (err, results) {
+    if (err || results == null) {
+      var err = new Error('User not found!');
+      err.status = 404;
+      console.error('Error - User not found!');
+      // Another way: return res.status(404).send('Error - User not found!');
+      return next(err);
+    }
+    res.json({
+      data: results,
+    });
+  });
+};
+
 // Display User signup form on GET.
 exports.user_signup_get = function (req, res, next) {
   res.json({

@@ -2,31 +2,37 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
-  username: {
-    type: String,
-    maxLength: 40,
-    unique: true,
-    dropDups: true,
-    required: true,
+// Necessary to use virtuals in the frontend
+const opts = { toJSON: { virtuals: true } };
+
+var UserSchema = new Schema(
+  {
+    username: {
+      type: String,
+      maxLength: 40,
+      unique: true,
+      dropDups: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      maxLength: 50,
+      unique: true,
+      dropDups: true,
+      required: true,
+    },
+    password: { type: String, maxLength: 100, required: true },
+    createTime: { type: Date },
+    membershipStatus: {
+      type: String,
+      enum: ['Normal', 'Admin'],
+      default: 'Normal',
+    },
+    karmaComments: { type: Number, default: 0 },
+    karmaPosts: { type: Number, default: 0 },
   },
-  email: {
-    type: String,
-    maxLength: 50,
-    unique: true,
-    dropDups: true,
-    required: true,
-  },
-  password: { type: String, maxLength: 100, required: true },
-  createTime: { type: Date },
-  membershipStatus: {
-    type: String,
-    enum: ['Normal', 'Admin'],
-    default: 'Normal',
-  },
-  karmaComments: { type: Number, default: 0 },
-  karmaPosts: { type: Number, default: 0 },
-});
+  opts
+);
 
 //Virtual for user's karma
 UserSchema.virtual('karma').get(function () {

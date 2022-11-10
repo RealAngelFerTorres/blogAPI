@@ -9,6 +9,7 @@ function AllPosts() {
   useEffect(() => {
     getAllPosts().then((e) => {
       setAllPosts(e.data);
+      console.log(e.data);
     });
   }, []);
 
@@ -20,7 +21,9 @@ function AllPosts() {
             <div className='post__title'>
               <a href={post.url}>{post.title}</a>
             </div>
-            <div className='post__author'>Made by {post.author.username}</div>
+            <div className='post__author'>
+              Made by <a href={post.author.url}>{post.author.username}</a>
+            </div>
             <div className='post__createTime'>On: {post.createTime}</div>
             {post.editTime.includes('1970-01-01') ? null : (
               // Conditional rendering. 1970-01-01 is considered a null date

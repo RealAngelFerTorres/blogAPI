@@ -7,9 +7,18 @@ export async function getAllPosts() {
   }
 }
 
-export async function getSinglePost(url) {
+export async function getSinglePost(id) {
   try {
-    const response = await fetch(`/post/${url}`);
+    const response = await fetch(`/post/${id}`);
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem fetching the data:', error);
+  }
+}
+
+export async function getUserDetails(id) {
+  try {
+    const response = await fetch(`/user/${id}`);
     return await response.json();
   } catch (error) {
     console.log('There was a problem fetching the data:', error);

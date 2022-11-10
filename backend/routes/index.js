@@ -46,6 +46,7 @@ router
   .post(comment_controller.comment_edit_post);
 
 // USER ROUTES
+router.route('/user/:id').get(user_controller.user_detail_get);
 
 router
   .route('/user/login')
