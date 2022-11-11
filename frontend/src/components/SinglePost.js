@@ -15,7 +15,6 @@ function SinglePost() {
   useEffect(() => {
     getSinglePost(url.id).then((e) => {
       setPost(e.data);
-      console.log(e);
     });
   }, []);
 

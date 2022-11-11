@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { getAllPosts, getSinglePost } from './services/DBServices';
 import SinglePost from './components/SinglePost';
 import UserDetails from './components/UserDetails';
+import NavBar from './components/NavBar';
+import About from './components/About';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   /*
@@ -19,11 +23,15 @@ function App() {
 */
   return (
     <BrowserRouter>
-      <div>
+      <NavBar></NavBar>
+      <div className='mainDisplay'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/post/:id' element={<SinglePost />}></Route>
-          <Route path='/user/:id' element={<UserDetails />}></Route>
+          <Route path='/post/:id' element={<SinglePost />} />
+          <Route path='/user/:id' element={<UserDetails />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
         </Routes>
       </div>
     </BrowserRouter>
