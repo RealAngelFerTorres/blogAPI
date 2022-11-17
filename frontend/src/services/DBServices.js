@@ -24,6 +24,21 @@ export async function getUserDetails(id) {
     console.log('There was a problem fetching the data:', error);
   }
 }
+
+export async function loginUser(form) {
+  try {
+    const response = await fetch(`/user/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem when trying to login:', error);
+  }
+}
 /*
 export async function createTask(data) {
   const response = await fetch(`/api/todos`, {

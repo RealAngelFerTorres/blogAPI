@@ -29,6 +29,9 @@ function NavBar(props) {
           <div>Register</div>
         </Link>
       </div>
+      <Link to='/admin' className='option'>
+        <div>Admin</div>
+      </Link>
     </div>
   );
 }

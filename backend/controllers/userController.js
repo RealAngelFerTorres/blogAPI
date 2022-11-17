@@ -10,8 +10,7 @@ const jwt = require('jsonwebtoken');
 
 // Handle User detail on GET.
 exports.user_detail_get = function (req, res, next) {
-  User.findById(req.params.id)
-  .exec(function (err, results) {
+  User.findById(req.params.id).exec(function (err, results) {
     if (err || results == null) {
       var err = new Error('User not found!');
       err.status = 404;
@@ -135,7 +134,7 @@ exports.user_login_post = function (req, res, next) {
       }
       // generate a signed son web token with the contents of user object and return it in the response
       const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
-        expiresIn: '2min',
+        expiresIn: '20s',
       });
       return res.json({ user, token });
     });
