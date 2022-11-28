@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
-import { loginUser } from '../services/DBServices';
+import { loginUser, checkUserLoggedIn } from '../services/DBServices';
 
 function Login() {
   const [form, setForm] = useState({
     username: '',
     password: '',
   });
+
+  let navigate = useNavigate();
 
   const handleFormChange = (e) => {
     let input = e.target.value;
@@ -24,22 +27,28 @@ function Login() {
   const submitForm = async (e) => {
     e.preventDefault();
     const res = await loginUser(form);
-    localStorage.setItem('token', res.token);
+    if (res.token) {
+      localStorage.setItem('token', res.token);
+      navigate('/'); // TODING check for promises not completed. Warning: send two navigate may not let promises to complete
+      navigate(0, { data: res.user });
+    } else {
+      console.log(res.message);
+    }
   };
+  /*
+useEffect(() => {
+  async function fetchData() {
+    // You can await here
+    const response = await MyAPI.getData(someId);
+    // ...
+  }
+  fetchData();
+}, [someId]); // Or [] if effect doesn't need props or state
+
+*/
 
   useEffect(() => {
-    fetch('/admin', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-      //.then((res) => res.json())
-      .then((res) => {
-        console.log(res.status);
-        res.status === 200
-          ? console.log('YES, logged in :)')
-          : console.log('Not logged in..');
-      });
+    checkUserLoggedIn();
   }, []);
 
   return (

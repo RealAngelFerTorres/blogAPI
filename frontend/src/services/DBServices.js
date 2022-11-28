@@ -39,6 +39,20 @@ export async function loginUser(form) {
     console.log('There was a problem when trying to login:', error);
   }
 }
+
+export async function checkUserLoggedIn(form) {
+  try {
+    const response = await fetch('/isAuth', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.ok;
+  } catch (error) {
+    console.log('There was a problem when trying to login:', error);
+  }
+}
+
 /*
 export async function createTask(data) {
   const response = await fetch(`/api/todos`, {

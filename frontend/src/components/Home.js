@@ -3,9 +3,13 @@ import AllPosts from './AllPosts';
 import '../styles/style.css';
 
 function Home(props) {
-  // const { data } = props;
+  //const { data } = props;
 
-  return <AllPosts></AllPosts>;
+  return (
+    <div>
+      <AllPosts></AllPosts>
+    </div>
+  );
 }
 
 export default Home;

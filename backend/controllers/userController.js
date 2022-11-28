@@ -141,8 +141,8 @@ exports.user_login_post = function (req, res, next) {
   })(req, res);
 };
 
-// Handle User admin path on GET.
-exports.user_admin_get = function (req, res, next) {
+// Handle User is authenticated path on GET (checks if token is ok)
+exports.user_is_auth = function (req, res, next) {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({

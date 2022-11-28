@@ -9,6 +9,7 @@ import UserDetails from './components/UserDetails';
 import NavBar from './components/NavBar';
 import About from './components/About';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Register from './components/Register';
 import Admin from './components/Admin';
 

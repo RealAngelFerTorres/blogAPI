@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { checkUserLoggedIn } from '../services/DBServices';
 
 function NavBar(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   let navigate = useNavigate();
 
   const goToHome = () => {
     navigate('/');
   };
+
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    navigate(0);
+  };
+
+  useEffect(() => {
+    async function checkSession() {
+      const res = await checkUserLoggedIn();
+      setIsLoggedIn(res);
+    }
+    checkSession();
+  }, []);
 
   return (
     <div className='navBar'>
@@ -22,9 +39,15 @@ function NavBar(props) {
         </Link>
       </div>
       <div className='navigationOptions--rightSide'>
-        <Link to='/login' className='option'>
-          <div>Login</div>
-        </Link>
+        {isLoggedIn ? (
+          <Link to='/logout' onClick={logout} className='option'>
+            Logout
+          </Link>
+        ) : (
+          <Link to='/login' className='option'>
+            Login
+          </Link>
+        )}
         <Link to='/register' className='option'>
           <div>Register</div>
         </Link>

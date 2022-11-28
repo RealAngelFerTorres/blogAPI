@@ -60,6 +60,6 @@ router
   .get(user_controller.user_signup_get)
   .post(user_controller.user_signup_post);
 
-router.route('/admin').get(user_controller.user_admin_get);
+router.route('/isAuth').get(user_controller.user_is_auth);
 
 module.exports = router;
