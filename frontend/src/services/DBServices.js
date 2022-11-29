@@ -40,6 +40,21 @@ export async function loginUser(form) {
   }
 }
 
+export async function signupUser(form) {
+  try {
+    const response = await fetch(`/user/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+    return response;
+  } catch (error) {
+    console.log('There was a problem when trying to signup:', error);
+  }
+}
+
 export async function isAuthenticated() {
   try {
     const response = await fetch('/isAuth', {

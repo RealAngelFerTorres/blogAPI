@@ -104,8 +104,8 @@ exports.user_signup_post = [
           if (err) {
             return next(err);
           }
-          //successful - redirect to home.
-          res.redirect(303, '/user/login');
+          // Success.
+          return res.redirect(201, '/user/login');
         });
       }
     });

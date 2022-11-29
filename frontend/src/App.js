@@ -10,7 +10,7 @@ import NavBar from './components/NavBar';
 import About from './components/About';
 import Login from './components/Login';
 import Logout from './components/Logout';
-import Register from './components/Register';
+import Signup from './components/Signup';
 import Admin from './components/Admin';
 
 import { UserProvider } from './services/UserContext';
@@ -27,7 +27,7 @@ function App() {
             <Route path='/user/:id' element={<UserDetails />} />
             <Route path='/about' element={<About />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
+            <Route path='/signup' element={<Signup />} />
             <Route path='/admin' element={<Admin />} />
           </Routes>
         </div>

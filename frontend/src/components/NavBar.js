@@ -55,7 +55,7 @@ function NavBar(props) {
             Login
           </Link>
         )}
-        <Link to='/register' className='option'>
+        <Link to='/signup' className='option'>
           <div>Register</div>
         </Link>
       </div>
