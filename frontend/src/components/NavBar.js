@@ -16,18 +16,17 @@ function NavBar(props) {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem('token');
-    setCurrentUser({}); // TODO: apostrofes o llaves?
+    setCurrentUser('');
     navigate(0);
   };
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      let cUser = await isAuthenticated();
-      if (cUser === null) {
-        cUser = '';
+      let response = await isAuthenticated();
+      if (response.user === false) {
+        response.user = '';
       }
-
-      setCurrentUser(cUser);
+      setCurrentUser(response.user);
     };
 
     checkLoggedIn();

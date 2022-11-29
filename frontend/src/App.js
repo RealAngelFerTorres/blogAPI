@@ -16,15 +16,6 @@ import Admin from './components/Admin';
 import { UserProvider } from './services/UserContext';
 
 function App() {
-  /*
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getAllPosts().then((e) => {
-      setData(e.data);
-    });
-  }, []);
-*/
   return (
     <BrowserRouter>
       <UserProvider>

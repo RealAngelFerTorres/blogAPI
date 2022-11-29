@@ -21,6 +21,9 @@ passport.use(
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
+          // Removes sensitive data before returning the json
+          user.password = undefined;
+          user.email = undefined;
           // passwords match! log user in
           return done(null, user, { message: 'Logged in successfully' });
         } else {
@@ -42,7 +45,10 @@ passport.use(
     async function (jwtPayload, cb) {
       //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
       try {
-        const user = await User.findById(jwtPayload._id);
+        const user = await User.findById(
+          jwtPayload._id,
+          'username createTime membershipStatus karmaComments karmaPosts'
+        );
         return cb(null, user);
       } catch (err) {
         return cb(err);

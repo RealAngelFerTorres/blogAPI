@@ -39,20 +39,18 @@ function Login() {
       console.log('Sorry, cannot log in', response.message);
     }
   };
-  /*
-useEffect(() => {
-  async function fetchData() {
-    // You can await here
-    const response = await MyAPI.getData(someId);
-    // ...
-  }
-  fetchData();
-}, [someId]); // Or [] if effect doesn't need props or state
-
-*/
 
   useEffect(() => {
-    isAuthenticated(); // TODO: Check this! Delete this?
+    const checkLoggedIn = async () => {
+      let response = await isAuthenticated();
+      if (response.user === false) {
+        response.user = '';
+      }
+      setCurrentUser(response.user);
+      if (response.user) navigate('/');
+    };
+
+    checkLoggedIn();
   }, []);
 
   return (

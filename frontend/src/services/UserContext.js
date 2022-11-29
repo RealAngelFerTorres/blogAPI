@@ -14,7 +14,6 @@ export const UserProvider = ({ children }) => {
       if (response.user === false) {
         response.user = '';
       }
-
       setCurrentUser(response.user);
     };
 
