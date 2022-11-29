@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import '../styles/style.css';
 import Comment from './Comment';
+
 import { getAllPosts } from '../services/DBServices';
+import UserContext from '../services/UserContext';
 
 function AllPosts() {
+  const [currentUser, setCurrentUser] = useContext(UserContext);
+
   const [allPosts, setAllPosts] = useState([]);
 
   useEffect(() => {

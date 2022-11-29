@@ -40,14 +40,14 @@ export async function loginUser(form) {
   }
 }
 
-export async function checkUserLoggedIn(form) {
+export async function isAuthenticated() {
   try {
     const response = await fetch('/isAuth', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
-    return response.ok;
+    return await response.json();
   } catch (error) {
     console.log('There was a problem when trying to login:', error);
   }

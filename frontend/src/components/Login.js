@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { redirect } from 'react-router-dom';
 
-import { loginUser, checkUserLoggedIn } from '../services/DBServices';
+import { loginUser, isAuthenticated } from '../services/DBServices';
+
+import UserContext from '../services/UserContext';
 
 function Login() {
+  const [currentUser, setCurrentUser] = useContext(UserContext);
+
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -26,13 +30,13 @@ function Login() {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const res = await loginUser(form);
-    if (res.token) {
-      localStorage.setItem('token', res.token);
-      navigate('/'); // TODING check for promises not completed. Warning: send two navigate may not let promises to complete
-      navigate(0, { data: res.user });
+    const response = await loginUser(form);
+    if (response.token) {
+      localStorage.setItem('token', response.token);
+      setCurrentUser(response.user);
+      navigate('/');
     } else {
-      console.log(res.message);
+      console.log('Sorry, cannot log in', response.message);
     }
   };
   /*
@@ -48,7 +52,7 @@ useEffect(() => {
 */
 
   useEffect(() => {
-    checkUserLoggedIn();
+    isAuthenticated(); // TODO: Check this! Delete this?
   }, []);
 
   return (

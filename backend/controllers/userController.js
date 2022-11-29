@@ -150,7 +150,7 @@ exports.user_is_auth = function (req, res, next) {
         user: user,
       });
     }
-    return res.status(200).send('YAY! this is a protected ADMIN Route'); // TODO: Change this for a token response
+    return res.json({ user });
   })(req, res);
 };
 

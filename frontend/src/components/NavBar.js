@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { checkUserLoggedIn } from '../services/DBServices';
+import { isAuthenticated } from '../services/DBServices';
+
+import UserContext from '../services/UserContext';
 
 function NavBar(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useContext(UserContext);
 
   let navigate = useNavigate();
 
@@ -14,15 +16,21 @@ function NavBar(props) {
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem('token');
+    setCurrentUser({}); // TODO: apostrofes o llaves?
     navigate(0);
   };
 
   useEffect(() => {
-    async function checkSession() {
-      const res = await checkUserLoggedIn();
-      setIsLoggedIn(res);
-    }
-    checkSession();
+    const checkLoggedIn = async () => {
+      let cUser = await isAuthenticated();
+      if (cUser === null) {
+        cUser = '';
+      }
+
+      setCurrentUser(cUser);
+    };
+
+    checkLoggedIn();
   }, []);
 
   return (
@@ -39,7 +47,7 @@ function NavBar(props) {
         </Link>
       </div>
       <div className='navigationOptions--rightSide'>
-        {isLoggedIn ? (
+        {currentUser ? (
           <Link to='/logout' onClick={logout} className='option'>
             Logout
           </Link>

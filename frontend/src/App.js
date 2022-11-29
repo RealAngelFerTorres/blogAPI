@@ -13,6 +13,8 @@ import Logout from './components/Logout';
 import Register from './components/Register';
 import Admin from './components/Admin';
 
+import { UserProvider } from './services/UserContext';
+
 function App() {
   /*
   const [data, setData] = useState([]);
@@ -25,18 +27,20 @@ function App() {
 */
   return (
     <BrowserRouter>
-      <NavBar></NavBar>
-      <div className='mainDisplay'>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/post/:id' element={<SinglePost />} />
-          <Route path='/user/:id' element={<UserDetails />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/admin' element={<Admin />} />
-        </Routes>
-      </div>
+      <UserProvider>
+        <NavBar></NavBar>
+        <div className='mainDisplay'>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/post/:id' element={<SinglePost />} />
+            <Route path='/user/:id' element={<UserDetails />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/admin' element={<Admin />} />
+          </Routes>
+        </div>
+      </UserProvider>
     </BrowserRouter>
   );
 }
