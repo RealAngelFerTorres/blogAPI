@@ -44,6 +44,11 @@ function NavBar(props) {
         <Link to='/about' className='option'>
           <div>ABOUT</div>
         </Link>
+        {currentUser ? (
+          <Link to='/post/create' className='option'>
+            Create new post
+          </Link>
+        ) : null}
       </div>
       <div className='navigationOptions--rightSide'>
         {currentUser ? (

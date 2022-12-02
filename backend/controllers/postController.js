@@ -40,7 +40,7 @@ exports.post_create_post = [
       title: req.body.title,
       text: req.body.text,
       createTime: new Date(),
-      author: res.locals.user._id, // UPDATE THIS LATER TO: res.locals.user._id
+      author: req.body.author,
       published: req.body.published,
     });
     if (!errors.isEmpty()) {

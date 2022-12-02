@@ -16,6 +16,21 @@ export async function getSinglePost(id) {
   }
 }
 
+export async function createNewPost(form) {
+  try {
+    const response = await fetch(`/post/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+    return response;
+  } catch (error) {
+    console.log('There was a problem when trying to create new post:', error);
+  }
+}
+
 export async function getUserDetails(id) {
   try {
     const response = await fetch(`/user/${id}`);
