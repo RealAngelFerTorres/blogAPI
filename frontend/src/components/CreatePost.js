@@ -30,7 +30,6 @@ export default function Signup() {
   };
 
   const submitForm = async (e) => {
-    // TODOING: trying to update state before request the server
     e.preventDefault();
 
     let responseAuth = await isAuthenticated();
@@ -51,8 +50,8 @@ export default function Signup() {
     setForm(copyState);
 
     const response = await createNewPost(copyState);
-    response.ok
-      ? navigate('/post/:id')
+    response.url
+      ? navigate(response.url)
       : console.log('Sorry, cannot create new post: ', response.message);
   };
 

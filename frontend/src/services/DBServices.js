@@ -25,7 +25,7 @@ export async function createNewPost(form) {
       },
       body: JSON.stringify(form),
     });
-    return response;
+    return await response.json();
   } catch (error) {
     console.log('There was a problem when trying to create new post:', error);
   }

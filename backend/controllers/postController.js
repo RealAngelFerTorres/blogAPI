@@ -49,12 +49,14 @@ exports.post_create_post = [
       });
     } else {
       // Data from form is valid. Save post.
-      post.save(function (err) {
+      post.save(function (err, newPost) {
         if (err) {
           return next(err);
         }
-        // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-        res.redirect(303, '/home');
+        // Successful - Send url
+        res.json({
+          url: newPost.url,
+        });
       });
     }
   },
