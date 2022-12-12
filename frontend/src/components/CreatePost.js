@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { createNewPost, isAuthenticated } from '../services/DBServices';
-
 import UserContext from '../services/UserContext';
 
 export default function Signup() {
@@ -36,6 +34,7 @@ export default function Signup() {
     if (responseAuth.user === false) {
       responseAuth.user = '';
       navigate('/login');
+      return;
     }
     await setCurrentUser(responseAuth.user);
 

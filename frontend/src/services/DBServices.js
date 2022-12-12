@@ -31,6 +31,38 @@ export async function createNewPost(form) {
   }
 }
 
+export async function createNewComment(form) {
+  try {
+    const response = await fetch(`/post/comment/onPost`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(
+      'There was a problem when trying to create new comment:',
+      error
+    );
+  }
+}
+
+export async function deletePost(id) {
+  try {
+    const response = await fetch(`/post/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem when trying to delete post:', error);
+  }
+}
+
 export async function getUserDetails(id) {
   try {
     const response = await fetch(`/user/${id}`);
@@ -90,11 +122,6 @@ export async function createTask(data) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ task: data }),
   });
-  return await response.json();
-}
-
-export async function deleteTask(taskId) {
-  const response = await fetch(`/api/todo/${taskId}`, { method: 'DELETE' });
   return await response.json();
 }
 

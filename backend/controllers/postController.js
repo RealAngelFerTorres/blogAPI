@@ -114,7 +114,7 @@ exports.post_delete = function (req, res, next) {
     // Delete object and redirect to home.
     Post.findByIdAndRemove(req.params.id, function deletePost(err) {
       // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-      res.redirect(303, '/home');
+      res.redirect(303, '/');
     });
   });
 };

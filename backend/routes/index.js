@@ -30,7 +30,7 @@ router
 // COMMENT ROUTES
 
 router
-  .route('/post/:id/comment/onPost') // Comment on post
+  .route('/post/comment/onPost') // Comment on post
   .post(comment_controller.comment_on_post_post);
 router
   .route('/post/:id/comment/onComment') // Comment on comment

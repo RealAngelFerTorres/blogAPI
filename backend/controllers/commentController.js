@@ -26,7 +26,7 @@ exports.comment_on_post_post = [
       text: req.body.text,
       createTime: new Date(),
       author: req.body.author, // UPDATE THIS LATER TO: res.locals.user._id
-      fatherPost: req.params.id,
+      fatherPost: req.body.fatherPost,
     });
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -35,7 +35,7 @@ exports.comment_on_post_post = [
     } else {
       // Data from form is valid.
       Post.findByIdAndUpdate(
-        req.params.id,
+        req.body.fatherPost,
         { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
         { safe: true },
         function (err, results) {
@@ -52,7 +52,7 @@ exports.comment_on_post_post = [
             }
           });
           //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-          res.redirect(303, '/post/' + req.params.id);
+          res.redirect(303, '/post/' + req.body.fatherPost);
         }
       );
     }
