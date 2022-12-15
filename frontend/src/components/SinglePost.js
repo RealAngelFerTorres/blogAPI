@@ -104,7 +104,7 @@ function SinglePost() {
         <br></br>
         <div className='post__comments'>
           {post.comments.map((comment, index) => {
-            return <Comment key={index} comment={comment}></Comment>;
+            return <Comment key={index} comment={comment} depth={0}></Comment>;
           })}
         </div>
         <br></br>

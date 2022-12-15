@@ -14,6 +14,7 @@ var CommentSchema = new Schema(
     fatherPost: { type: Schema.Types.ObjectId, ref: 'Post' },
     upvotes: { type: Number, default: 1 },
     downvotes: { type: Number, default: 0 },
+    isDeleted: { type: Boolean, default: false },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   },
   opts

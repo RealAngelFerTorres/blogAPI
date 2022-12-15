@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import {
-  getSinglePost,
+  deleteComment,
   createNewReply,
   isAuthenticated,
 } from '../services/DBServices';
@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import UserContext from '../services/UserContext';
 
 function Comment(props) {
-  const { comment } = props;
+  const { comment, depth } = props;
 
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
@@ -60,45 +60,85 @@ function Comment(props) {
       : console.log('There was a problem when trying to create a new comment');
   };
 
-  return (
-    <div className='comment' id={comment.id}>
-      <div className='comment__author'>
-        <Link to={comment.author.url}>{comment.author.username}</Link>
-      </div>
-      <div className='comment__createTime'>On: {comment.createTime}</div>
-      {comment.editTime.includes('1970-01-01') ? null : (
-        // Conditional rendering. 1970-01-01 is considered a null date
-        <div className='comment__editTime'>Edited {comment.editTime}</div>
-      )}
-      <div className='comment__title'>Karma: {comment.karma}</div>
-      <div className='comment__text'>{comment.text}</div>
-      <div className='comment__reply' onClick={toggleReply}>
-        Reply
-      </div>
-      {showReply ? (
-        <div className='replySection'>
-          <input
-            name='text'
-            type='text'
-            placeholder='What do you think?'
-            required
-            onChange={handleFormChange}
-          ></input>
-          <div>
-            <button className='cancel__button' onClick={toggleReply}>
-              Cancel
-            </button>
-            <button className='comment__button' onClick={submitReply}>
-              Reply
-            </button>
-          </div>
-        </div>
-      ) : null}
+  const submitDeleteComment = async (e) => {
+    let responseAuth = await isAuthenticated();
+    if (responseAuth.user === false) {
+      responseAuth.user = '';
+      navigate('/login');
+      return;
+    }
+    await setCurrentUser(responseAuth.user);
 
+    const response = await deleteComment(comment.id);
+    response.ok
+      ? navigate(0)
+      : console.log(
+          'There was a problem when trying to create a delete comment'
+        );
+  };
+  return (
+    <div>
+      {comment.isDeleted ? (
+        <div className={'comment depth' + depth}>
+          <i>Deleted comment</i>
+        </div>
+      ) : (
+        <div className={'comment depth' + depth} id={comment.id}>
+          <div className='comment__author'>
+            <Link to={'../' + comment.author.url}>
+              {comment.author.username}
+            </Link>
+          </div>
+          <div className='comment__createTime'>On: {comment.createTime}</div>
+          {comment.editTime.includes('1970-01-01') ? null : (
+            // Conditional rendering. 1970-01-01 is considered a null date
+            <div className='comment__editTime'>Edited {comment.editTime}</div>
+          )}
+          <div className='comment__title'>Karma: {comment.karma}</div>
+          <div className='comment__text'>{comment.text}</div>
+          {depth > 2 ? null : (
+            <div>
+              <div className='comment__reply' onClick={toggleReply}>
+                Reply
+              </div>
+              {showReply ? (
+                <div className='replySection'>
+                  <input
+                    name='text'
+                    type='text'
+                    placeholder='What do you think?'
+                    required
+                    onChange={handleFormChange}
+                  />
+                  <div>
+                    <button className='cancel__button' onClick={toggleReply}>
+                      Cancel
+                    </button>
+                    <button className='comment__button' onClick={submitReply}>
+                      Reply
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          )}
+          {currentUser.id === comment.author.id ? (
+            <div className='comment__delete' onClick={submitDeleteComment}>
+              Delete
+            </div>
+          ) : null}
+        </div>
+      )}
       <br></br>
-      {comment.comments.length > 0
+      {comment.comments.length >= 1
         ? comment.comments.map((comment, index) => {
-            return <Comment key={index} comment={comment}></Comment>;
+            return (
+              <Comment
+                key={index}
+                comment={comment}
+                depth={depth + 1}
+              ></Comment>
+            );
           })
         : null}
     </div>

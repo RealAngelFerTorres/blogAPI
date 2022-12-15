@@ -124,10 +124,10 @@ exports.comment_on_comment_post = [
   },
 ];
 
-// Handle Comment delete on POST.
-exports.comment_delete_post = function (req, res, next) {
+// Handle Comment delete on DELETE.
+exports.comment_delete_delete = function (req, res, next) {
   // commentID will be a hidden value in the frontend
-  Comment.findById(req.body.commentID).exec(function (err, results) {
+  Comment.findById(req.params.id).exec(function (err, results) {
     if (err || results == null) {
       var err = new Error('Comment not found!');
       err.status = 404;
@@ -135,22 +135,19 @@ exports.comment_delete_post = function (req, res, next) {
       return next(err);
     }
     // Success
-    // Delete object and redirect to home.
-    Comment.findByIdAndRemove(req.body.commentID, function deleteComment(err) {
-      if (err) {
-        return next(err);
-      }
-      Post.findByIdAndUpdate(
-        req.params.id,
-        { $pull: { comments: { $in: req.body.commentID } } },
-        function (err) {
-          if (err) {
-            return next(err);
-          }
+    // Mark as deleted and redirect to post.
+
+    Comment.findByIdAndUpdate(
+      req.params.id,
+      { text: '', isDeleted: true },
+
+      function (err) {
+        if (err) {
+          return next(err);
         }
-      );
-      res.redirect(303, '/post/' + req.params.id);
-    });
+      }
+    );
+    res.redirect(303, '/');
   });
 };
 

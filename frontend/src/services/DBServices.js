@@ -81,6 +81,20 @@ export async function deletePost(id) {
   }
 }
 
+export async function deleteComment(id) {
+  try {
+    const response = await fetch(`/comment/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log('There was a problem when trying to delete post:', error);
+  }
+}
+
 export async function getUserDetails(id) {
   try {
     const response = await fetch(`/user/${id}`);

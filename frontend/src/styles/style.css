@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div.comment.depth0 {
+  margin-left: 25px;
+}
+
+div.comment.depth1 {
+  margin-left: 50px;
+}
+
+div.comment.depth2 {
+  margin-left: 75px;
+}
+
+div.comment.depth3 {
+  margin-left: 100px;
+}

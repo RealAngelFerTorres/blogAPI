@@ -37,8 +37,8 @@ router
   .post(comment_controller.comment_on_comment_post);
 
 router
-  .route('/post/:id/comment/delete')
-  .delete(comment_controller.comment_delete_post);
+  .route('/comment/delete/:id')
+  .delete(comment_controller.comment_delete_delete);
 
 router
   .route('/post/:id/comment/edit')

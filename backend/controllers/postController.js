@@ -80,6 +80,12 @@ exports.post_detail_get = function (req, res, next) {
                 { path: 'author' },
                 {
                   path: 'comments',
+                  populate: [
+                    { path: 'author' },
+                    {
+                      path: 'comments',
+                    },
+                  ],
                 },
               ],
             },
