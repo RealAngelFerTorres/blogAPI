@@ -14,7 +14,7 @@ exports.comment_on_post_post = [
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
     .isLength({ max: 100 })
-    .withMessage('Post content max. characters is 100.')
+    .withMessage('Comment content max. characters is 100.')
     .escape(),
 
   // Process request after validation and sanitization.
@@ -61,9 +61,9 @@ exports.comment_on_post_post = [
 
 // Handle Comment create on comment POST.
 exports.comment_on_comment_post = [
-  // First, check if post id exists
+  // First, check if comment id exists
   (req, res, next) => {
-    Post.findById(req.params.id).exec(function (err, results) {
+    Comment.findById(req.body.fatherPost).exec(function (err, results) {
       if (err || results == null) {
         var err = new Error('Post not found!');
         err.status = 404;
@@ -79,7 +79,7 @@ exports.comment_on_comment_post = [
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
     .isLength({ max: 100 })
-    .withMessage('Post content max. characters is 100.')
+    .withMessage('Comment content max. characters is 100.')
     .escape(),
 
   // Process request after validation and sanitization.
@@ -91,7 +91,7 @@ exports.comment_on_comment_post = [
       text: req.body.text,
       createTime: new Date(),
       author: req.body.author, // UPDATE THIS LATER TO: res.locals.user._id
-      fatherPost: req.params.id,
+      fatherPost: req.body.fatherPost,
     });
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -100,7 +100,7 @@ exports.comment_on_comment_post = [
     } else {
       // Data from form is valid
       Comment.findByIdAndUpdate(
-        req.body.commentID,
+        req.body.fatherPost,
         { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
         { safe: true },
         function (err, results) {
@@ -116,8 +116,8 @@ exports.comment_on_comment_post = [
               });
             }
           });
-          //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-          res.redirect(303, '/post/' + req.params.id);
+          // Success.
+          return res.redirect(201, '/');
         }
       );
     }

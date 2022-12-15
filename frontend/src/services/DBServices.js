@@ -49,6 +49,24 @@ export async function createNewComment(form) {
   }
 }
 
+export async function createNewReply(form) {
+  try {
+    const response = await fetch(`/post/comment/onComment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+    return response;
+  } catch (error) {
+    console.log(
+      'There was a problem when trying to create new comment:',
+      error
+    );
+  }
+}
+
 export async function deletePost(id) {
   try {
     const response = await fetch(`/post/delete/${id}`, {
