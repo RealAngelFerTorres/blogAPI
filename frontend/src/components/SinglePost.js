@@ -6,6 +6,7 @@ import {
   getSinglePost,
   createNewComment,
   isAuthenticated,
+  deletePost,
 } from '../services/DBServices';
 import { useParams } from 'react-router-dom';
 import UserContext from '../services/UserContext';
@@ -18,10 +19,24 @@ function SinglePost() {
   const [form, setForm] = useState({
     text: '',
   });
-  let navigate = useNavigate();
 
+  let navigate = useNavigate();
   let url = useParams();
-  const deletePost = () => {};
+
+  const submitDeletePost = async (e) => {
+    let responseAuth = await isAuthenticated();
+    if (responseAuth.user === false) {
+      responseAuth.user = '';
+      navigate('/login');
+      return;
+    }
+    await setCurrentUser(responseAuth.user);
+
+    const response = await deletePost(post.id);
+    response.ok
+      ? navigate('/')
+      : console.log('There was a problem when trying to delete post');
+  };
 
   const handleFormChange = (e) => {
     let input = e.target.value;
@@ -81,9 +96,11 @@ function SinglePost() {
           <div className='post__editTime'>Edited {post.editTime}</div>
         )}
         <div className='post__title'>Karma: {post.karma}</div>
-        <button className='deleteButton' onClick={deletePost}>
-          Delete post
-        </button>
+        {currentUser.id === post.author.id ? (
+          <button className='deleteButton' onClick={submitDeletePost}>
+            Delete post
+          </button>
+        ) : null}
 
         <div className='post__text'>{post.text}</div>
 

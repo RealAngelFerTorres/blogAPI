@@ -116,10 +116,37 @@ exports.post_delete = function (req, res, next) {
       console.error('Error - Post not found!');
       return next(err);
     }
-    // Success
-    // Delete object and redirect to home.
+
+    // The recursion function
+    function recursion(commentsArray) {
+      commentsArray.map((comment) => {
+        Comment.findById(comment).exec(function (err, results) {
+          if (err || results == null) {
+            var err = new Error('Comment not found!');
+            err.status = 404;
+            console.error('Error - Comment not found!');
+            return next(err);
+          }
+          if (results.comments.length >= 1) {
+            recursion(results.comments);
+          }
+          // Delete comment
+          Comment.findByIdAndRemove(results.id).exec(function (err, results) {
+            if (err || results == null) {
+              var err = new Error('Comment not found!');
+              err.status = 404;
+              console.error('Error - Comment not found!');
+              return next(err);
+            }
+          });
+        });
+      });
+    }
+    if (results.comments.length >= 1) {
+      recursion(results.comments);
+    }
+    // Success. Delete post and redirect to home.
     Post.findByIdAndRemove(req.params.id, function deletePost(err) {
-      // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
       res.redirect(303, '/');
     });
   });

@@ -69,13 +69,13 @@ export async function createNewReply(form) {
 
 export async function deletePost(id) {
   try {
-    const response = await fetch(`/post/delete/${id}`, {
+    const response = await fetch(`/post/${id}/delete`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    return await response.json();
+    return response;
   } catch (error) {
     console.log('There was a problem when trying to delete post:', error);
   }
