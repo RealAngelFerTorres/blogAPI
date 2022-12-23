@@ -7,16 +7,21 @@ import {
   createNewComment,
   isAuthenticated,
   deletePost,
+  editPost,
 } from '../services/DBServices';
 import { useParams } from 'react-router-dom';
 import UserContext from '../services/UserContext';
 
 function SinglePost() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
-
   const [post, setPost] = useState();
-
-  const [form, setForm] = useState({
+  const [isEditing, setIsEditing] = useState(false);
+  const [postForm, setPostForm] = useState({
+    title: '',
+    text: '',
+    published: undefined,
+  });
+  const [commentForm, setCommentForm] = useState({
     text: '',
   });
 
@@ -38,18 +43,57 @@ function SinglePost() {
       : console.log('There was a problem when trying to delete post');
   };
 
-  const handleFormChange = (e) => {
+  const handlePostFormChange = (e) => {
     let input = e.target.value;
     let key = e.target.name;
-    let copyState = form;
+    let copyState = postForm;
 
     copyState = {
       ...copyState,
       [key]: input,
     };
-    setForm(copyState);
+    setPostForm(copyState);
   };
 
+  const handleCheckboxChange = () => {
+    postForm.published
+      ? setPostForm({ ...postForm, published: false })
+      : setPostForm({ ...postForm, published: true });
+  };
+
+  const handleCommentFormChange = (e) => {
+    let input = e.target.value;
+    let key = e.target.name;
+    let copyState = commentForm;
+
+    copyState = {
+      ...copyState,
+      [key]: input,
+    };
+    setCommentForm(copyState);
+  };
+
+  const submitEditPost = async (e) => {
+    let responseAuth = await isAuthenticated();
+    if (responseAuth.user === false) {
+      responseAuth.user = '';
+      navigate('/login');
+      return;
+    }
+    await setCurrentUser(responseAuth.user);
+
+    let copyState = postForm;
+    copyState = {
+      ...copyState,
+      id: post.id,
+    };
+    setPostForm(copyState);
+
+    const response = await editPost(copyState);
+    response.ok
+      ? navigate(0)
+      : console.log('There was a problem when trying to edit a post');
+  };
   const submitComment = async (e) => {
     let responseAuth = await isAuthenticated();
     if (responseAuth.user === false) {
@@ -59,18 +103,27 @@ function SinglePost() {
     }
     await setCurrentUser(responseAuth.user);
 
-    let copyState = form;
+    let copyState = commentForm;
     copyState = {
       ...copyState,
       author: currentUser._id,
       fatherPost: post.id,
     };
-    setForm(copyState);
+    setCommentForm(copyState);
 
     const response = await createNewComment(copyState);
     response
       ? setPost(response.data)
       : console.log('There was a problem when trying to create a new comment');
+  };
+
+  const toggleEditPost = () => {
+    isEditing ? setIsEditing(false) : setIsEditing(true);
+    setPostForm({
+      title: post.title,
+      text: post.text,
+      published: post.published,
+    });
   };
 
   useEffect(() => {
@@ -85,7 +138,16 @@ function SinglePost() {
     return (
       <div className='post' id={post.id} title={post.title}>
         <div className='post__title'>
-          <Link to={post.url}>{post.title}</Link>
+          {isEditing ? (
+            <input
+              type='text'
+              name='title'
+              value={postForm.title}
+              onChange={handlePostFormChange}
+            ></input>
+          ) : (
+            <Link to={post.url}>{post.title}</Link>
+          )}
         </div>
         <div className='post__author'>
           Made by <Link to={post.author.url}>{post.author.username}</Link>
@@ -95,14 +157,48 @@ function SinglePost() {
           // Conditional rendering. 1970-01-01 is considered a null date
           <div className='post__editTime'>Edited {post.editTime}</div>
         )}
-        <div className='post__title'>Karma: {post.karma}</div>
+        <div className='post__karma'>Karma: {post.karma}</div>
+
         {currentUser.id === post.author.id ? (
-          <button className='deleteButton' onClick={submitDeletePost}>
-            Delete post
-          </button>
+          <div>
+            <button className='deleteButton' onClick={submitDeletePost}>
+              Delete post
+            </button>
+            {isEditing ? (
+              <div>
+                <input
+                  type='checkbox'
+                  id='published'
+                  name='published'
+                  onChange={handleCheckboxChange}
+                  checked={postForm.published}
+                />
+                <label htmlFor='published'>Published</label>
+                <button className='OKButton' onClick={submitEditPost}>
+                  OK
+                </button>
+                <button className='cancelButton' onClick={toggleEditPost}>
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button className='editButton' onClick={toggleEditPost}>
+                Edit post
+              </button>
+            )}
+          </div>
         ) : null}
 
-        <div className='post__text'>{post.text}</div>
+        {isEditing ? (
+          <input
+            type='text'
+            name='text'
+            value={postForm.text}
+            onChange={handlePostFormChange}
+          ></input>
+        ) : (
+          <div className='post__text'>{post.text}</div>
+        )}
 
         <div className='post__comments'>{post.comments.length} Comments</div>
         <br></br>
@@ -112,7 +208,7 @@ function SinglePost() {
             type='text'
             placeholder='What do you think?'
             required
-            onChange={handleFormChange}
+            onChange={handleCommentFormChange}
           ></input>
           <button className='comment__button' onClick={submitComment}>
             Comment post

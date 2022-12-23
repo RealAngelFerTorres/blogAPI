@@ -19,8 +19,8 @@ router.route('/post/:id/delete').delete(post_controller.post_delete);
 
 router
   .route('/post/:id/edit')
-  .get(post_controller.post_edit_get)
-  .post(post_controller.post_edit_post);
+  .get(post_controller.post_edit_get) // Delete this later if a new page is loaded
+  .put(post_controller.post_edit_put);
 
 router
   .route('/post/create')

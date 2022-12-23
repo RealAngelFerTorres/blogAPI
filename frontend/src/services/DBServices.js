@@ -67,6 +67,15 @@ export async function createNewReply(form) {
   }
 }
 
+export async function editPost(form) {
+  const response = await fetch(`/post/${form.id}/edit`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form),
+  });
+  return response;
+}
+
 export async function deletePost(id) {
   try {
     const response = await fetch(`/post/${id}/delete`, {
@@ -157,12 +166,4 @@ export async function createTask(data) {
   return await response.json();
 }
 
-export async function editTask(data) {
-  const response = await fetch(`/api/todo`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ task: data }),
-  });
-  return await response.json();
-}
 */

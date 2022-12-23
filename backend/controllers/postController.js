@@ -152,7 +152,7 @@ exports.post_delete = function (req, res, next) {
   });
 };
 
-// Handle Post edit on GET
+// Handle Post edit on GET - D E L E T E    T H I S     L A T E R if a new page is not loaded
 exports.post_edit_get = function (req, res, next) {
   Post.findById(req.params.id).exec(function (err, results) {
     if (err || results == null) {
@@ -169,8 +169,8 @@ exports.post_edit_get = function (req, res, next) {
   });
 };
 
-// Handle Post edit on POST
-exports.post_edit_post = [
+// Handle Post edit on PUT
+exports.post_edit_put = [
   // Validate and sanitize fields
   body('title')
     .trim()
