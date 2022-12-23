@@ -205,15 +205,30 @@ exports.post_edit_put = [
       });
     } else {
       // Data from form is valid. Save post.
-      Post.findByIdAndUpdate(req.params.id, post, {}, function (err, results) {
-        if (err || results == null) {
-          return res.status(404).json({
-            err,
-          });
+      Post.findByIdAndUpdate(
+        req.params.id,
+        {
+          // Must use $set, otherwise would delete comments array
+          // (post object would replace the found object with the params id)
+          $set: {
+            title: post.title,
+            text: post.text,
+            editTime: post.editTime,
+            published: post.published,
+            _id: post.id,
+          },
+        },
+        {},
+        function (err, results) {
+          if (err || results == null) {
+            return res.status(404).json({
+              err,
+            });
+          }
+          // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
+          res.redirect(303, '/post/' + req.params.id);
         }
-        // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-        res.redirect(303, '/post/' + req.params.id);
-      });
+      );
     }
   },
 ];
