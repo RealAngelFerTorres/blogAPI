@@ -197,7 +197,7 @@ exports.post_edit_put = [
       text: req.body.text,
       editTime: new Date(),
       published: req.body.published,
-      _id: req.params.id, // This is required, or a new ID will be assigned!
+      _id: req.params.id, // This is required, or a new ID will be assigned! -> This is not necessary if $set is used when findByIdAndUpdate
     });
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -209,7 +209,7 @@ exports.post_edit_put = [
         req.params.id,
         {
           // Must use $set, otherwise would delete comments array
-          // (post object would replace the found object with the params id)
+          // (post object would replace the found object with the params id's post)
           $set: {
             title: post.title,
             text: post.text,

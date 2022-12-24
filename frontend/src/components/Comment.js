@@ -5,18 +5,20 @@ import {
   deleteComment,
   createNewReply,
   isAuthenticated,
+  editComment,
 } from '../services/DBServices';
 import { useParams } from 'react-router-dom';
 import UserContext from '../services/UserContext';
 
 function Comment(props) {
   const { comment, depth } = props;
-
   const [currentUser, setCurrentUser] = useContext(UserContext);
-
   const [showReply, setShowReply] = useState(false);
-
-  const [form, setForm] = useState({
+  const [isEditing, setIsEditing] = useState(false);
+  const [replyForm, setReplyForm] = useState({
+    text: '',
+  });
+  const [commentForm, setCommentForm] = useState({
     text: '',
   });
 
@@ -25,16 +27,35 @@ function Comment(props) {
   const toggleReply = () =>
     showReply ? setShowReply(false) : setShowReply(true);
 
-  const handleFormChange = (e) => {
+  const toggleCommentEdit = () => {
+    isEditing ? setIsEditing(false) : setIsEditing(true);
+    setCommentForm({
+      text: comment.text,
+    });
+  };
+
+  const handleReplyFormChange = (e) => {
     let input = e.target.value;
     let key = e.target.name;
-    let copyState = form;
+    let copyState = replyForm;
 
     copyState = {
       ...copyState,
       [key]: input,
     };
-    setForm(copyState);
+    setReplyForm(copyState);
+  };
+
+  const handleCommentFormChange = (e) => {
+    let input = e.target.value;
+    let key = e.target.name;
+    let copyState = commentForm;
+
+    copyState = {
+      ...copyState,
+      [key]: input,
+    };
+    setCommentForm(copyState);
   };
 
   const submitReply = async (e) => {
@@ -46,18 +67,40 @@ function Comment(props) {
     }
     await setCurrentUser(responseAuth.user);
 
-    let copyState = form;
+    let copyState = replyForm;
     copyState = {
       ...copyState,
       author: currentUser._id,
       fatherPost: comment.id,
     };
-    setForm(copyState);
+    setReplyForm(copyState);
 
     const response = await createNewReply(copyState);
     response.ok
       ? navigate(0)
       : console.log('There was a problem when trying to create a new comment');
+  };
+
+  const submitEditComment = async (e) => {
+    let responseAuth = await isAuthenticated();
+    if (responseAuth.user === false) {
+      responseAuth.user = '';
+      navigate('/login');
+      return;
+    }
+    await setCurrentUser(responseAuth.user);
+
+    let copyState = commentForm;
+    copyState = {
+      ...copyState,
+      id: comment.id,
+    };
+    setCommentForm(copyState);
+
+    const response = await editComment(copyState);
+    response.ok
+      ? navigate(0)
+      : console.log('There was a problem when trying to edit a comment');
   };
 
   const submitDeleteComment = async (e) => {
@@ -76,6 +119,7 @@ function Comment(props) {
           'There was a problem when trying to create a delete comment'
         );
   };
+
   return (
     <div>
       {comment.isDeleted ? (
@@ -95,7 +139,17 @@ function Comment(props) {
             <div className='comment__editTime'>Edited {comment.editTime}</div>
           )}
           <div className='comment__title'>Karma: {comment.karma}</div>
-          <div className='comment__text'>{comment.text}</div>
+          {isEditing ? (
+            <input
+              type='text'
+              name='text'
+              value={commentForm.text}
+              onChange={handleCommentFormChange}
+            ></input>
+          ) : (
+            <div className='comment__text'>{comment.text}</div>
+          )}
+
           {depth > 2 ? null : (
             <div>
               <div className='comment__reply' onClick={toggleReply}>
@@ -108,7 +162,7 @@ function Comment(props) {
                     type='text'
                     placeholder='What do you think?'
                     required
-                    onChange={handleFormChange}
+                    onChange={handleReplyFormChange}
                   />
                   <div>
                     <button className='cancel__button' onClick={toggleReply}>
@@ -123,8 +177,24 @@ function Comment(props) {
             </div>
           )}
           {currentUser.id === comment.author.id ? (
-            <div className='comment__delete' onClick={submitDeleteComment}>
-              Delete
+            <div>
+              <div className='comment__delete' onClick={submitDeleteComment}>
+                Delete
+              </div>
+              {isEditing ? (
+                <div>
+                  <button className='OKButton' onClick={submitEditComment}>
+                    OK
+                  </button>
+                  <button className='cancelButton' onClick={toggleCommentEdit}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div className='comment__edit' onClick={toggleCommentEdit}>
+                  Edit
+                </div>
+              )}
             </div>
           ) : null}
         </div>

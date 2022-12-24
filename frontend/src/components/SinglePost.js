@@ -94,6 +94,7 @@ function SinglePost() {
       ? navigate(0)
       : console.log('There was a problem when trying to edit a post');
   };
+
   const submitComment = async (e) => {
     let responseAuth = await isAuthenticated();
     if (responseAuth.user === false) {

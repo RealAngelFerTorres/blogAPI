@@ -76,6 +76,15 @@ export async function editPost(form) {
   return response;
 }
 
+export async function editComment(form) {
+  const response = await fetch(`/comment/${form.id}/edit`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form),
+  });
+  return response;
+}
+
 export async function deletePost(id) {
   try {
     const response = await fetch(`/post/${id}/delete`, {
@@ -155,15 +164,3 @@ export async function isAuthenticated() {
     console.log('There was a problem when trying to login:', error);
   }
 }
-
-/*
-export async function createTask(data) {
-  const response = await fetch(`/api/todos`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ task: data }),
-  });
-  return await response.json();
-}
-
-*/

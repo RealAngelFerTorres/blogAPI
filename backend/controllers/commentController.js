@@ -168,8 +168,8 @@ exports.comment_edit_get = function (req, res, next) {
   });
 };
 
-// Handle Comment edit on POST
-exports.comment_edit_post = [
+// Handle Comment edit on PUT
+exports.comment_edit_put = [
   // Validate and sanitize fields
   body('text')
     .trim()
@@ -187,7 +187,7 @@ exports.comment_edit_post = [
     var comment = new Comment({
       text: req.body.text,
       editTime: new Date(),
-      _id: req.body.commentID, // This is required, or a new ID will be assigned!
+      _id: req.params.id, // This is required, or a new ID will be assigned! -> This is not necessary if $set is used when findByIdAndUpdate
     });
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -196,8 +196,15 @@ exports.comment_edit_post = [
     } else {
       // Data from form is valid. Save comment.
       Comment.findByIdAndUpdate(
-        req.body.commentID,
-        comment,
+        req.params.id,
+        {
+          // Must use $set, otherwise would delete comments array
+          // (post object would replace the found object with the params id's comment)
+          $set: {
+            text: comment.text,
+            editTime: comment.editTime,
+          },
+        },
         {},
         function (err, results) {
           if (err || results == null) {
@@ -205,7 +212,7 @@ exports.comment_edit_post = [
               err,
             });
           }
-          res.redirect(303, '/post/' + req.params.id);
+          res.redirect(303, '/');
         }
       );
     }

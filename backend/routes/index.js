@@ -41,9 +41,9 @@ router
   .delete(comment_controller.comment_delete_delete);
 
 router
-  .route('/post/:id/comment/edit')
-  .get(comment_controller.comment_edit_get)
-  .post(comment_controller.comment_edit_post);
+  .route('/comment/:id/edit')
+  .get(comment_controller.comment_edit_get) // Delete this later if a new page is loaded
+  .put(comment_controller.comment_edit_put);
 
 // USER ROUTES
 router.route('/user/:id').get(user_controller.user_detail_get);
