@@ -12,6 +12,7 @@ var CommentSchema = new Schema(
     editTime: { type: Date, default: 'Jan 1, 1970' }, // value equals this should be considered null in the frontend
     author: { type: Schema.Types.ObjectId, ref: 'User' },
     fatherPost: { type: Schema.Types.ObjectId, ref: 'Post' },
+    fatherComment: { type: Schema.Types.ObjectId, ref: 'Comment' },
     upvotes: { type: Number, default: 1 },
     downvotes: { type: Number, default: 0 },
     isDeleted: { type: Boolean, default: false },

@@ -61,9 +61,9 @@ exports.comment_on_post_post = [
 
 // Handle Comment create on comment POST.
 exports.comment_on_comment_post = [
-  // First, check if comment id exists
+  // First, check if father comment exists
   (req, res, next) => {
-    Comment.findById(req.body.fatherPost).exec(function (err, results) {
+    Comment.findById(req.body.fatherComment).exec(function (err, results) {
       if (err || results == null) {
         var err = new Error('Post not found!');
         err.status = 404;
@@ -92,6 +92,7 @@ exports.comment_on_comment_post = [
       createTime: new Date(),
       author: req.body.author, // UPDATE THIS LATER TO: res.locals.user._id
       fatherPost: req.body.fatherPost,
+      fatherComment: req.body.fatherComment,
     });
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -100,7 +101,7 @@ exports.comment_on_comment_post = [
     } else {
       // Data from form is valid
       Comment.findByIdAndUpdate(
-        req.body.fatherPost,
+        req.body.fatherComment,
         { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
         { safe: true },
         function (err, results) {

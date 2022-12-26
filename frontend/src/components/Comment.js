@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 import UserContext from '../services/UserContext';
 
 function Comment(props) {
-  const { comment, depth } = props;
+  const { comment, postID, depth } = props;
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [showReply, setShowReply] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -71,7 +71,8 @@ function Comment(props) {
     copyState = {
       ...copyState,
       author: currentUser._id,
-      fatherPost: comment.id,
+      fatherPost: postID,
+      fatherComment: comment.id,
     };
     setReplyForm(copyState);
 
@@ -206,6 +207,7 @@ function Comment(props) {
               <Comment
                 key={index}
                 comment={comment}
+                postID={postID}
                 depth={depth + 1}
               ></Comment>
             );
