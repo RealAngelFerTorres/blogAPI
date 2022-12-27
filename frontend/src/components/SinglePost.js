@@ -129,6 +129,7 @@ function SinglePost() {
 
   useEffect(() => {
     getSinglePost(url.id).then((e) => {
+      e.data = { ...e.data, commentQuantity: e.commentQuantity };
       setPost(e.data);
     });
   }, []);
@@ -201,7 +202,7 @@ function SinglePost() {
           <div className='post__text'>{post.text}</div>
         )}
 
-        <div className='post__comments'>{post.comments.length} Comments</div>
+        <div className='post__comments'>{post.commentQuantity} Comments</div>
         <br></br>
         <div className='commentSection'>
           <input

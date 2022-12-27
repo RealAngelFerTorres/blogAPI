@@ -101,8 +101,20 @@ exports.post_detail_get = function (req, res, next) {
         // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
-      res.json({
-        data: results,
+      Comment.countDocuments({
+        fatherPost: req.params.id,
+        isDeleted: false,
+      }).exec(function (err, commentQuantity) {
+        if (err || commentQuantity == null) {
+          var err = new Error('No comments found!');
+          err.status = 404;
+          console.error('Error - Comments not found');
+          return next(err);
+        }
+        res.json({
+          data: results,
+          commentQuantity: commentQuantity,
+        });
       });
     });
 };
