@@ -18,8 +18,22 @@ exports.home_get = function (req, res) {
       if (err) {
         return next(err);
       }
-      res.json({
-        data: results,
+
+      // Get comment quantity for each post and append them to results
+      let newResults = [];
+      const promises = results.map(async function (post) {
+        const commentQuantity = await Comment.countDocuments({
+          fatherPost: post.id,
+          isDeleted: false,
+        });
+        post._doc = {
+          ...post._doc,
+          commentQuantity: commentQuantity,
+        };
+        newResults.push(post);
+      });
+      Promise.all(promises).then(function () {
+        res.json({ data: newResults });
       });
     });
 };
