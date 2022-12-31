@@ -7,6 +7,7 @@ import { getAllPosts, getSinglePost } from './services/DBServices';
 import SinglePost from './components/SinglePost';
 import CreatePost from './components/CreatePost';
 import UserDetails from './components/UserDetails';
+import UserDrafts from './components/UserDrafts';
 import NavBar from './components/NavBar';
 import About from './components/About';
 import Login from './components/Login';
@@ -27,6 +28,7 @@ function App() {
             <Route path='/post/:id' element={<SinglePost />} />
             <Route path='/post/create' element={<CreatePost />} />
             <Route path='/user/:id' element={<UserDetails />} />
+            <Route path='/user/:id/drafts' element={<UserDrafts />} />
             <Route path='/about' element={<About />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />

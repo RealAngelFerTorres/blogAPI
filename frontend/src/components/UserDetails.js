@@ -1,16 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { redirect } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
-
 import '../styles/style.css';
 import Comment from './Comment';
-import { getUserDetails } from '../services/DBServices';
-
+import { isAuthenticated, getUserDetails } from '../services/DBServices';
+import UserContext from '../services/UserContext';
 import { useParams } from 'react-router-dom';
 
 function UserDetails() {
+  const [currentUser, setCurrentUser] = useContext(UserContext);
   const [user, setUser] = useState();
 
   let url = useParams();
+  let navigate = useNavigate();
+
+  const manageDrafts = async () => {
+    let responseAuth = await isAuthenticated();
+    if (responseAuth.user === false) {
+      responseAuth.user = '';
+      navigate('/login');
+      return;
+    }
+    await setCurrentUser(responseAuth.user);
+    navigate('drafts');
+  };
 
   useEffect(() => {
     getUserDetails(url.id).then((e) => {
@@ -18,7 +31,7 @@ function UserDetails() {
     });
   }, []);
 
-  if (!user) {
+  if (!user || !currentUser) {
     return <div>Loading user data...</div>;
   } else {
     return (
@@ -32,6 +45,9 @@ function UserDetails() {
           Membership status: {user.membershipStatus}
         </div>
 
+        {currentUser.id === user.id ? (
+          <button onClick={manageDrafts}>View unpublished posts</button>
+        ) : null}
         <br></br>
       </div>
     );

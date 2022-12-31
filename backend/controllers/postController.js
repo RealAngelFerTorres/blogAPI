@@ -101,6 +101,8 @@ exports.post_detail_get = function (req, res, next) {
         // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
+
+      // Get comment quantity and append them to results
       Comment.countDocuments({
         fatherPost: req.params.id,
         isDeleted: false,
@@ -111,9 +113,14 @@ exports.post_detail_get = function (req, res, next) {
           console.error('Error - Comments not found');
           return next(err);
         }
+        // ._doc because the results from countDocuments are hydrated
+        // more info: https://mongoosejs.com/docs/tutorials/lean.html
+        results._doc = {
+          ...results._doc,
+          commentQuantity: commentQuantity,
+        };
         res.json({
           data: results,
-          commentQuantity: commentQuantity,
         });
       });
     });
@@ -129,7 +136,7 @@ exports.post_delete = function (req, res, next) {
       return next(err);
     }
 
-    // The recursion function
+    // Recursion function to delete comments and its children
     function recursion(commentsArray) {
       commentsArray.map((comment) => {
         Comment.findById(comment).exec(function (err, results) {

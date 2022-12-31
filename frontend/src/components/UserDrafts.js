@@ -1,36 +1,44 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import '../styles/style.css';
 import Comment from './Comment';
-
-import { getAllPosts } from '../services/DBServices';
+import { isAuthenticated, getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 
-function AllPosts() {
+export default function UserDrafts() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [allDrafts, setAllDrafts] = useState([]);
 
-  const [allPosts, setAllPosts] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
-    getAllPosts().then((e) => {
-      setAllPosts(e.data);
-    });
+    const checkLoggedIn = async () => {
+      let response = await isAuthenticated();
+      if (response.user === false) {
+        response.user = '';
+        navigate('/login');
+      }
+      setCurrentUser(response.user);
+
+      // This is not part of log check, but it is necessary to stay here because setting state takes some time
+      getAllDrafts(response.user.id).then((e) => {
+        setAllDrafts(e.data);
+      });
+    };
+
+    checkLoggedIn();
   }, []);
 
-  if (!allPosts) {
-    return <div>Loading all posts...</div>;
+  if (!allDrafts || !currentUser) {
+    return <div>Loading drafts...</div>;
   } else {
     return (
       <div>
-        {allPosts.map((post, index) => {
+        {allDrafts.map((post, index) => {
           return (
             <div className='post' key={index} id={post.id} title={post.title}>
               <div className='post__title'>
                 <Link to={post.url}>{post.title}</Link>
-              </div>
-              <div className='post__author'>
-                Made by <Link to={post.author.url}>{post.author.username}</Link>
               </div>
               <div className='post__createTime'>On: {post.createTime}</div>
               {post.editTime.includes('1970-01-01') ? null : (
@@ -39,9 +47,6 @@ function AllPosts() {
               )}
               <div className='post__karma'>Karma: {post.karma}</div>
               <div className='post__text'>{post.text}</div>
-              <div className='post__comments'>
-                {post.commentQuantity} Comments
-              </div>
 
               <br></br>
             </div>
@@ -51,5 +56,3 @@ function AllPosts() {
     );
   }
 }
-
-export default AllPosts;

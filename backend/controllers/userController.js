@@ -2,6 +2,7 @@ var async = require('async');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
+var Post = require('../models/post');
 var User = require('../models/user');
 var SESSION_SECRET = process.env.SESSION_SECRET;
 
@@ -21,6 +22,19 @@ exports.user_detail_get = function (req, res, next) {
     res.json({
       data: results,
     });
+  });
+};
+
+// Handle User drafts on GET.
+exports.user_drafts_get = function (req, res) {
+  Post.find({ author: req.params.id, published: false }).exec(function (
+    err,
+    results
+  ) {
+    if (err) {
+      return next(err);
+    }
+    res.json({ data: results });
   });
 };
 
@@ -134,7 +148,7 @@ exports.user_login_post = function (req, res, next) {
       }
       // generate a signed son web token with the contents of user object and return it in the response
       const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
-        expiresIn: '2m',
+        expiresIn: '1d',
       });
       return res.json({ user, token });
     });

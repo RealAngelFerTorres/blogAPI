@@ -8,7 +8,7 @@ var Comment = require('../models/comment');
 
 // Home page
 exports.home_get = function (req, res) {
-  Post.find({})
+  Post.find({ published: true })
     .populate('author', 'username')
     .populate({
       path: 'comments',
@@ -19,13 +19,15 @@ exports.home_get = function (req, res) {
         return next(err);
       }
 
-      // Get comment quantity for each post and append them to results
+      // Get comment quantity for each post and append them to a new array of results
       let newResults = [];
       const promises = results.map(async function (post) {
         const commentQuantity = await Comment.countDocuments({
           fatherPost: post.id,
           isDeleted: false,
         });
+        // ._doc because the results from countDocuments are hydrated
+        // more info: https://mongoosejs.com/docs/tutorials/lean.html
         post._doc = {
           ...post._doc,
           commentQuantity: commentQuantity,

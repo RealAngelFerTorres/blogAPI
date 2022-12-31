@@ -122,6 +122,15 @@ export async function getUserDetails(id) {
   }
 }
 
+export async function getAllDrafts(id) {
+  try {
+    const response = await fetch(`/user/${id}/drafts`);
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem fetching the data:', error);
+  }
+}
+
 export async function loginUser(form) {
   try {
     const response = await fetch(`/user/login`, {

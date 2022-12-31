@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import Comment from './Comment';
+import { useParams } from 'react-router-dom';
+import UserContext from '../services/UserContext';
 import {
   getSinglePost,
   createNewComment,
@@ -9,8 +11,6 @@ import {
   deletePost,
   editPost,
 } from '../services/DBServices';
-import { useParams } from 'react-router-dom';
-import UserContext from '../services/UserContext';
 
 function SinglePost() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -129,7 +129,6 @@ function SinglePost() {
 
   useEffect(() => {
     getSinglePost(url.id).then((e) => {
-      e.data = { ...e.data, commentQuantity: e.commentQuantity };
       setPost(e.data);
     });
   }, []);
