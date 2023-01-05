@@ -264,13 +264,41 @@ exports.post_vote_post = function (req, res, next) {
       return next(err);
     }
 
-    // User already voted the post
-    if (
-      results.votedPosts.find((e) => e.postID.valueOf() === req.body.postID)
-    ) {
-      // TO DO
+    const foundVote = results.votedPosts.find(
+      (e) => e.postID.valueOf() === req.body.postID
+    );
+    // Checks if user already voted the post
+    if (foundVote) {
+      // Checks if the found vote is the same as user input
+      if (foundVote.voteType === parseInt(req.body.voteType)) {
+        // The same: it has to delete (pull) saved vote from user's votedPosts array
+        User.findByIdAndUpdate(
+          req.body.userID,
+          { $pull: { votedPosts: { postID: foundVote.postID } } },
+          function (err, results) {
+            if (err || results == null) {
+              return res.status(404).json({
+                err,
+              });
+            }
+          }
+        );
+      } else {
+        // Different: it has to change the upvoteType from user's votedPosts array
+        User.updateOne(
+          { _id: req.body.userID, 'votedPosts.postID': foundVote.postID },
+          { $set: { 'votedPosts.$.voteType': parseInt(req.body.voteType) } },
+          function (err, results) {
+            if (err || results == null) {
+              return res.status(404).json({
+                err,
+              });
+            }
+          }
+        );
+      }
     } else {
-      // User didn't vote the post: Update user's voted posts array and update Post's votes
+      // User didn't vote the post: Add voted post ID to user's voted post array
       User.findByIdAndUpdate(
         req.body.userID,
         {
@@ -292,8 +320,18 @@ exports.post_vote_post = function (req, res, next) {
       );
     }
 
-    let updateType =
-      req.body.voteType === '1' ? { upvotes: 1 } : { downvotes: 1 };
+    // Update post votes quantity based on user input
+    let updateType = foundVote
+      ? foundVote.voteType === parseInt(req.body.voteType)
+        ? req.body.voteType === '1'
+          ? { upvotes: -1 }
+          : { downvotes: -1 }
+        : req.body.voteType === '1'
+        ? { upvotes: 1, downvotes: -1 }
+        : { upvotes: -1, downvotes: 1 }
+      : req.body.voteType === '1'
+      ? { upvotes: 1 }
+      : { downvotes: 1 };
 
     Post.findByIdAndUpdate(req.params.id, {
       $inc: updateType,
@@ -304,7 +342,6 @@ exports.post_vote_post = function (req, res, next) {
         console.error('Error - Post not found!');
         return next(err);
       }
-
       res.json({
         data: req.body,
       });
