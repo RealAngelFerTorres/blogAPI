@@ -10,6 +10,7 @@ import {
   isAuthenticated,
   deletePost,
   editPost,
+  sendVote,
 } from '../services/DBServices';
 
 function SinglePost() {
@@ -127,6 +128,26 @@ function SinglePost() {
     });
   };
 
+  const manageVote = async (e) => {
+    let responseAuth = await isAuthenticated();
+    if (responseAuth.user === false) {
+      responseAuth.user = '';
+      navigate('/login');
+      return;
+    }
+    await setCurrentUser(responseAuth.user);
+
+    const form = {
+      postID: post.id,
+      voteType: e.target.value,
+      userID: currentUser.id,
+    };
+    const response = await sendVote(form);
+    response
+      ? console.log('Your vote:', response.data)
+      : console.log('There was a problem when trying to vote');
+  };
+
   useEffect(() => {
     getSinglePost(url.id).then((e) => {
       setPost(e.data);
@@ -159,7 +180,14 @@ function SinglePost() {
           <div className='post__editTime'>Edited {post.editTime}</div>
         )}
         <div className='post__karma'>Karma: {post.karma}</div>
-
+        <div>
+          <button onClick={manageVote} value={1}>
+            Upvote
+          </button>
+          <button onClick={manageVote} value={-1}>
+            Downvote
+          </button>
+        </div>
         {currentUser.id === post.author.id ? (
           <div>
             <button className='deleteButton' onClick={submitDeletePost}>

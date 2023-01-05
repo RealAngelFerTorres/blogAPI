@@ -15,6 +15,8 @@ router.route('/home').get(home_controller.home_get);
 
 router.route('/post/:id').get(post_controller.post_detail_get);
 
+router.route('/post/:id/vote').post(post_controller.post_vote_post);
+
 router.route('/post/:id/delete').delete(post_controller.post_delete);
 
 router

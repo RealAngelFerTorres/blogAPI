@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 var Post = require('../models/post');
 var User = require('../models/user');
 var Comment = require('../models/comment');
+const { parse } = require('dotenv');
+const e = require('express');
 
 // Display Post create form on GET
 exports.post_create_get = function (req, res, next) {
@@ -251,3 +253,61 @@ exports.post_edit_put = [
     }
   },
 ];
+
+// Handle Post vote on POST
+exports.post_vote_post = function (req, res, next) {
+  User.findById(req.body.userID).exec(function (err, results) {
+    if (err || results == null) {
+      var err = new Error('User not found!');
+      err.status = 404;
+      console.error('Error - User not found!');
+      return next(err);
+    }
+
+    // User already voted the post
+    if (
+      results.votedPosts.find((e) => e.postID.valueOf() === req.body.postID)
+    ) {
+      // TO DO
+    } else {
+      // User didn't vote the post: Update user's voted posts array and update Post's votes
+      User.findByIdAndUpdate(
+        req.body.userID,
+        {
+          $push: {
+            votedPosts: {
+              postID: req.body.postID,
+              voteType: req.body.voteType,
+            },
+          },
+        },
+        { safe: true },
+        function (err, results) {
+          if (err || results == null) {
+            return res.status(404).json({
+              err,
+            });
+          }
+        }
+      );
+    }
+
+    let updateType =
+      req.body.voteType === '1' ? { upvotes: 1 } : { downvotes: 1 };
+
+    Post.findByIdAndUpdate(req.params.id, {
+      $inc: updateType,
+    }).exec(function (err, results) {
+      if (err || results == null) {
+        var err = new Error('Post not found!');
+        err.status = 404;
+        console.error('Error - Post not found!');
+        return next(err);
+      }
+
+      res.json({
+        data: req.body,
+      });
+    });
+  });
+};

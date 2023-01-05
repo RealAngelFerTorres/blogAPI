@@ -31,7 +31,13 @@ var UserSchema = new Schema(
     karmaComments: { type: Number, default: 0 },
     karmaPosts: { type: Number, default: 0 },
     votedPosts: [
-      { type: Schema.Types.ObjectId, ref: 'Post', voteType: Number },
+      {
+        _id: false,
+        postID: { type: Schema.Types.ObjectId, ref: 'Post' },
+        voteType: {
+          type: Number,
+        },
+      },
     ],
   },
   opts
