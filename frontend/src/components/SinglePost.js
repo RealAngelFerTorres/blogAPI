@@ -17,6 +17,8 @@ function SinglePost() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [post, setPost] = useState();
   const [isEditing, setIsEditing] = useState(false);
+  const [isDownvote, setIsDownvote] = useState(false);
+  const [isUpvote, setIsUpvote] = useState(false);
   const [postForm, setPostForm] = useState({
     title: '',
     text: '',
@@ -143,10 +145,53 @@ function SinglePost() {
       userID: currentUser.id,
     };
     const response = await sendVote(form);
-    response
+    response.data
       ? console.log('Your vote:', response.data)
       : console.log('There was a problem when trying to vote');
+
+    toggleVote(e.target.value);
   };
+
+  const toggleVote = (voteType) => {
+    // let karmaUpdater = null;
+    if (voteType === '1') {
+      if (isUpvote) {
+        setIsUpvote(false);
+        // karmaUpdater = -1;
+        return;
+      }
+      if (isDownvote) setIsDownvote(false);
+      setIsUpvote(true);
+    } else {
+      if (isDownvote) {
+        setIsDownvote(false);
+        return;
+      }
+      if (isUpvote) setIsUpvote(false);
+      setIsDownvote(true);
+    }
+
+    // TO DO Update karma when voting
+    /*
+    let copyState = post;
+    copyState = {
+      ...copyState,
+      karma: post.karma + karmaUpdater,
+    };
+    setPost(copyState);
+    */
+  };
+
+  useEffect(() => {
+    if (currentUser && post) {
+      const foundVote = currentUser.votedPosts.find(
+        (e) => e.postID.valueOf() === post.id
+      );
+      if (foundVote) {
+        foundVote.voteType === 1 ? setIsUpvote(true) : setIsDownvote(true);
+      }
+    }
+  }, [currentUser, post]);
 
   useEffect(() => {
     getSinglePost(url.id).then((e) => {
@@ -181,10 +226,18 @@ function SinglePost() {
         )}
         <div className='post__karma'>Karma: {post.karma}</div>
         <div>
-          <button onClick={manageVote} value={1}>
+          <button
+            className={isUpvote ? 'voted' : ''}
+            onClick={manageVote}
+            value={1}
+          >
             Upvote
           </button>
-          <button onClick={manageVote} value={-1}>
+          <button
+            className={isDownvote ? 'voted' : ''}
+            onClick={manageVote}
+            value={-1}
+          >
             Downvote
           </button>
         </div>

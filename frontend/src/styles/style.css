@@ -27,3 +27,7 @@ div.comment.depth2 {
 div.comment.depth3 {
   margin-left: 100px;
 }
+
+.voted {
+  background-color: red;
+}

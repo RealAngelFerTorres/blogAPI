@@ -342,9 +342,7 @@ exports.post_vote_post = function (req, res, next) {
         console.error('Error - Post not found!');
         return next(err);
       }
-      res.json({
-        data: req.body,
-      });
+      res.status(200).json({ data: results });
     });
   });
 };

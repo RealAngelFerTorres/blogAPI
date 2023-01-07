@@ -47,7 +47,7 @@ passport.use(
       try {
         const user = await User.findById(
           jwtPayload._id,
-          'username createTime membershipStatus karmaComments karmaPosts'
+          'username createTime membershipStatus karmaComments karmaPosts votedPosts'
         );
         return cb(null, user);
       } catch (err) {
