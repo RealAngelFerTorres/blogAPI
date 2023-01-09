@@ -16,7 +16,9 @@ import {
 function SinglePost() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [post, setPost] = useState();
+  const [updatedKarma, setUpdatedKarma] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
+  const [isTogglingVote, setIsTogglingVote] = useState(false);
   const [isDownvote, setIsDownvote] = useState(false);
   const [isUpvote, setIsUpvote] = useState(false);
   const [postForm, setPostForm] = useState({
@@ -131,6 +133,11 @@ function SinglePost() {
   };
 
   const manageVote = async (e) => {
+    if (isTogglingVote) {
+      return;
+    }
+    setIsTogglingVote(true);
+
     let responseAuth = await isAuthenticated();
     if (responseAuth.user === false) {
       responseAuth.user = '';
@@ -146,40 +153,44 @@ function SinglePost() {
     };
     const response = await sendVote(form);
     response.data
-      ? console.log('Your vote:', response.data)
+      ? console.log('Voted ok')
       : console.log('There was a problem when trying to vote');
 
     toggleVote(e.target.value);
+    setTimeout(() => {
+      setIsTogglingVote(false);
+    }, 500);
   };
 
   const toggleVote = (voteType) => {
-    // let karmaUpdater = null;
+    let karmaUpdater = 0;
     if (voteType === '1') {
       if (isUpvote) {
         setIsUpvote(false);
-        // karmaUpdater = -1;
+        setUpdatedKarma(updatedKarma - 1);
         return;
       }
-      if (isDownvote) setIsDownvote(false);
+      if (isDownvote) {
+        setIsDownvote(false);
+        karmaUpdater += 1;
+      }
       setIsUpvote(true);
+      karmaUpdater += 1;
+      setUpdatedKarma(updatedKarma + karmaUpdater);
     } else {
       if (isDownvote) {
         setIsDownvote(false);
+        setUpdatedKarma(updatedKarma + 1);
         return;
       }
-      if (isUpvote) setIsUpvote(false);
+      if (isUpvote) {
+        setIsUpvote(false);
+        karmaUpdater -= 1;
+      }
       setIsDownvote(true);
+      karmaUpdater -= 1;
+      setUpdatedKarma(updatedKarma + karmaUpdater);
     }
-
-    // TO DO Update karma when voting
-    /*
-    let copyState = post;
-    copyState = {
-      ...copyState,
-      karma: post.karma + karmaUpdater,
-    };
-    setPost(copyState);
-    */
   };
 
   useEffect(() => {
@@ -196,6 +207,7 @@ function SinglePost() {
   useEffect(() => {
     getSinglePost(url.id).then((e) => {
       setPost(e.data);
+      setUpdatedKarma(e.data.karma);
     });
   }, []);
 
@@ -224,12 +236,13 @@ function SinglePost() {
           // Conditional rendering. 1970-01-01 is considered a null date
           <div className='post__editTime'>Edited {post.editTime}</div>
         )}
-        <div className='post__karma'>Karma: {post.karma}</div>
+        <div className='post__karma'>Karma: {updatedKarma}</div>
         <div>
           <button
             className={isUpvote ? 'voted' : ''}
             onClick={manageVote}
             value={1}
+            disabled={isTogglingVote}
           >
             Upvote
           </button>
@@ -237,6 +250,7 @@ function SinglePost() {
             className={isDownvote ? 'voted' : ''}
             onClick={manageVote}
             value={-1}
+            disabled={isTogglingVote}
           >
             Downvote
           </button>
