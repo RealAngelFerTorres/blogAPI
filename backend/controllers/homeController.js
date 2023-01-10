@@ -35,6 +35,7 @@ exports.home_get = function (req, res) {
         newResults.push(post);
       });
       Promise.all(promises).then(function () {
+        newResults.sort((a, b) => b.createTime - a.createTime);
         res.json({ data: newResults });
       });
     });

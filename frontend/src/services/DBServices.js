@@ -1,3 +1,16 @@
+export async function isAuthenticated() {
+  try {
+    const response = await fetch('/isAuth', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log('There was a problem when trying to login:', error);
+  }
+}
+
 export async function getAllPosts() {
   try {
     const response = await fetch('/home');
@@ -158,19 +171,6 @@ export async function signupUser(form) {
     return response;
   } catch (error) {
     console.log('There was a problem when trying to signup:', error);
-  }
-}
-
-export async function isAuthenticated() {
-  try {
-    const response = await fetch('/isAuth', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return await response.json();
-  } catch (error) {
-    console.log('There was a problem when trying to login:', error);
   }
 }
 
