@@ -83,7 +83,10 @@ export async function createNewReply(form) {
 export async function editPost(form) {
   const response = await fetch(`/post/${form.id}/edit`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(form),
   });
   return response;

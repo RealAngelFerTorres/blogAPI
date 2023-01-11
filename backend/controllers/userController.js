@@ -6,7 +6,7 @@ var Post = require('../models/post');
 var User = require('../models/user');
 var SESSION_SECRET = process.env.SESSION_SECRET;
 
-const passport = require('../services/auth');
+const authJwt = require('../services/auth');
 const jwt = require('jsonwebtoken');
 
 // Handle User detail on GET.
@@ -156,7 +156,7 @@ exports.user_login_post = function (req, res, next) {
 };
 
 // Handle User is authenticated path on GET (checks if token is ok)
-exports.user_is_auth = function (req, res, next) {
+exports.authentication = function (req, res, next) {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400).json({
@@ -164,8 +164,16 @@ exports.user_is_auth = function (req, res, next) {
         user: user,
       });
     }
-    return res.json({ user });
+    res.locals.user = user;
+    next();
   })(req, res);
+};
+
+// Handle User is authenticated path on GET (checks if token is ok)
+exports.user_is_auth = function (req, res) {
+  // TO DO its done!. Now delete upper authentication
+  console.log(req.user);
+  return res.json({ user: req.user });
 };
 
 // Handle User logout form on GET.

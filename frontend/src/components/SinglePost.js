@@ -79,6 +79,7 @@ function SinglePost() {
   };
 
   const submitEditPost = async (e) => {
+    /*
     let responseAuth = await isAuthenticated();
     if (responseAuth.user === false) {
       responseAuth.user = '';
@@ -86,7 +87,7 @@ function SinglePost() {
       return;
     }
     await setCurrentUser(responseAuth.user);
-
+*/
     let copyState = postForm;
     copyState = {
       ...copyState,

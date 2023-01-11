@@ -7,6 +7,9 @@ var post_controller = require('../controllers/postController');
 var comment_controller = require('../controllers/commentController');
 var user_controller = require('../controllers/userController');
 
+// Require auth services
+var authJwt = require('../services/auth');
+
 // HOME //
 
 router.route('/home').get(home_controller.home_get);
@@ -22,7 +25,7 @@ router.route('/post/:id/delete').delete(post_controller.post_delete);
 router
   .route('/post/:id/edit')
   .get(post_controller.post_edit_get) // Delete this later if a new page is loaded
-  .put(post_controller.post_edit_put);
+  .put(authJwt.authJwt, post_controller.post_edit_put);
 
 router
   .route('/post/create')
@@ -64,6 +67,6 @@ router
   .get(user_controller.user_signup_get)
   .post(user_controller.user_signup_post);
 
-router.route('/isAuth').get(user_controller.user_is_auth);
+router.route('/isAuth').get(authJwt.authJwt, user_controller.user_is_auth);
 
 module.exports = router;

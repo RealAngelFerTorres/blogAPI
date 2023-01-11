@@ -57,4 +57,5 @@ passport.use(
   )
 );
 
-module.exports = passport;
+exports.authLocal = passport.authenticate('local', { session: false });
+exports.authJwt = passport.authenticate('jwt', { session: false });
