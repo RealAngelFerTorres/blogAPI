@@ -23,10 +23,9 @@ function NavBar(props) {
   useEffect(() => {
     const checkLoggedIn = async () => {
       let response = await isAuthenticated();
-      if (response.user === false) {
-        response.user = '';
-      }
-      setCurrentUser(response.user);
+      response === undefined
+        ? setCurrentUser('')
+        : setCurrentUser(response.user);
     };
 
     checkLoggedIn();

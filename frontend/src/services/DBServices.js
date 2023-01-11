@@ -7,7 +7,7 @@ export async function isAuthenticated() {
     });
     return await response.json();
   } catch (error) {
-    console.log('There was a problem when trying to login:', error);
+    console.log('There was a problem when trying to authenticate:', error);
   }
 }
 

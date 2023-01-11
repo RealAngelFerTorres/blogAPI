@@ -8,6 +8,7 @@ var comment_controller = require('../controllers/commentController');
 var user_controller = require('../controllers/userController');
 
 // Require auth services
+var authLocal = require('../services/auth');
 var authJwt = require('../services/auth');
 
 // HOME //
@@ -58,7 +59,7 @@ router.route('/user/:id/drafts').get(user_controller.user_drafts_get);
 router
   .route('/user/login')
   .get(user_controller.user_login_get)
-  .post(user_controller.user_login_post);
+  .post(authLocal.authLocal, user_controller.user_login_post);
 
 router.route('/user/logout').get(user_controller.user_logout_get);
 
