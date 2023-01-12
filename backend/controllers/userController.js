@@ -6,7 +6,7 @@ var Post = require('../models/post');
 var User = require('../models/user');
 var SESSION_SECRET = process.env.SESSION_SECRET;
 
-const authJwt = require('../services/auth');
+const passport = require('../services/auth');
 const jwt = require('jsonwebtoken');
 
 // Handle User detail on GET.
@@ -135,16 +135,43 @@ exports.user_login_get = function (req, res, next) {
 
 // Handle User login form on POST.
 exports.user_login_post = function (req, res, next) {
-  const user = req.user;
-  const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
-    expiresIn: '1d',
-  });
-  return res.json({ user, token });
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: 'Invalid username and/or password.',
+        user: user,
+      });
+    }
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        res.send(err);
+      }
+      // generate a signed son web token with the contents of user object and return it in the response
+      const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
+        expiresIn: '1d',
+      });
+      return res.json({ user, token });
+    });
+  })(req, res);
 };
 
-// Handle User is authenticated path on GET (checks if token is ok)
+// Authentication middleware (checks if token is ok)
+exports.user_authentication = function (req, res, next) {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: 'You must be logged-in to see this page...',
+        user: user,
+      });
+    }
+    res.locals.user = user;
+    next();
+  })(req, res, next);
+};
+
+// After authentication middleware, response with user data
 exports.user_is_auth = function (req, res) {
-  return res.json({ user: req.user });
+  return res.json({ user: res.locals.user });
 };
 
 // Handle User logout form on GET.
