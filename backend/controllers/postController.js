@@ -56,7 +56,8 @@ exports.post_create_post = [
           return next(err);
         }
         // Successful - Send url
-        res.json({
+        res.status(200).json({
+          status: 'OK',
           url: newPost.url,
         });
       });
@@ -168,7 +169,10 @@ exports.post_delete = function (req, res, next) {
     }
     // Success. Delete post and redirect to home.
     Post.findByIdAndRemove(req.params.id, function deletePost(err) {
-      res.redirect(303, '/');
+      res.status(200).json({
+        status: 'OK',
+        url: '/',
+      });
     });
   });
 };
@@ -246,8 +250,11 @@ exports.post_edit_put = [
               err,
             });
           }
-          // Successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-          res.redirect(303, '/post/' + req.params.id);
+          // Success
+          res.status(200).json({
+            status: 'OK',
+            data: results,
+          });
         }
       );
     }

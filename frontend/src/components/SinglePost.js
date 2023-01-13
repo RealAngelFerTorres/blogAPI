@@ -33,19 +33,29 @@ function SinglePost() {
   let navigate = useNavigate();
   let url = useParams();
 
-  const submitDeletePost = async (e) => {
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
+  const manageResponse = (response) => {
+    if (response.url) {
+      navigate(response.url);
+      return;
+    }
+    if (response.status === 'OK') {
+      navigate(0);
+      return;
+    }
+    if (response.user === false) {
       navigate('/login');
       return;
     }
-    await setCurrentUser(responseAuth.user);
+    if (response.errors) {
+      response.errors.forEach((error) => {
+        console.log(error.msg);
+      });
+    }
+  };
 
+  const submitDeletePost = async (e) => {
     const response = await deletePost(post.id);
-    response.ok
-      ? navigate('/')
-      : console.log('There was a problem when trying to delete post');
+    manageResponse(response);
   };
 
   const handlePostFormChange = (e) => {
@@ -79,15 +89,6 @@ function SinglePost() {
   };
 
   const submitEditPost = async (e) => {
-    /*
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-*/
     let copyState = postForm;
     copyState = {
       ...copyState,
@@ -96,20 +97,10 @@ function SinglePost() {
     setPostForm(copyState);
 
     const response = await editPost(copyState);
-    response.ok
-      ? navigate(0)
-      : console.log('There was a problem when trying to edit a post');
+    manageResponse(response);
   };
 
   const submitComment = async (e) => {
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-
     let copyState = commentForm;
     copyState = {
       ...copyState,
@@ -119,9 +110,27 @@ function SinglePost() {
     setCommentForm(copyState);
 
     const response = await createNewComment(copyState);
-    response
-      ? setPost(response.data)
-      : console.log('There was a problem when trying to create a new comment');
+    if (response.status === 'OK') {
+      let copyArray = post.comments;
+      copyArray.unshift(response.data);
+
+      let copyState = post;
+      copyState = {
+        ...copyState,
+        comments: copyArray,
+      };
+      setPost(copyState);
+      return;
+    }
+    if (response.user === false) {
+      navigate('/login');
+      return;
+    }
+    if (response.errors) {
+      response.errors.forEach((error) => {
+        console.log(error.msg);
+      });
+    }
   };
 
   const toggleEditPost = () => {
@@ -304,6 +313,7 @@ function SinglePost() {
             name='text'
             type='text'
             placeholder='What do you think?'
+            maxLength={100}
             required
             onChange={handleCommentFormChange}
           ></input>

@@ -29,15 +29,6 @@ export default function Signup() {
 
   const submitForm = async (e) => {
     e.preventDefault();
-
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-
     let published = e.nativeEvent.submitter.value === 'true'; // This is true or false depending on which button is clicked (draft or publish)
     let copyState = form;
 
@@ -49,9 +40,19 @@ export default function Signup() {
     setForm(copyState);
 
     const response = await createNewPost(copyState);
-    response.url
-      ? navigate(response.url)
-      : console.log('Sorry, cannot create new post: ', response.message);
+    if (response.url) {
+      navigate(response.url);
+      return;
+    }
+    if (response.user === false) {
+      navigate('/login');
+      return;
+    }
+    if (response.errors) {
+      response.errors.forEach((error) => {
+        console.log(error.msg);
+      });
+    }
   };
 
   useEffect(() => {
@@ -75,13 +76,21 @@ export default function Signup() {
           <input
             type='text'
             name='title'
+            maxLength={50}
             required
             onChange={handleFormChange}
           />
         </div>
         <div>
           <label>Text</label>
-          <input type='text' name='text' required onChange={handleFormChange} />
+
+          <input
+            type='text'
+            name='text'
+            maxLength={300}
+            required
+            onChange={handleFormChange}
+          />
         </div>
         <button
           className='submitButton'

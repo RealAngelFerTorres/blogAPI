@@ -37,22 +37,29 @@ exports.comment_on_post_post = [
       Post.findByIdAndUpdate(
         req.body.fatherPost,
         { $push: { comments: comment._id } }, // comment._id is created when comment object is too (line 25)
-        { safe: true },
-        function (err, results) {
-          if (err || results == null) {
+        {
+          safe: true,
+        },
+        function (err, postResults) {
+          if (err || postResults == null) {
             return res.status(404).json({
               err,
             });
           }
-          comment.save(function (err, results) {
-            if (err || results == null) {
+          comment.save(function (err, newComment) {
+            if (err || newComment == null) {
               return res.status(404).json({
                 err,
               });
             }
+            newComment.populate('author', function (err, populatedNewComment) {
+              // Success
+              res.status(201).json({
+                status: 'OK',
+                data: populatedNewComment,
+              });
+            });
           });
-          //successful - redirect to home with 303 code (Redirect - See other) to change POST to GET
-          res.redirect(303, '/post/' + req.body.fatherPost);
         }
       );
     }
@@ -213,7 +220,11 @@ exports.comment_edit_put = [
               err,
             });
           }
-          res.redirect(303, '/');
+          // OJO QUE MODIFIQUE ESTO SIN QUERER
+          res.status(200).json({
+            status: 'OK',
+            data: comment,
+          });
         }
       );
     }

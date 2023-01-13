@@ -21,7 +21,9 @@ router.route('/post/:id').get(post_controller.post_detail_get);
 
 router.route('/post/:id/vote').post(post_controller.post_vote_post);
 
-router.route('/post/:id/delete').delete(post_controller.post_delete);
+router
+  .route('/post/:id/delete')
+  .delete(user_controller.user_authentication, post_controller.post_delete);
 
 router
   .route('/post/:id/edit')
@@ -31,13 +33,16 @@ router
 router
   .route('/post/create')
   .get(post_controller.post_create_get)
-  .post(post_controller.post_create_post);
+  .post(user_controller.user_authentication, post_controller.post_create_post);
 
 // COMMENT ROUTES
 
 router
   .route('/post/comment/onPost') // Comment on post
-  .post(comment_controller.comment_on_post_post);
+  .post(
+    user_controller.user_authentication,
+    comment_controller.comment_on_post_post
+  );
 router
   .route('/post/comment/onComment') // Comment on comment
   .post(comment_controller.comment_on_comment_post);

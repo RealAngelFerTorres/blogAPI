@@ -34,6 +34,7 @@ export async function createNewPost(form) {
     const response = await fetch(`/post/create`, {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(form),
@@ -49,6 +50,7 @@ export async function createNewComment(form) {
     const response = await fetch(`/post/comment/onPost`, {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(form),
@@ -89,7 +91,7 @@ export async function editPost(form) {
     },
     body: JSON.stringify(form),
   });
-  return response;
+  return await response.json();
 }
 
 export async function editComment(form) {
@@ -106,10 +108,11 @@ export async function deletePost(id) {
     const response = await fetch(`/post/${id}/delete`, {
       method: 'DELETE',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     });
-    return response;
+    return await response.json();
   } catch (error) {
     console.log('There was a problem when trying to delete post:', error);
   }
