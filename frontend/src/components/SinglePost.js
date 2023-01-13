@@ -34,14 +34,6 @@ function SinglePost() {
   let url = useParams();
 
   const manageResponse = (response) => {
-    if (response.url) {
-      navigate(response.url);
-      return;
-    }
-    if (response.status === 'OK') {
-      navigate(0);
-      return;
-    }
     if (response.user === false) {
       navigate('/login');
       return;
@@ -55,6 +47,58 @@ function SinglePost() {
 
   const submitDeletePost = async (e) => {
     const response = await deletePost(post.id);
+    if (response.url) {
+      navigate(response.url);
+      return;
+    }
+    manageResponse(response);
+  };
+
+  const submitEditPost = async (e) => {
+    let copyState = postForm;
+    copyState = {
+      ...copyState,
+      id: post.id,
+    };
+    setPostForm(copyState);
+
+    const response = await editPost(copyState);
+    if (response.status === 'OK') {
+      let copyState = post;
+      copyState = {
+        ...copyState,
+        title: postForm.title,
+        text: postForm.text,
+      };
+      setPost(copyState);
+      setIsEditing(false);
+      return;
+    }
+    manageResponse(response);
+  };
+
+  const submitComment = async (e) => {
+    let copyState = commentForm;
+    copyState = {
+      ...copyState,
+      author: currentUser._id,
+      fatherPost: post.id,
+    };
+    setCommentForm(copyState);
+
+    const response = await createNewComment(copyState);
+    if (response.status === 'OK') {
+      let copyArray = post.comments;
+      copyArray.unshift(response.data);
+
+      let copyState = post;
+      copyState = {
+        ...copyState,
+        comments: copyArray,
+      };
+      setPost(copyState);
+      return;
+    }
     manageResponse(response);
   };
 
@@ -86,51 +130,6 @@ function SinglePost() {
       [key]: input,
     };
     setCommentForm(copyState);
-  };
-
-  const submitEditPost = async (e) => {
-    let copyState = postForm;
-    copyState = {
-      ...copyState,
-      id: post.id,
-    };
-    setPostForm(copyState);
-
-    const response = await editPost(copyState);
-    manageResponse(response);
-  };
-
-  const submitComment = async (e) => {
-    let copyState = commentForm;
-    copyState = {
-      ...copyState,
-      author: currentUser._id,
-      fatherPost: post.id,
-    };
-    setCommentForm(copyState);
-
-    const response = await createNewComment(copyState);
-    if (response.status === 'OK') {
-      let copyArray = post.comments;
-      copyArray.unshift(response.data);
-
-      let copyState = post;
-      copyState = {
-        ...copyState,
-        comments: copyArray,
-      };
-      setPost(copyState);
-      return;
-    }
-    if (response.user === false) {
-      navigate('/login');
-      return;
-    }
-    if (response.errors) {
-      response.errors.forEach((error) => {
-        console.log(error.msg);
-      });
-    }
   };
 
   const toggleEditPost = () => {
