@@ -69,11 +69,12 @@ export async function createNewReply(form) {
     const response = await fetch(`/post/comment/onComment`, {
       method: 'POST',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(form),
     });
-    return response;
+    return await response.json();
   } catch (error) {
     console.log(
       'There was a problem when trying to create new comment:',

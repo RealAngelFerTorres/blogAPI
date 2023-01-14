@@ -123,9 +123,12 @@ exports.comment_on_comment_post = [
                 err,
               });
             }
+            // Success
+            res.status(201).json({
+              status: 'OK',
+              data: results,
+            });
           });
-          // Success.
-          return res.redirect(201, '/');
         }
       );
     }

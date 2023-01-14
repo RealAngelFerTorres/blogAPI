@@ -24,6 +24,18 @@ function Comment(props) {
 
   let navigate = useNavigate();
 
+  const manageResponse = (response) => {
+    if (response.user === false) {
+      navigate('/login');
+      return;
+    }
+    if (response.errors) {
+      response.errors.forEach((error) => {
+        console.log(error.msg);
+      });
+    }
+  };
+
   const toggleReply = () =>
     showReply ? setShowReply(false) : setShowReply(true);
 
@@ -59,14 +71,6 @@ function Comment(props) {
   };
 
   const submitReply = async (e) => {
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-
     let copyState = replyForm;
     copyState = {
       ...copyState,
@@ -77,9 +81,7 @@ function Comment(props) {
     setReplyForm(copyState);
 
     const response = await createNewReply(copyState);
-    response.ok
-      ? navigate(0)
-      : console.log('There was a problem when trying to create a new comment');
+    response.status === 'OK' ? navigate(0) : manageResponse(response);
   };
 
   const submitEditComment = async (e) => {
@@ -145,6 +147,8 @@ function Comment(props) {
               type='text'
               name='text'
               value={commentForm.text}
+              maxLength={100}
+              required
               onChange={handleCommentFormChange}
             ></input>
           ) : (

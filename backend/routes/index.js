@@ -45,7 +45,10 @@ router
   );
 router
   .route('/post/comment/onComment') // Comment on comment
-  .post(comment_controller.comment_on_comment_post);
+  .post(
+    user_controller.user_authentication,
+    comment_controller.comment_on_comment_post
+  );
 
 router
   .route('/comment/delete/:id')
