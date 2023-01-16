@@ -147,7 +147,6 @@ exports.comment_delete_delete = function (req, res, next) {
     }
     // Success
     // Mark as deleted and redirect to post.
-
     Comment.findByIdAndUpdate(
       req.params.id,
       { text: '', isDeleted: true },
@@ -158,7 +157,9 @@ exports.comment_delete_delete = function (req, res, next) {
         }
       }
     );
-    res.redirect(303, '/');
+    res.status(200).json({
+      status: 'OK',
+    });
   });
 };
 

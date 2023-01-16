@@ -52,7 +52,10 @@ router
 
 router
   .route('/comment/delete/:id')
-  .delete(comment_controller.comment_delete_delete);
+  .delete(
+    user_controller.user_authentication,
+    comment_controller.comment_delete_delete
+  );
 
 router
   .route('/comment/:id/edit')

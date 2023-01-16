@@ -127,10 +127,11 @@ export async function deleteComment(id) {
     const response = await fetch(`/comment/delete/${id}`, {
       method: 'DELETE',
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     });
-    return response;
+    return await response.json();
   } catch (error) {
     console.log('There was a problem when trying to delete post:', error);
   }

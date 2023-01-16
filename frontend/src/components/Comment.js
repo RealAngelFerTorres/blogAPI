@@ -96,27 +96,14 @@ function Comment(props) {
     if (response.status === 'OK') {
       comment.text = copyState.text;
       setIsEditing(false);
-      //navigate(0);
       return;
     }
     manageResponse(response);
   };
 
   const submitDeleteComment = async (e) => {
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-
     const response = await deleteComment(comment.id);
-    response.ok
-      ? navigate(0)
-      : console.log(
-          'There was a problem when trying to create a delete comment'
-        );
+    response.status === 'OK' ? navigate(0) : manageResponse(response);
   };
 
   return (
