@@ -179,7 +179,7 @@ export async function signupUser(form) {
       },
       body: JSON.stringify(form),
     });
-    return response;
+    return await response.json();
   } catch (error) {
     console.log('There was a problem when trying to signup:', error);
   }

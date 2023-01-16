@@ -30,9 +30,11 @@ export default function Signup() {
   const submitForm = async (e) => {
     e.preventDefault();
     const response = await signupUser(form);
-    response.ok
+    response.status === 'OK'
       ? navigate('/login')
-      : console.log('Sorry, cannot sign up', response.message);
+      : response.errors.forEach((error) => {
+          console.log(error.msg);
+        });
   };
 
   useEffect(() => {
@@ -65,6 +67,7 @@ export default function Signup() {
           <input
             type='email'
             name='email'
+            maxLength={50}
             required
             onChange={handleFormChange}
           />
@@ -74,6 +77,7 @@ export default function Signup() {
           <input
             type='password'
             name='password'
+            maxLength={100}
             required
             onChange={handleFormChange}
           />
@@ -83,6 +87,7 @@ export default function Signup() {
           <input
             type='password'
             name='confirmPassword'
+            maxLength={100}
             required
             onChange={handleFormChange}
           />

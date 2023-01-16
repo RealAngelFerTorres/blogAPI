@@ -109,7 +109,7 @@ exports.user_signup_post = [
 
       if (!errors.isEmpty()) {
         // There are errors.
-        return res.status(400).json({
+        res.status(400).json({
           errors: errors.array(),
         });
       } else {
@@ -119,7 +119,7 @@ exports.user_signup_post = [
             return next(err);
           }
           // Success.
-          return res.redirect(201, '/user/login');
+          res.status(201).json({ status: 'OK' });
         });
       }
     });
