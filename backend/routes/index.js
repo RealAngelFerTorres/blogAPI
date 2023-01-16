@@ -7,11 +7,7 @@ var post_controller = require('../controllers/postController');
 var comment_controller = require('../controllers/commentController');
 var user_controller = require('../controllers/userController');
 
-// Require auth services
-//var authLocal = require('../services/auth');
-//var authJwt = require('../services/auth');
-
-// HOME //
+// HOME
 
 router.route('/home').get(home_controller.home_get);
 
@@ -19,7 +15,9 @@ router.route('/home').get(home_controller.home_get);
 
 router.route('/post/:id').get(post_controller.post_detail_get);
 
-router.route('/post/:id/vote').post(post_controller.post_vote_post);
+router
+  .route('/post/:id/vote')
+  .post(user_controller.user_authentication, post_controller.post_vote_post);
 
 router
   .route('/post/:id/delete')

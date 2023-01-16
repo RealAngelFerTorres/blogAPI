@@ -189,7 +189,10 @@ export async function sendVote(form) {
   try {
     const response = await fetch(`/post/${form.postID}/vote`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(form),
     });
     return await response.json();

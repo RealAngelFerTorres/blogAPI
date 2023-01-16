@@ -147,23 +147,13 @@ function SinglePost() {
     }
     setIsTogglingVote(true);
 
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-
     const form = {
       postID: post.id,
       voteType: e.target.value,
       userID: currentUser.id,
     };
     const response = await sendVote(form);
-    response.data
-      ? console.log('Voted ok')
-      : console.log('There was a problem when trying to vote');
+    if (response.status !== 'OK') manageResponse(response);
 
     toggleVote(e.target.value);
     setTimeout(() => {
