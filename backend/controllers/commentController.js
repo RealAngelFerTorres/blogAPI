@@ -223,10 +223,10 @@ exports.comment_edit_put = [
               err,
             });
           }
-          // OJO QUE MODIFIQUE ESTO SIN QUERER
+          // Sucess
           res.status(200).json({
             status: 'OK',
-            data: comment,
+            data: results,
           });
         }
       );

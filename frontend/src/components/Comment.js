@@ -85,14 +85,6 @@ function Comment(props) {
   };
 
   const submitEditComment = async (e) => {
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
-
     let copyState = commentForm;
     copyState = {
       ...copyState,
@@ -101,9 +93,13 @@ function Comment(props) {
     setCommentForm(copyState);
 
     const response = await editComment(copyState);
-    response.ok
-      ? navigate(0)
-      : console.log('There was a problem when trying to edit a comment');
+    if (response.status === 'OK') {
+      comment.text = copyState.text;
+      setIsEditing(false);
+      //navigate(0);
+      return;
+    }
+    manageResponse(response);
   };
 
   const submitDeleteComment = async (e) => {

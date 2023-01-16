@@ -98,10 +98,13 @@ export async function editPost(form) {
 export async function editComment(form) {
   const response = await fetch(`/comment/${form.id}/edit`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(form),
   });
-  return response;
+  return await response.json();
 }
 
 export async function deletePost(id) {

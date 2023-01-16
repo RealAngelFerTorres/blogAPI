@@ -57,7 +57,10 @@ router
 router
   .route('/comment/:id/edit')
   .get(comment_controller.comment_edit_get) // Delete this later if a new page is loaded
-  .put(comment_controller.comment_edit_put);
+  .put(
+    user_controller.user_authentication,
+    comment_controller.comment_edit_put
+  );
 
 // USER ROUTES
 router.route('/user/:id').get(user_controller.user_detail_get);
