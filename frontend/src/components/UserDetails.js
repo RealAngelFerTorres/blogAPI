@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { redirect } from 'react-router';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
-import Comment from './Comment';
 import { isAuthenticated, getUserDetails } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import { useParams } from 'react-router-dom';

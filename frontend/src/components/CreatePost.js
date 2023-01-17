@@ -29,7 +29,7 @@ export default function Signup() {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    let published = e.nativeEvent.submitter.value === 'true'; // This is true or false depending on which button is clicked (draft or publish)
+    let published = e.nativeEvent.submitter.value === 'true'; // This is true or false depending on which button is clicked (draft or publish).
     let copyState = form;
 
     copyState = {

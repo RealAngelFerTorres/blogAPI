@@ -1,4 +1,3 @@
-var async = require('async');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
@@ -16,7 +15,6 @@ exports.user_detail_get = function (req, res, next) {
       var err = new Error('User not found!');
       err.status = 404;
       console.error('Error - User not found!');
-      // Another way: return res.status(404).send('Error - User not found!');
       return next(err);
     }
     res.json({
@@ -35,13 +33,6 @@ exports.user_drafts_get = function (req, res) {
       return next(err);
     }
     res.json({ data: results });
-  });
-};
-
-// Display User signup form on GET.
-exports.user_signup_get = function (req, res, next) {
-  res.json({
-    title: 'Sign up form',
   });
 };
 
@@ -89,7 +80,7 @@ exports.user_signup_post = [
   )
     .trim()
     .exists()
-    // Custom validator for check password and password confirmation
+    // Custom validator to check password and password confirmation.
     .custom((value, { req }) => {
       return value === req.body.password;
     })
@@ -126,13 +117,6 @@ exports.user_signup_post = [
   },
 ];
 
-// Display User login form on GET.
-exports.user_login_get = function (req, res, next) {
-  res.json({
-    title: 'User login screen',
-  });
-};
-
 // Handle User login form on POST.
 exports.user_login_post = function (req, res, next) {
   passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -146,7 +130,7 @@ exports.user_login_post = function (req, res, next) {
       if (err) {
         res.send(err);
       }
-      // generate a signed son web token with the contents of user object and return it in the response
+      // Generate a signed son web token with the contents of user object and return it in the response.
       const token = jwt.sign(user.toJSON(), SESSION_SECRET, {
         expiresIn: '1d',
       });
@@ -155,7 +139,7 @@ exports.user_login_post = function (req, res, next) {
   })(req, res);
 };
 
-// Authentication middleware (checks if token is ok)
+// Authentication middleware (checks if token is ok).
 exports.user_authentication = function (req, res, next) {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err || !user) {
@@ -169,14 +153,7 @@ exports.user_authentication = function (req, res, next) {
   })(req, res, next);
 };
 
-// After authentication middleware, response with user data
+// After authentication middleware, response with user data.
 exports.user_is_auth = function (req, res) {
   return res.json({ user: res.locals.user });
-};
-
-// Handle User logout form on GET.
-exports.user_logout_get = function (req, res, next) {
-  res.json({
-    title: 'User attempted to logout.',
-  });
 };

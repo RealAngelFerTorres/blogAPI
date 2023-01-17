@@ -1,23 +1,12 @@
 const { body, validationResult } = require('express-validator');
-var async = require('async');
-const jwt = require('jsonwebtoken');
 
 var Post = require('../models/post');
 var User = require('../models/user');
 var Comment = require('../models/comment');
-const { parse } = require('dotenv');
-const e = require('express');
-
-// Display Post create form on GET
-exports.post_create_get = function (req, res, next) {
-  res.json({
-    title: 'Post creation',
-  });
-};
 
 // Handle Post create on POST.
 exports.post_create_post = [
-  // Validate and sanitize fields
+  // Validate and sanitize fields.
   body('title')
     .trim()
     .isLength({ min: 1 })
@@ -55,7 +44,7 @@ exports.post_create_post = [
         if (err) {
           return next(err);
         }
-        // Successful - Send url
+        // Successful - Send URL.
         res.status(200).json({
           status: 'OK',
           url: newPost.url,
@@ -101,11 +90,10 @@ exports.post_detail_get = function (req, res, next) {
         var err = new Error('Post not found!');
         err.status = 404;
         console.error('Error - Post not found!');
-        // Another way: return res.status(404).send('Error - Post not found!');
         return next(err);
       }
 
-      // Get comment quantity and append them to results
+      // Get comment quantity and append them to results.
       Comment.countDocuments({
         fatherPost: req.params.id,
         isDeleted: false,
@@ -116,8 +104,8 @@ exports.post_detail_get = function (req, res, next) {
           console.error('Error - Comments not found');
           return next(err);
         }
-        // ._doc because the results from countDocuments are hydrated
-        // more info: https://mongoosejs.com/docs/tutorials/lean.html
+        // ._doc because the results from countDocuments are hydrated.
+        // More info: https://mongoosejs.com/docs/tutorials/lean.html
         results._doc = {
           ...results._doc,
           commentQuantity: commentQuantity,
@@ -139,7 +127,7 @@ exports.post_delete = function (req, res, next) {
       return next(err);
     }
 
-    // Recursion function to delete comments and its children
+    // Recursion function to delete comments and its children.
     function recursion(commentsArray) {
       commentsArray.map((comment) => {
         Comment.findById(comment).exec(function (err, results) {
@@ -152,7 +140,7 @@ exports.post_delete = function (req, res, next) {
           if (results.comments.length >= 1) {
             recursion(results.comments);
           }
-          // Delete comment
+          // Delete comment.
           Comment.findByIdAndRemove(results.id).exec(function (err, results) {
             if (err || results == null) {
               var err = new Error('Comment not found!');
@@ -177,26 +165,9 @@ exports.post_delete = function (req, res, next) {
   });
 };
 
-// Handle Post edit on GET - D E L E T E    T H I S     L A T E R if a new page is not loaded
-exports.post_edit_get = function (req, res, next) {
-  Post.findById(req.params.id).exec(function (err, results) {
-    if (err || results == null) {
-      var err = new Error('Post not found!');
-      err.status = 404;
-      console.error('Error - Post not found!');
-      // Another way: return res.status(404).send('Error - Post not found!');
-      return next(err);
-    }
-    res.json({
-      title: 'Post editing',
-      data: results,
-    });
-  });
-};
-
-// Handle Post edit on PUT
+// Handle Post edit on PUT.
 exports.post_edit_put = [
-  // Validate and sanitize fields
+  // Validate and sanitize fields.
   body('title')
     .trim()
     .isLength({ min: 1 })
@@ -222,7 +193,7 @@ exports.post_edit_put = [
       text: req.body.text,
       editTime: new Date(),
       published: req.body.published,
-      _id: req.params.id, // This is required, or a new ID will be assigned! -> This is not necessary if $set is used when findByIdAndUpdate
+      _id: req.params.id, // This is required, or a new ID will be assigned! -> This is not necessary if $set is used when findByIdAndUpdate.
     });
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -234,7 +205,7 @@ exports.post_edit_put = [
         req.params.id,
         {
           // Must use $set, otherwise would delete comments array
-          // (post object would replace the found object with the params id's post)
+          // (post object would replace the found object with the params id's post).
           $set: {
             title: post.title,
             text: post.text,
@@ -250,7 +221,7 @@ exports.post_edit_put = [
               err,
             });
           }
-          // Success
+          // Success.
           res.status(200).json({
             status: 'OK',
             data: results,
@@ -261,7 +232,7 @@ exports.post_edit_put = [
   },
 ];
 
-// Handle Post vote on POST
+// Handle Post vote on POST.
 exports.post_vote_post = function (req, res, next) {
   User.findById(req.body.userID).exec(function (err, results) {
     if (err || results == null) {
@@ -274,11 +245,11 @@ exports.post_vote_post = function (req, res, next) {
     const foundVote = results.votedPosts.find(
       (e) => e.postID.valueOf() === req.body.postID
     );
-    // Checks if user already voted the post
+    // Checks if user already voted the post.
     if (foundVote) {
-      // Checks if the found vote is the same as user input
+      // Checks if the found vote is the same as user input.
       if (foundVote.voteType === parseInt(req.body.voteType)) {
-        // The same: it has to delete (pull) saved vote from user's votedPosts array
+        // The same: it has to delete (pull) saved vote from user's votedPosts array.
         User.findByIdAndUpdate(
           req.body.userID,
           { $pull: { votedPosts: { postID: foundVote.postID } } },
@@ -291,7 +262,7 @@ exports.post_vote_post = function (req, res, next) {
           }
         );
       } else {
-        // Different: it has to change the upvoteType from user's votedPosts array
+        // Different: it has to change the upvoteType from user's votedPosts array.
         User.updateOne(
           { _id: req.body.userID, 'votedPosts.postID': foundVote.postID },
           { $set: { 'votedPosts.$.voteType': parseInt(req.body.voteType) } },
@@ -305,7 +276,7 @@ exports.post_vote_post = function (req, res, next) {
         );
       }
     } else {
-      // User didn't vote the post: Add voted post ID to user's voted post array
+      // User didn't vote the post: Add voted post ID to user's voted post array.
       User.findByIdAndUpdate(
         req.body.userID,
         {
@@ -327,7 +298,7 @@ exports.post_vote_post = function (req, res, next) {
       );
     }
 
-    // Update post votes quantity based on user input
+    // Update post votes quantity based on user input.
     let updateType = foundVote
       ? foundVote.voteType === parseInt(req.body.voteType)
         ? req.body.voteType === '1'

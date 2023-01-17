@@ -7,7 +7,6 @@ import UserContext from '../services/UserContext';
 import {
   getSinglePost,
   createNewComment,
-  isAuthenticated,
   deletePost,
   editPost,
   sendVote,
@@ -232,7 +231,7 @@ function SinglePost() {
         </div>
         <div className='post__createTime'>On: {post.createTime}</div>
         {post.editTime.includes('1970-01-01') ? null : (
-          // Conditional rendering. 1970-01-01 is considered a null date
+          // Conditional rendering. 1970-01-01 is considered a null date.
           <div className='post__editTime'>Edited {post.editTime}</div>
         )}
         <div className='post__karma'>Karma: {updatedKarma}</div>

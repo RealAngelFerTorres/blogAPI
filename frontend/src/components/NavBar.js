@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/DBServices';
 
@@ -64,9 +64,6 @@ function NavBar(props) {
           <div>Register</div>
         </Link>
       </div>
-      <Link to='/admin' className='option'>
-        <div>Admin</div>
-      </Link>
     </div>
   );
 }

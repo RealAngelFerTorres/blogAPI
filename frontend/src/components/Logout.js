@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { redirect } from 'react-router-dom';
-
-import { loginUser, isAuthenticated } from '../services/DBServices';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Logout() {
   let navigate = useNavigate();

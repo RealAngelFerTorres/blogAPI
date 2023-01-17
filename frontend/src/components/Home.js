@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AllPosts from './AllPosts';
 import '../styles/style.css';
 
 function Home(props) {
-  //const { data } = props;
-
   return (
     <div>
       <AllPosts></AllPosts>

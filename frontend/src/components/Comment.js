@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import {
   deleteComment,
   createNewReply,
-  isAuthenticated,
   editComment,
 } from '../services/DBServices';
-import { useParams } from 'react-router-dom';
 import UserContext from '../services/UserContext';
 
 function Comment(props) {
@@ -121,7 +119,7 @@ function Comment(props) {
           </div>
           <div className='comment__createTime'>On: {comment.createTime}</div>
           {comment.editTime.includes('1970-01-01') ? null : (
-            // Conditional rendering. 1970-01-01 is considered a null date
+            // Conditional rendering. 1970-01-01 is considered a null date.
             <div className='comment__editTime'>Edited {comment.editTime}</div>
           )}
           <div className='comment__title'>Karma: {comment.karma}</div>
@@ -137,7 +135,7 @@ function Comment(props) {
           ) : (
             <div className='comment__text'>{comment.text}</div>
           )}
-
+          {/* Since depth of 2 onwards, the reply button will not be shown */}
           {depth > 2 ? null : (
             <div>
               <div className='comment__reply' onClick={toggleReply}>

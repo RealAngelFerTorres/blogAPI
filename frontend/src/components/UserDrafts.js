@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
-import Comment from './Comment';
 import { isAuthenticated, getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 
@@ -20,7 +19,7 @@ export default function UserDrafts() {
       }
       setCurrentUser(response.user);
 
-      // This is not part of log check, but it is necessary to stay here because setting state takes some time
+      // This is not part of log check, but it is necessary to stay here because setting state takes some time.
       getAllDrafts(response.user.id).then((e) => {
         setAllDrafts(e.data);
       });
@@ -42,7 +41,7 @@ export default function UserDrafts() {
               </div>
               <div className='post__createTime'>On: {post.createTime}</div>
               {post.editTime.includes('1970-01-01') ? null : (
-                // Conditional rendering. 1970-01-01 is considered a null date
+                // Conditional rendering. 1970-01-01 is considered a null date.
                 <div className='post__editTime'>Edited {post.editTime}</div>
               )}
               <div className='post__karma'>Karma: {post.karma}</div>

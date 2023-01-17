@@ -1,8 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { isAuthenticated } from './DBServices';
 
-import Login from '../components/Login';
-
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {

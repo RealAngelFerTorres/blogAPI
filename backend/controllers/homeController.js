@@ -1,12 +1,7 @@
-const { body, validationResult } = require('express-validator');
-var async = require('async');
-const jwt = require('jsonwebtoken');
-
 var Post = require('../models/post');
-var User = require('../models/user');
 var Comment = require('../models/comment');
 
-// Home page
+// Home page.
 exports.home_get = function (req, res) {
   Post.find({ published: true })
     .populate('author', 'username')
@@ -19,7 +14,7 @@ exports.home_get = function (req, res) {
         return next(err);
       }
 
-      // Get comment quantity for each post and append them to a new array of results
+      // Get comment quantity for each post and append them to a new array of results.
       let newResults = [];
       const promises = results.map(async function (post) {
         const commentQuantity = await Comment.countDocuments({
@@ -34,6 +29,7 @@ exports.home_get = function (req, res) {
         };
         newResults.push(post);
       });
+      // Order post by creation time.
       Promise.all(promises).then(function () {
         newResults.sort((a, b) => b.createTime - a.createTime);
         res.json({ data: newResults });

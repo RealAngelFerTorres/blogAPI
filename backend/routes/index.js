@@ -25,12 +25,10 @@ router
 
 router
   .route('/post/:id/edit')
-  .get(post_controller.post_edit_get) // Delete this later if a new page is loaded
   .put(user_controller.user_authentication, post_controller.post_edit_put);
 
 router
   .route('/post/create')
-  .get(post_controller.post_create_get)
   .post(user_controller.user_authentication, post_controller.post_create_post);
 
 // COMMENT ROUTES
@@ -57,28 +55,20 @@ router
 
 router
   .route('/comment/:id/edit')
-  .get(comment_controller.comment_edit_get) // Delete this later if a new page is loaded
   .put(
     user_controller.user_authentication,
     comment_controller.comment_edit_put
   );
 
 // USER ROUTES
+
 router.route('/user/:id').get(user_controller.user_detail_get);
 
 router.route('/user/:id/drafts').get(user_controller.user_drafts_get);
 
-router
-  .route('/user/login')
-  .get(user_controller.user_login_get)
-  .post(user_controller.user_login_post);
+router.route('/user/login').post(user_controller.user_login_post);
 
-router.route('/user/logout').get(user_controller.user_logout_get);
-
-router
-  .route('/user/signup')
-  .get(user_controller.user_signup_get)
-  .post(user_controller.user_signup_post);
+router.route('/user/signup').post(user_controller.user_signup_post);
 
 router
   .route('/isAuth')

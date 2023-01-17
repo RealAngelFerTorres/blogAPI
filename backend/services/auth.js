@@ -9,7 +9,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 var User = require('../models/user');
 var SESSION_SECRET = process.env.SESSION_SECRET;
 
-// PassportJS Local strategy
+// PassportJS Local strategy.
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
@@ -21,13 +21,13 @@ passport.use(
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
-          // Removes sensitive data before returning the json
+          // Removes sensitive data before returning the json.
           user.password = undefined;
           user.email = undefined;
-          // passwords match! log user in
+          // Passwords match. Log user in
           return done(null, user, { message: 'Logged in successfully' });
         } else {
-          // passwords do not match!
+          // Passwords do not match.
           return done(null, false, { message: 'Incorrect password' });
         }
       });
@@ -35,7 +35,7 @@ passport.use(
   })
 );
 
-// PassportJS JWS strategy
+// PassportJS JWS strategy.
 passport.use(
   new JWTStrategy(
     {
@@ -43,7 +43,7 @@ passport.use(
       secretOrKey: SESSION_SECRET,
     },
     async function (jwtPayload, cb) {
-      //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+      // Find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
       try {
         const user = await User.findById(
           jwtPayload._id,

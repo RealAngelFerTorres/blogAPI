@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import '../styles/style.css';
-import Comment from './Comment';
 
 import { getAllPosts } from '../services/DBServices';
-import UserContext from '../services/UserContext';
 
 function AllPosts() {
-  const [currentUser, setCurrentUser] = useContext(UserContext);
-
   const [allPosts, setAllPosts] = useState([]);
 
   useEffect(() => {
@@ -34,7 +30,7 @@ function AllPosts() {
               </div>
               <div className='post__createTime'>On: {post.createTime}</div>
               {post.editTime.includes('1970-01-01') ? null : (
-                // Conditional rendering. 1970-01-01 is considered a null date
+                // Conditional rendering. 1970-01-01 is considered a null date.
                 <div className='post__editTime'>Edited {post.editTime}</div>
               )}
               <div className='post__karma'>Karma: {post.karma}</div>

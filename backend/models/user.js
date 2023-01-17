@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-// Necessary to use virtuals in the frontend
+// Necessary to use virtuals in the frontend.
 const opts = { toJSON: { virtuals: true } };
 
 var UserSchema = new Schema(
@@ -43,15 +43,15 @@ var UserSchema = new Schema(
   opts
 );
 
-//Virtual for user's karma
+// Virtual for user's karma.
 UserSchema.virtual('karma').get(function () {
   return this.karmaPosts * 10 + this.karmaComments;
 });
 
-//Virtual for user's URL
+// Virtual for user's URL.
 UserSchema.virtual('url').get(function () {
   return '/user/' + this._id;
 });
 
-//Export model
+// Export model.
 module.exports = mongoose.model('User', UserSchema);
