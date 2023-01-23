@@ -148,7 +148,12 @@ export async function getUserDetails(id) {
 
 export async function getAllDrafts(id) {
   try {
-    const response = await fetch(`/user/${id}/drafts`);
+    const response = await fetch(`/user/${id}/drafts`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return await response.json();
   } catch (error) {
     console.log('There was a problem fetching the data:', error);

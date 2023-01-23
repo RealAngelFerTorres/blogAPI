@@ -3,33 +3,43 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import { isAuthenticated, getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
+import { useParams } from 'react-router-dom';
 
 export default function UserDrafts() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [allDrafts, setAllDrafts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  let url = useParams();
 
   let navigate = useNavigate();
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      let response = await isAuthenticated();
-      if (response.user === false) {
-        response.user = '';
-        navigate('/login');
-      }
-      setCurrentUser(response.user);
+  useEffect(() => {}, []);
 
-      // This is not part of log check, but it is necessary to stay here because setting state takes some time.
-      getAllDrafts(response.user.id).then((e) => {
-        setAllDrafts(e.data);
-      });
+  useEffect(() => {
+    const async = async () => {
+      const response = await getAllDrafts(url.id);
+
+      if (response.status === 'OK') {
+        setAllDrafts(response.data);
+        setIsLoading(false);
+        return;
+      }
+      if (response.user === false) {
+        navigate('/login');
+        return;
+      }
+      if (response.message) {
+        navigate('/error');
+      }
     };
 
-    checkLoggedIn();
+    async();
   }, []);
 
-  if (!allDrafts || !currentUser) {
+  if (isLoading) {
     return <div>Loading drafts...</div>;
+  } else if (allDrafts.length === 0 && currentUser) {
+    return <div>You don't have any drafts...</div>;
   } else {
     return (
       <div>

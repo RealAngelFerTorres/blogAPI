@@ -43,7 +43,7 @@ app.use(function (err, req, res, next) {
 
   // Render the error page.
   res.status(err.status || 500);
-  res.json({ message: 'error' });
+  res.json({ message: 'There is a kind of problem right here...' });
 });
 
 module.exports = app;

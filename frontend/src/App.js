@@ -12,6 +12,7 @@ import NavBar from './components/NavBar';
 import About from './components/About';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Error from './components/Error';
 
 import { UserProvider } from './services/UserContext';
 
@@ -30,6 +31,7 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
+            <Route path='/error' element={<Error />} />
           </Routes>
         </div>
       </UserProvider>

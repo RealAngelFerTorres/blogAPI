@@ -24,7 +24,7 @@ exports.user_detail_get = function (req, res, next) {
 };
 
 // Handle User drafts on GET.
-exports.user_drafts_get = function (req, res) {
+exports.user_drafts_get = function (req, res, next) {
   Post.find({ author: req.params.id, published: false }).exec(function (
     err,
     results
@@ -32,7 +32,7 @@ exports.user_drafts_get = function (req, res) {
     if (err) {
       return next(err);
     }
-    res.json({ data: results });
+    res.status(200).json({ status: 'OK', data: results });
   });
 };
 

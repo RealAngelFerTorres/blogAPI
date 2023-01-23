@@ -64,7 +64,9 @@ router
 
 router.route('/user/:id').get(user_controller.user_detail_get);
 
-router.route('/user/:id/drafts').get(user_controller.user_drafts_get);
+router
+  .route('/user/:id/drafts')
+  .get(user_controller.user_authentication, user_controller.user_drafts_get);
 
 router.route('/user/login').post(user_controller.user_login_post);
 

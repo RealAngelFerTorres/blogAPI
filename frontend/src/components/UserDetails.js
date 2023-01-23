@@ -13,13 +13,6 @@ function UserDetails() {
   let navigate = useNavigate();
 
   const manageDrafts = async () => {
-    let responseAuth = await isAuthenticated();
-    if (responseAuth.user === false) {
-      responseAuth.user = '';
-      navigate('/login');
-      return;
-    }
-    await setCurrentUser(responseAuth.user);
     navigate('drafts');
   };
 
