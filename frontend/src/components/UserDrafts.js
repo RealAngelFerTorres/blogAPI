@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
-import { isAuthenticated, getAllDrafts } from '../services/DBServices';
+import { getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import { useParams } from 'react-router-dom';
 
@@ -9,36 +9,36 @@ export default function UserDrafts() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [allDrafts, setAllDrafts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  let url = useParams();
 
   let navigate = useNavigate();
-
-  useEffect(() => {}, []);
+  let url = useParams();
 
   useEffect(() => {
-    const async = async () => {
-      const response = await getAllDrafts(url.id);
-
-      if (response.status === 'OK') {
-        setAllDrafts(response.data);
+    if (currentUser !== undefined) {
+      const async = async () => {
+        const response = await getAllDrafts(currentUser.id);
         setIsLoading(false);
-        return;
-      }
-      if (response.user === false) {
-        navigate('/login');
-        return;
-      }
-      if (response.message) {
-        navigate('/error');
-      }
-    };
 
-    async();
-  }, []);
+        if (response.status === 'OK') {
+          setAllDrafts(response.data);
+          return;
+        }
+        if (response.user === false) {
+          navigate('/login');
+          return;
+        }
+        if (response.message) {
+          navigate('/error');
+        }
+      };
+
+      async();
+    }
+  }, [currentUser]);
 
   if (isLoading) {
     return <div>Loading drafts...</div>;
-  } else if (allDrafts.length === 0 && currentUser) {
+  } else if (currentUser && allDrafts.length === 0) {
     return <div>You don't have any drafts...</div>;
   } else {
     return (
