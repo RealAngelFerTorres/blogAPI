@@ -5,6 +5,7 @@ import UserContext from '../services/UserContext';
 
 export default function Signup() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [form, setForm] = useState({
     title: '',
@@ -60,55 +61,61 @@ export default function Signup() {
       let response = await isAuthenticated();
       if (response.user === false) {
         response.user = '';
-        navigate('/login');
       }
       setCurrentUser(response.user);
+      setIsLoading(false);
     };
 
     checkLoggedIn();
   }, []);
 
-  return (
-    <div className='createNewPost'>
-      <form onSubmit={submitForm}>
-        <div>
-          <label>Title</label>
-          <input
-            type='text'
-            name='title'
-            maxLength={50}
-            required
-            onChange={handleFormChange}
-          />
-        </div>
-        <div>
-          <label>Text</label>
+  if (isLoading) {
+    return <div>Loading page...</div>;
+  } else if (!isLoading && currentUser === '') {
+    return <div>You need to be logged-in to see this page.</div>;
+  } else if (!isLoading && currentUser) {
+    return (
+      <div className='createNewPost'>
+        <form onSubmit={submitForm}>
+          <div>
+            <label>Title</label>
+            <input
+              type='text'
+              name='title'
+              maxLength={50}
+              required
+              onChange={handleFormChange}
+            />
+          </div>
+          <div>
+            <label>Text</label>
 
-          <input
-            type='text'
-            name='text'
-            maxLength={300}
-            required
-            onChange={handleFormChange}
-          />
-        </div>
-        <button
-          className='submitButton'
-          type='submit'
-          name='draft'
-          value={false}
-        >
-          Save draft
-        </button>
-        <button
-          className='submitButton'
-          type='submit'
-          name='publish'
-          value={true}
-        >
-          Publish
-        </button>
-      </form>
-    </div>
-  );
+            <input
+              type='text'
+              name='text'
+              maxLength={300}
+              required
+              onChange={handleFormChange}
+            />
+          </div>
+          <button
+            className='submitButton'
+            type='submit'
+            name='draft'
+            value={false}
+          >
+            Save draft
+          </button>
+          <button
+            className='submitButton'
+            type='submit'
+            name='publish'
+            value={true}
+          >
+            Publish
+          </button>
+        </form>
+      </div>
+    );
+  }
 }

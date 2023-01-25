@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import { getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
-import { useParams } from 'react-router-dom';
 
 export default function UserDrafts() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -11,7 +10,6 @@ export default function UserDrafts() {
   const [isLoading, setIsLoading] = useState(true);
 
   let navigate = useNavigate();
-  let url = useParams();
 
   useEffect(() => {
     if (currentUser !== undefined) {
@@ -31,7 +29,6 @@ export default function UserDrafts() {
           navigate('/error');
         }
       };
-
       async();
     }
   }, [currentUser]);
