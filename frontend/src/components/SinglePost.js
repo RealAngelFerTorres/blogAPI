@@ -18,6 +18,7 @@ function SinglePost() {
   const [updatedKarma, setUpdatedKarma] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
   const [isTogglingVote, setIsTogglingVote] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDownvote, setIsDownvote] = useState(false);
   const [isUpvote, setIsUpvote] = useState(false);
   const [postForm, setPostForm] = useState({
@@ -140,6 +141,10 @@ function SinglePost() {
     });
   };
 
+  const toggleDeleteModal = (e) => {
+    isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
+  };
+
   const manageVote = async (e) => {
     if (isTogglingVote) {
       return;
@@ -255,9 +260,25 @@ function SinglePost() {
         </div>
         {currentUser.id === post.author.id ? (
           <div>
-            <button className='deleteButton' onClick={submitDeletePost}>
+            <button className='deleteButton' onClick={toggleDeleteModal}>
               Delete post
             </button>
+
+            <div
+              className={`modalBackground ${isModalOpen ? 'show' : ''}`}
+              onClick={toggleDeleteModal}
+            >
+              <div
+                className='modalContent'
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button onClick={toggleDeleteModal}>X</button>
+                <div>Are you sure you want to delete this post?</div>
+                <button onClick={submitDeletePost}>Delete post</button>
+                <button onClick={toggleDeleteModal}>Cancel</button>
+              </div>
+            </div>
+
             {isEditing ? (
               <div>
                 <input

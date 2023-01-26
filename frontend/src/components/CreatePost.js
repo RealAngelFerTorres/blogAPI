@@ -71,51 +71,53 @@ export default function Signup() {
 
   if (isLoading) {
     return <div>Loading page...</div>;
-  } else if (!isLoading && currentUser === '') {
-    return <div>You need to be logged-in to see this page.</div>;
-  } else if (!isLoading && currentUser) {
-    return (
-      <div className='createNewPost'>
-        <form onSubmit={submitForm}>
-          <div>
-            <label>Title</label>
-            <input
-              type='text'
-              name='title'
-              maxLength={50}
-              required
-              onChange={handleFormChange}
-            />
-          </div>
-          <div>
-            <label>Text</label>
+  } else {
+    if (currentUser === '') {
+      return <div>You need to be logged-in to see this page.</div>;
+    } else if (currentUser) {
+      return (
+        <div className='createNewPost'>
+          <form onSubmit={submitForm}>
+            <div>
+              <label>Title</label>
+              <input
+                type='text'
+                name='title'
+                maxLength={50}
+                required
+                onChange={handleFormChange}
+              />
+            </div>
+            <div>
+              <label>Text</label>
 
-            <input
-              type='text'
-              name='text'
-              maxLength={300}
-              required
-              onChange={handleFormChange}
-            />
-          </div>
-          <button
-            className='submitButton'
-            type='submit'
-            name='draft'
-            value={false}
-          >
-            Save draft
-          </button>
-          <button
-            className='submitButton'
-            type='submit'
-            name='publish'
-            value={true}
-          >
-            Publish
-          </button>
-        </form>
-      </div>
-    );
+              <input
+                type='text'
+                name='text'
+                maxLength={300}
+                required
+                onChange={handleFormChange}
+              />
+            </div>
+            <button
+              className='submitButton'
+              type='submit'
+              name='draft'
+              value={false}
+            >
+              Save draft
+            </button>
+            <button
+              className='submitButton'
+              type='submit'
+              name='publish'
+              value={true}
+            >
+              Publish
+            </button>
+          </form>
+        </div>
+      );
+    }
   }
 }
