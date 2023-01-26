@@ -18,6 +18,7 @@ exports.user_detail_get = function (req, res, next) {
       return next(err);
     }
     res.json({
+      status: 'OK',
       data: results,
     });
   });

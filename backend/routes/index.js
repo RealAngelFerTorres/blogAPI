@@ -62,7 +62,9 @@ router
 
 // USER ROUTES
 
-router.route('/user/:id').get(user_controller.user_detail_get);
+router
+  .route('/user/:id')
+  .get(user_controller.user_authentication, user_controller.user_detail_get);
 
 router
   .route('/user/:id/drafts')

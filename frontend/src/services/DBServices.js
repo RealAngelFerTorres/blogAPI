@@ -139,7 +139,12 @@ export async function deleteComment(id) {
 
 export async function getUserDetails(id) {
   try {
-    const response = await fetch(`/user/${id}`);
+    const response = await fetch(`/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return await response.json();
   } catch (error) {
     console.log('There was a problem fetching the data:', error);
