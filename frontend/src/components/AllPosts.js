@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import '../styles/style.css';
-
 import { getAllPosts } from '../services/DBServices';
+import { DateTime } from 'luxon';
 
 function AllPosts() {
   const [allPosts, setAllPosts] = useState([]);
@@ -11,6 +10,11 @@ function AllPosts() {
   useEffect(() => {
     getAllPosts().then((e) => {
       setAllPosts(e.data);
+      console.log(
+        DateTime.fromISO(e.data[0].createTime).toLocaleString(
+          DateTime.DATE_FULL
+        )
+      );
     });
   }, []);
 
@@ -28,10 +32,20 @@ function AllPosts() {
               <div className='post__author'>
                 Made by <Link to={post.author.url}>{post.author.username}</Link>
               </div>
-              <div className='post__createTime'>On: {post.createTime}</div>
+              <div className='post__createTime'>
+                On:{' '}
+                {DateTime.fromISO(post.createTime).toLocaleString(
+                  DateTime.DATETIME_SHORT
+                )}
+              </div>
               {post.editTime.includes('1970-01-01') ? null : (
                 // Conditional rendering. 1970-01-01 is considered a null date.
-                <div className='post__editTime'>Edited {post.editTime}</div>
+                <div className='post__editTime'>
+                  Edited{' '}
+                  {DateTime.fromISO(post.editTime).toLocaleString(
+                    DateTime.DATETIME_SHORT
+                  )}
+                </div>
               )}
               <div className='post__karma'>Karma: {post.karma}</div>
               <div className='post__text'>{post.text}</div>

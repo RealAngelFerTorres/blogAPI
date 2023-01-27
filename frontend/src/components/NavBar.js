@@ -56,13 +56,15 @@ function NavBar(props) {
             Logout
           </Link>
         ) : (
-          <Link to='/login' className='option'>
-            Login
-          </Link>
+          <div>
+            <Link to='/login' className='option'>
+              Login
+            </Link>
+            <Link to='/signup' className='option'>
+              <div>Register</div>
+            </Link>
+          </div>
         )}
-        <Link to='/signup' className='option'>
-          <div>Register</div>
-        </Link>
       </div>
     </div>
   );
