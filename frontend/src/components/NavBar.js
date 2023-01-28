@@ -35,35 +35,33 @@ function NavBar(props) {
   return (
     <div className='navBar'>
       <div className='mainTitle' onClick={goToHome}>
-        THE BLOG API APP
+        THE PUBLIC BLOG
       </div>
       <div className='navigationOptions'>
         <Link to='/' className='option'>
-          <div>HOME</div>
+          <div>Home</div>
         </Link>
         <Link to='/about' className='option'>
-          <div>ABOUT</div>
+          <div>About</div>
         </Link>
         {currentUser ? (
           <Link to='/post/create' className='option'>
-            Create new post
+            <div>Create new post</div>
           </Link>
         ) : null}
-      </div>
-      <div className='navigationOptions--rightSide'>
+        {!currentUser ? (
+          <Link to='/signup' className='option'>
+            <div>Register</div>
+          </Link>
+        ) : null}
         {currentUser ? (
           <Link to='/logout' onClick={logout} className='option'>
-            Logout
+            <div>Logout</div>
           </Link>
         ) : (
-          <div>
-            <Link to='/login' className='option'>
-              Login
-            </Link>
-            <Link to='/signup' className='option'>
-              <div>Register</div>
-            </Link>
-          </div>
+          <Link to='/login' className='option'>
+            <div>Login</div>
+          </Link>
         )}
       </div>
     </div>

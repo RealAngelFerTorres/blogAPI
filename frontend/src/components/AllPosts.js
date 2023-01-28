@@ -10,11 +10,6 @@ function AllPosts() {
   useEffect(() => {
     getAllPosts().then((e) => {
       setAllPosts(e.data);
-      console.log(
-        DateTime.fromISO(e.data[0].createTime).toLocaleString(
-          DateTime.DATE_FULL
-        )
-      );
     });
   }, []);
 
@@ -35,7 +30,7 @@ function AllPosts() {
               <div className='post__createTime'>
                 On:{' '}
                 {DateTime.fromISO(post.createTime).toLocaleString(
-                  DateTime.DATETIME_SHORT
+                  DateTime.DATE_FULL
                 )}
               </div>
               {post.editTime.includes('1970-01-01') ? null : (
@@ -43,7 +38,7 @@ function AllPosts() {
                 <div className='post__editTime'>
                   Edited{' '}
                   {DateTime.fromISO(post.editTime).toLocaleString(
-                    DateTime.DATETIME_SHORT
+                    DateTime.DATETIME_MED
                   )}
                 </div>
               )}
