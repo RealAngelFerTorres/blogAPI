@@ -17,7 +17,7 @@ function AllPosts() {
     return <div>Loading all posts...</div>;
   } else {
     return (
-      <div>
+      <div className='allPosts'>
         {allPosts.map((post, index) => {
           return (
             <div className='post' key={index} id={post.id} title={post.title}>
@@ -27,25 +27,32 @@ function AllPosts() {
               <div className='post__author'>
                 Made by <Link to={post.author.url}>{post.author.username}</Link>
               </div>
-              <div className='post__createTime'>
-                On:{' '}
-                {DateTime.fromISO(post.createTime).toLocaleString(
-                  DateTime.DATE_FULL
-                )}
-              </div>
-              {post.editTime.includes('1970-01-01') ? null : (
-                // Conditional rendering. 1970-01-01 is considered a null date.
-                <div className='post__editTime'>
-                  Edited{' '}
-                  {DateTime.fromISO(post.editTime).toLocaleString(
-                    DateTime.DATETIME_MED
+              <div className='post__dates'>
+                <div className='post__createTime'>
+                  On:{' '}
+                  {DateTime.fromISO(post.createTime).toLocaleString(
+                    DateTime.DATE_FULL
                   )}
                 </div>
-              )}
-              <div className='post__karma'>Karma: {post.karma}</div>
+                {post.editTime.includes('1970-01-01') ? null : (
+                  // Conditional rendering. 1970-01-01 is considered a null date.
+                  <div className='post__editTime'>
+                    - Edited:{' '}
+                    {DateTime.fromISO(post.editTime).toLocaleString(
+                      DateTime.DATETIME_MED
+                    )}
+                  </div>
+                )}
+              </div>
+
               <div className='post__text'>{post.text}</div>
-              <div className='post__comments'>
-                {post.commentQuantity} Comments
+              <div className='post__interactions'>
+                <div className='post__interactions--karma'>
+                  Karma: {post.karma}
+                </div>
+                <div className='post__interactions--comments'>
+                  Comments: {post.commentQuantity}
+                </div>
               </div>
 
               <br></br>

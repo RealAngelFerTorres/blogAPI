@@ -3,11 +3,7 @@ import AllPosts from './AllPosts';
 import '../styles/style.css';
 
 function Home(props) {
-  return (
-    <div>
-      <AllPosts></AllPosts>
-    </div>
-  );
+  return <AllPosts></AllPosts>;
 }
 
 export default Home;

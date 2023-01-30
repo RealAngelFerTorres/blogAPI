@@ -12,6 +12,9 @@ code {
     monospace;
 }
 
+#root {
+}
+
 .navBar {
   display: flex;
   flex-direction: row;
@@ -54,14 +57,66 @@ code {
 .mainDisplay {
   display: flex;
   justify-content: center;
-  margin-top: 120px;
+  margin-top: 10vh;
   margin-bottom: 50px;
-  height: 100%;
   min-height: 800px;
-  width: 100%;
+  width: 100vw;
   background-color: #ededed;
 }
 
+.allPosts {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: left;
+  margin-left: 20%;
+  row-gap: 80px;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.post__title {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.post__author {
+}
+
+.post__dates {
+  display: flex;
+  flex-direction: row;
+}
+
+.post__createTime {
+  color: grey;
+  font-style: italic;
+  font-size: small;
+  margin-right: 5px;
+}
+
+.post__editTime {
+  color: grey;
+  font-style: italic;
+  font-size: small;
+}
+
+.post__text {
+  font-size: larger;
+}
+
+.post__interactions {
+  display: flex;
+  justify-content: left;
+}
+.post__interactions--karma {
+  margin-right: 50px;
+}
 div.comment.depth0 {
   margin-left: 25px;
 }
