@@ -83,7 +83,7 @@ export default function Signup() {
               <input
                 type='text'
                 name='title'
-                maxLength={50}
+                maxLength={120}
                 required
                 onChange={handleFormChange}
               />
@@ -94,7 +94,7 @@ export default function Signup() {
               <input
                 type='text'
                 name='text'
-                maxLength={300}
+                maxLength={5000}
                 required
                 onChange={handleFormChange}
               />

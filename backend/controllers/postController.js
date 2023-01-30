@@ -11,15 +11,15 @@ exports.post_create_post = [
     .trim()
     .isLength({ min: 1 })
     .withMessage('Title must not be empty.')
-    .isLength({ max: 50 })
-    .withMessage('Title max. characters is 50.')
+    .isLength({ max: 120 })
+    .withMessage('Title max. characters is 120.')
     .escape(),
   body('text')
     .trim()
     .isLength({ min: 1 })
     .withMessage('Post content area must not be empty.')
-    .isLength({ max: 300 })
-    .withMessage('Post content max. characters is 300.')
+    .isLength({ max: 5000 })
+    .withMessage('Post content max. characters is 5000.')
     .escape(),
 
   // Process request after validation and sanitization.
@@ -172,15 +172,15 @@ exports.post_edit_put = [
     .trim()
     .isLength({ min: 1 })
     .withMessage('Title must not be empty.')
-    .isLength({ max: 50 })
-    .withMessage('Title max. characters is 50.')
+    .isLength({ max: 120 })
+    .withMessage('Title max. characters is 120.')
     .escape(),
   body('text')
     .trim()
     .isLength({ min: 1 })
     .withMessage('Post content area must not be empty.')
-    .isLength({ max: 300 })
-    .withMessage('Post content max. characters is 300.')
+    .isLength({ max: 5000 })
+    .withMessage('Post content max. characters is 5000.')
     .escape(),
 
   // Process request after validation and sanitization.

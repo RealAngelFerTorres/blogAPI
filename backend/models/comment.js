@@ -7,7 +7,7 @@ const opts = { toJSON: { virtuals: true } };
 
 var CommentSchema = new Schema(
   {
-    text: { type: String, maxLength: 100, required: true },
+    text: { type: String, maxLength: 500, required: true },
     createTime: { type: Date },
     editTime: { type: Date, default: 'Jan 1, 1970' }, // Value equals this should be considered null in the frontend.
     author: { type: Schema.Types.ObjectId, ref: 'User' },

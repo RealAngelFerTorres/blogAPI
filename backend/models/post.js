@@ -7,8 +7,8 @@ const opts = { toJSON: { virtuals: true } };
 
 var PostSchema = new Schema(
   {
-    title: { type: String, maxLength: 50, required: true },
-    text: { type: String, maxLength: 300, required: true },
+    title: { type: String, maxLength: 120, required: true },
+    text: { type: String, maxLength: 5000, required: true },
     createTime: { type: Date },
     editTime: { type: Date, default: 'Jan 1, 1970' }, // This date should be considered null.
     author: { type: Schema.Types.ObjectId, ref: 'User' },

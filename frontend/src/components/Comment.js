@@ -128,7 +128,7 @@ function Comment(props) {
               type='text'
               name='text'
               value={commentForm.text}
-              maxLength={100}
+              maxLength={500}
               required
               onChange={handleCommentFormChange}
             ></input>

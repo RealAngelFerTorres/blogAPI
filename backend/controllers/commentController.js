@@ -10,8 +10,8 @@ exports.comment_on_post_post = [
     .trim()
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
-    .isLength({ max: 100 })
-    .withMessage('Comment content max. characters is 100.')
+    .isLength({ max: 500 })
+    .withMessage('Comment content max. characters is 500.')
     .escape(),
 
   // Process request after validation and sanitization.
@@ -82,8 +82,8 @@ exports.comment_on_comment_post = [
     .trim()
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
-    .isLength({ max: 100 })
-    .withMessage('Comment content max. characters is 100.')
+    .isLength({ max: 500 })
+    .withMessage('Comment content max. characters is 500.')
     .escape(),
 
   // Process request after validation and sanitization.
@@ -166,8 +166,8 @@ exports.comment_edit_put = [
     .trim()
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
-    .isLength({ max: 100 })
-    .withMessage('Comment content max. characters is 100.')
+    .isLength({ max: 500 })
+    .withMessage('Comment content max. characters is 500.')
     .escape(),
 
   // Process request after validation and sanitization.

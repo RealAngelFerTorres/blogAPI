@@ -322,7 +322,8 @@ function SinglePost() {
             name='text'
             type='text'
             placeholder='What do you think?'
-            maxLength={100}
+            minLength={1}
+            maxLength={500}
             required
             onChange={handleCommentFormChange}
           ></input>
