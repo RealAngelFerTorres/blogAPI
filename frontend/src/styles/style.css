@@ -13,6 +13,25 @@ code {
 }
 
 #root {
+  --main-color: #377ed2;
+  --links-color: #b51675;
+  --links-color-hover: #fbcc6a;
+  --icons-color: #377ed2;
+}
+
+.material-icons {
+  font-family: 'Material Symbols Rounded';
+  color: var(--icons-color);
+  font-size: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--links-color);
+}
+
+a:hover {
+  color: var(--links-color-hover);
 }
 
 .navBar {
@@ -31,6 +50,7 @@ code {
   font-size: 50px;
   margin-left: 20px;
   cursor: pointer;
+  color: var(--links-color);
 }
 
 .navigationOptions {
@@ -61,31 +81,45 @@ code {
   margin-bottom: 50px;
   min-height: 800px;
   width: 100vw;
-  background-color: #ededed;
+  background-color: #f5f5f5;
 }
 
 .allPosts {
-  width: 90%;
+  width: 60%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: left;
-  margin-left: 20%;
   row-gap: 80px;
+  margin-top: 50px;
 }
 
 .post {
   display: flex;
   flex-direction: column;
   row-gap: 15px;
+  text-align: justify;
+  background-color: white;
+  border: 1px solid;
+  border-radius: 10px;
+  border-color: #dedede;
+  margin: 10px;
+  padding: 40px;
 }
 
 .post__title {
   font-size: xx-large;
   font-weight: bold;
+  color: black;
 }
 
 .post__author {
+  color: grey;
+}
+
+.post__author div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .post__dates {
@@ -97,7 +131,7 @@ code {
   color: grey;
   font-style: italic;
   font-size: small;
-  margin-right: 5px;
+  margin-right: 4px;
 }
 
 .post__editTime {
@@ -108,15 +142,33 @@ code {
 
 .post__text {
   font-size: larger;
+  line-height: 36px;
 }
 
 .post__interactions {
   display: flex;
   justify-content: left;
+  color: grey;
 }
+
 .post__interactions--karma {
   margin-right: 50px;
 }
+
+.post__interactions--karma div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.post__interactions--comments div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+}
+
 div.comment.depth0 {
   margin-left: 25px;
 }

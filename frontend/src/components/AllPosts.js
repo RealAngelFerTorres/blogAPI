@@ -21,11 +21,14 @@ function AllPosts() {
         {allPosts.map((post, index) => {
           return (
             <div className='post' key={index} id={post.id} title={post.title}>
+              <div className='post__author'>
+                <div>
+                  <div className='material-icons'>person</div>{' '}
+                  <Link to={post.author.url}>{post.author.username}</Link>
+                </div>
+              </div>{' '}
               <div className='post__title'>
                 <Link to={post.url}>{post.title}</Link>
-              </div>
-              <div className='post__author'>
-                Made by <Link to={post.author.url}>{post.author.username}</Link>
               </div>
               <div className='post__dates'>
                 <div className='post__createTime'>
@@ -44,17 +47,21 @@ function AllPosts() {
                   </div>
                 )}
               </div>
-
               <div className='post__text'>{post.text}</div>
               <div className='post__interactions'>
                 <div className='post__interactions--karma'>
-                  Karma: {post.karma}
+                  <div>
+                    <div className='material-icons'>swap_vert</div>Karma:{' '}
+                    {post.karma}
+                  </div>
                 </div>
                 <div className='post__interactions--comments'>
-                  Comments: {post.commentQuantity}
+                  <div>
+                    <div className='material-icons'>mode_comment</div>Comments:{' '}
+                    {post.commentQuantity}
+                  </div>
                 </div>
               </div>
-
               <br></br>
             </div>
           );
