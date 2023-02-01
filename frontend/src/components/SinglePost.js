@@ -316,7 +316,6 @@ function SinglePost() {
         )}
 
         <div className='post__comments'>{post.commentQuantity} Comments</div>
-        <br></br>
         <div className='commentSection'>
           <input
             name='text'
@@ -331,7 +330,6 @@ function SinglePost() {
             Comment post
           </button>
         </div>
-        <br></br>
         <div className='post__comments'>
           {post.comments.map((comment, index) => {
             return (
@@ -344,7 +342,6 @@ function SinglePost() {
             );
           })}
         </div>
-        <br></br>
       </div>
     );
   }

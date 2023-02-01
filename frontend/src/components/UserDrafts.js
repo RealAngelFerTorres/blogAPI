@@ -53,8 +53,6 @@ export default function UserDrafts() {
               )}
               <div className='post__karma'>Karma: {post.karma}</div>
               <div className='post__text'>{post.text}</div>
-
-              <br></br>
             </div>
           );
         })}

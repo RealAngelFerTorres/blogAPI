@@ -185,7 +185,6 @@ function Comment(props) {
           ) : null}
         </div>
       )}
-      <br></br>
       {comment.comments.length >= 1
         ? comment.comments.map((comment, index) => {
             return (

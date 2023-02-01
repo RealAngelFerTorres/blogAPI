@@ -38,17 +38,17 @@ function NavBar(props) {
         THE PUBLIC BLOG
       </div>
       <div className='navigationOptions'>
+        {currentUser ? (
+          <Link to='/post/create' className='option' id='createButtonContainer'>
+            <div id='createButton'>Create new post</div>
+          </Link>
+        ) : null}
         <Link to='/' className='option'>
           <div>Home</div>
         </Link>
         <Link to='/about' className='option'>
           <div>About</div>
         </Link>
-        {currentUser ? (
-          <Link to='/post/create' className='option'>
-            <div>Create new post</div>
-          </Link>
-        ) : null}
         {!currentUser ? (
           <Link to='/signup' className='option'>
             <div>Register</div>

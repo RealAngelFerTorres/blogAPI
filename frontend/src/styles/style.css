@@ -14,9 +14,9 @@ code {
 
 #root {
   --main-color: #377ed2;
-  --links-color: #b51675;
+  --links-color: #377ed2;
   --links-color-hover: #fbcc6a;
-  --icons-color: #377ed2;
+  --icons-color: #b51675;
 }
 
 .material-icons {
@@ -43,11 +43,12 @@ a:hover {
   top: 0;
   width: 100%;
   background-color: white;
-  height: 90px;
+  height: 8vh;
+  border-bottom: #e2e2e2 solid 1px;
 }
 
 .mainTitle {
-  font-size: 50px;
+  font-size: 40px;
   margin-left: 20px;
   cursor: pointer;
   color: var(--links-color);
@@ -57,13 +58,13 @@ a:hover {
   margin-right: 20px;
   display: flex;
   flex-direction: row;
-  width: 650px;
+  width: 550px;
   justify-content: space-between;
   height: 100%;
 }
 
 .option {
-  font-size: 32px;
+  font-size: 25px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -74,11 +75,30 @@ a:hover {
   transition: inherit;
 }
 
+#createButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#createButtonContainer:hover div {
+  border: var(--links-color-hover) 1px solid;
+}
+
+#createButton {
+  border: var(--links-color) 1px solid;
+  border-radius: 10px;
+  font-size: medium;
+  height: 70%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .mainDisplay {
   display: flex;
   justify-content: center;
-  margin-top: 10vh;
-  margin-bottom: 50px;
+  padding-top: 10vh;
+  padding-bottom: 50px;
   min-height: 800px;
   width: 100vw;
   background-color: #f5f5f5;
@@ -101,7 +121,6 @@ a:hover {
   border: 1px solid;
   border-radius: 10px;
   border-color: #dedede;
-  margin: 10px;
   padding: 40px;
 }
 
@@ -221,4 +240,37 @@ div.comment.depth3 {
 
 .modalBackground.show .modalContent {
   transform: translateY(0);
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+  width: 100%;
+  height: 5vh;
+  background-color: #e5e5e5;
+  color: grey;
+}
+
+.bottomBarOptions {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bottomBarOptions > .option {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+#upArrow {
+  color: grey;
 }

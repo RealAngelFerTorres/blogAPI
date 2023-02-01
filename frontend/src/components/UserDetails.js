@@ -56,7 +56,6 @@ function UserDetails() {
           {currentUser.id === user.id ? (
             <button onClick={manageDrafts}>View unpublished posts</button>
           ) : null}
-          <br></br>
         </div>
       );
     }

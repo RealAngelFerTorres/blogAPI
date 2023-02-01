@@ -13,6 +13,7 @@ import About from './components/About';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Error from './components/Error';
+import BottomBar from './components/BottomBar';
 
 import { UserProvider } from './services/UserContext';
 
@@ -34,6 +35,7 @@ function App() {
             <Route path='/error' element={<Error />} />
           </Routes>
         </div>
+        <BottomBar></BottomBar>
       </UserProvider>
     </BrowserRouter>
   );
