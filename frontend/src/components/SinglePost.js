@@ -46,6 +46,12 @@ function SinglePost() {
     }
   };
 
+  const goToComments = () => {
+    var y = document.querySelector('.post__comments').offsetTop;
+    var subtract = document.querySelector('.navBar').offsetHeight;
+    window.scrollTo({ top: y - subtract, left: 0, behavior: 'smooth' });
+  };
+
   const submitDeletePost = async (e) => {
     const response = await deletePost(post.id);
     if (response.url) {
@@ -220,8 +226,8 @@ function SinglePost() {
   } else {
     return (
       <div className='postContainer'>
-        <div className='karmaContainer'>
-          <div className='karmaSubcontainer'>
+        <div className='leftBar'>
+          <div className='karmaContainer'>
             <button
               className={`material-icons upvoteArrow ${
                 isUpvote ? 'voted' : ''
@@ -243,6 +249,15 @@ function SinglePost() {
             >
               shift
             </button>
+          </div>
+          <div className='commentContainer'>
+            <button
+              className='material-icons commentIcon'
+              onClick={goToComments}
+            >
+              mode_comment
+            </button>
+            <div className=''>{post.commentQuantity}</div>
           </div>
         </div>
         <div className='post' id={post.id}>

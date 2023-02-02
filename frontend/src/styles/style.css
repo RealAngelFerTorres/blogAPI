@@ -120,13 +120,14 @@ a:hover {
   width: 60%;
 }
 
-.karmaContainer {
+.leftBar {
   display: flex;
   margin-right: 25px;
   flex-direction: column;
+  color: grey;
 }
 
-.karmaSubcontainer {
+.karmaContainer {
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -136,7 +137,8 @@ a:hover {
 }
 
 .upvoteArrow,
-.downvoteArrow {
+.downvoteArrow,
+.commentIcon {
   border: 1px solid transparent;
   background-color: transparent;
   color: grey;
@@ -172,6 +174,23 @@ a:hover {
 
 .post__karma {
   color: gray;
+}
+
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 300px;
+  gap: 5px;
+  text-align: center;
+}
+
+.commentIcon {
+  color: grey;
+}
+
+.commentIcon:hover {
+  background-color: rgb(227, 227, 227);
 }
 
 .post {
