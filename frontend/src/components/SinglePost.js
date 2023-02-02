@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import Comment from './Comment';
 import { useParams } from 'react-router-dom';
+import { DateTime } from 'luxon';
 import UserContext from '../services/UserContext';
 import {
   getSinglePost,
@@ -218,129 +219,151 @@ function SinglePost() {
     return <div>Loading post...</div>;
   } else {
     return (
-      <div className='post' id={post.id} title={post.title}>
-        <div className='post__title'>
+      <div className='postContainer'>
+        <div className='karmaContainer'>
+          <div className='karmaSubcontainer'>
+            <button
+              className={`material-icons upvoteArrow ${
+                isUpvote ? 'voted' : ''
+              }`}
+              onClick={manageVote}
+              value={1}
+              disabled={isTogglingVote}
+            >
+              shift
+            </button>
+            <div className='post__karma'>{updatedKarma}</div>
+            <button
+              className={`material-icons downvoteArrow ${
+                isDownvote ? 'voted' : ''
+              }`}
+              onClick={manageVote}
+              value={-1}
+              disabled={isTogglingVote}
+            >
+              shift
+            </button>
+          </div>
+        </div>
+        <div className='post' id={post.id}>
+          <div className='post__author'>
+            <div>
+              <div className='material-icons'>person</div>{' '}
+              <Link to={post.author.url}>{post.author.username}</Link>
+            </div>
+          </div>
+          <div className='post__title'>
+            {isEditing ? (
+              <input
+                type='text'
+                name='title'
+                value={postForm.title}
+                onChange={handlePostFormChange}
+              ></input>
+            ) : (
+              <Link to={post.url}>{post.title}</Link>
+            )}
+          </div>
+          <div className='post__dates'>
+            <div className='post__createTime'>
+              {DateTime.fromISO(post.createTime).toLocaleString(
+                DateTime.DATE_FULL
+              )}
+            </div>
+            {post.editTime.includes('1970-01-01') ? null : (
+              // Conditional rendering. 1970-01-01 is considered a null date.
+              <div className='post__editTime'>
+                - Edited:{' '}
+                {DateTime.fromISO(post.editTime).toLocaleString(
+                  DateTime.DATETIME_MED
+                )}
+              </div>
+            )}
+          </div>
+          {currentUser.id === post.author.id ? (
+            <div>
+              <button className='deleteButton' onClick={toggleDeleteModal}>
+                Delete post
+              </button>
+
+              <div
+                className={`modalBackground ${isModalOpen ? 'show' : ''}`}
+                onClick={toggleDeleteModal}
+              >
+                <div
+                  className='modalContent'
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button onClick={toggleDeleteModal}>X</button>
+                  <div>Are you sure you want to delete this post?</div>
+                  <button onClick={submitDeletePost}>Delete post</button>
+                  <button onClick={toggleDeleteModal}>Cancel</button>
+                </div>
+              </div>
+
+              {isEditing ? (
+                <div>
+                  <input
+                    type='checkbox'
+                    id='published'
+                    name='published'
+                    onChange={handleCheckboxChange}
+                    checked={postForm.published}
+                  />
+                  <label htmlFor='published'>Published</label>
+                  <button className='OKButton' onClick={submitEditPost}>
+                    OK
+                  </button>
+                  <button className='cancelButton' onClick={toggleEditPost}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button className='editButton' onClick={toggleEditPost}>
+                  Edit post
+                </button>
+              )}
+            </div>
+          ) : null}
+
           {isEditing ? (
             <input
               type='text'
-              name='title'
-              value={postForm.title}
+              name='text'
+              value={postForm.text}
               onChange={handlePostFormChange}
             ></input>
           ) : (
-            <Link to={post.url}>{post.title}</Link>
+            <div className='post__text'>{post.text}</div>
           )}
-        </div>
-        <div className='post__author'>
-          Made by <Link to={post.author.url}>{post.author.username}</Link>
-        </div>
-        <div className='post__createTime'>On: {post.createTime}</div>
-        {post.editTime.includes('1970-01-01') ? null : (
-          // Conditional rendering. 1970-01-01 is considered a null date.
-          <div className='post__editTime'>Edited {post.editTime}</div>
-        )}
-        <div className='post__karma'>Karma: {updatedKarma}</div>
-        <div>
-          <button
-            className={isUpvote ? 'voted' : ''}
-            onClick={manageVote}
-            value={1}
-            disabled={isTogglingVote}
-          >
-            Upvote
-          </button>
-          <button
-            className={isDownvote ? 'voted' : ''}
-            onClick={manageVote}
-            value={-1}
-            disabled={isTogglingVote}
-          >
-            Downvote
-          </button>
-        </div>
-        {currentUser.id === post.author.id ? (
-          <div>
-            <button className='deleteButton' onClick={toggleDeleteModal}>
-              Delete post
+
+          <div className='post__comments'>{post.commentQuantity} Comments</div>
+          <div className='commentSection'>
+            <input
+              name='text'
+              type='text'
+              placeholder='What do you think?'
+              minLength={1}
+              maxLength={500}
+              required
+              onChange={handleCommentFormChange}
+            ></input>
+            <button className='comment__button' onClick={submitComment}>
+              Comment post
             </button>
-
-            <div
-              className={`modalBackground ${isModalOpen ? 'show' : ''}`}
-              onClick={toggleDeleteModal}
-            >
-              <div
-                className='modalContent'
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button onClick={toggleDeleteModal}>X</button>
-                <div>Are you sure you want to delete this post?</div>
-                <button onClick={submitDeletePost}>Delete post</button>
-                <button onClick={toggleDeleteModal}>Cancel</button>
-              </div>
-            </div>
-
-            {isEditing ? (
-              <div>
-                <input
-                  type='checkbox'
-                  id='published'
-                  name='published'
-                  onChange={handleCheckboxChange}
-                  checked={postForm.published}
-                />
-                <label htmlFor='published'>Published</label>
-                <button className='OKButton' onClick={submitEditPost}>
-                  OK
-                </button>
-                <button className='cancelButton' onClick={toggleEditPost}>
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <button className='editButton' onClick={toggleEditPost}>
-                Edit post
-              </button>
-            )}
           </div>
-        ) : null}
-
-        {isEditing ? (
-          <input
-            type='text'
-            name='text'
-            value={postForm.text}
-            onChange={handlePostFormChange}
-          ></input>
-        ) : (
-          <div className='post__text'>{post.text}</div>
-        )}
-
-        <div className='post__comments'>{post.commentQuantity} Comments</div>
-        <div className='commentSection'>
-          <input
-            name='text'
-            type='text'
-            placeholder='What do you think?'
-            minLength={1}
-            maxLength={500}
-            required
-            onChange={handleCommentFormChange}
-          ></input>
-          <button className='comment__button' onClick={submitComment}>
-            Comment post
-          </button>
-        </div>
-        <div className='post__comments'>
-          {post.comments.map((comment, index) => {
-            return (
-              <Comment
-                key={index}
-                comment={comment}
-                postID={post.id}
-                depth={0}
-              ></Comment>
-            );
-          })}
+          <div className='post__comments'>
+            {post.comments.map((comment, index) => {
+              return (
+                <Comment
+                  key={index}
+                  comment={comment}
+                  postID={post.id}
+                  depth={0}
+                ></Comment>
+              );
+            })}
+          </div>
         </div>
       </div>
     );

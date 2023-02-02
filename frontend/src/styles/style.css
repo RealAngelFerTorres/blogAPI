@@ -27,11 +27,11 @@ code {
 
 a {
   text-decoration: none;
-  color: var(--links-color);
+  color: black;
 }
 
 a:hover {
-  color: var(--links-color-hover);
+  color: var(--links-color);
 }
 
 .navBar {
@@ -65,7 +65,7 @@ a:hover {
 
 .option {
   font-size: 25px;
-  transition: all 0.3s ease-in-out;
+  color: grey;
 }
 
 .option > div {
@@ -81,10 +81,6 @@ a:hover {
   align-items: center;
 }
 
-#createButtonContainer:hover div {
-  border: var(--links-color-hover) 1px solid;
-}
-
 #createButton {
   border: var(--links-color) 1px solid;
   border-radius: 10px;
@@ -92,6 +88,12 @@ a:hover {
   height: 70%;
   padding-left: 10px;
   padding-right: 10px;
+  color: var(--links-color);
+}
+
+#createButton:hover {
+  background-color: var(--links-color);
+  color: white;
 }
 
 .mainDisplay {
@@ -110,6 +112,66 @@ a:hover {
   flex-direction: column;
   row-gap: 80px;
   margin-top: 50px;
+}
+
+.postContainer {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+}
+
+.karmaContainer {
+  display: flex;
+  margin-right: 25px;
+  flex-direction: column;
+}
+
+.karmaSubcontainer {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 150px;
+  gap: 5px;
+  text-align: center;
+}
+
+.upvoteArrow,
+.downvoteArrow {
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: grey;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.downvoteArrow {
+  transform: rotate(180deg);
+}
+
+.upvoteArrow:hover {
+  color: var(--icons-color);
+  background-color: #ecd8e4;
+}
+
+.downvoteArrow:hover {
+  color: var(--links-color);
+  background-color: #ccdef3;
+}
+
+.voted {
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 200, 'opsz' 48;
+}
+
+.upvoteArrow.voted {
+  color: #b51675;
+}
+
+.downvoteArrow.voted {
+  color: #377ed2;
+}
+
+.post__karma {
+  color: gray;
 }
 
 .post {
@@ -202,10 +264,6 @@ div.comment.depth2 {
 
 div.comment.depth3 {
   margin-left: 100px;
-}
-
-.voted {
-  background-color: red;
 }
 
 .modalBackground {
