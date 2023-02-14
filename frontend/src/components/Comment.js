@@ -108,7 +108,8 @@ function Comment(props) {
   return (
     <div className='comment__thread'>
       {comment.isDeleted ? (
-        <div className={'comment depth' + depth}>
+        <div className={'comment__author deleted comment depth' + depth}>
+          <div className='material-icons deleted'>person</div>
           <i>Deleted comment</i>
         </div>
       ) : (
@@ -155,11 +156,12 @@ function Comment(props) {
           <div className='comment__options'>
             {/* Since depth of 2 onwards, the reply button will not be shown */}
             {depth > 2 ? null : (
-              <div className='comment__options__replySection'>
-                <div className='material-icons'>reply</div>
-                <div className='comment__reply' onClick={toggleReply}>
-                  Reply
-                </div>
+              <div
+                className='comment__options__replySection'
+                onClick={toggleReply}
+              >
+                <div className='material-icons icon reply'>reply</div>
+                <div className='comment__reply'>Reply</div>
               </div>
             )}
             {currentUser.id === comment.author.id ? (
