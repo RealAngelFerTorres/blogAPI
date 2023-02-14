@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { DateTime } from 'luxon';
 import '../styles/style.css';
 import {
   deleteComment,
@@ -105,24 +106,40 @@ function Comment(props) {
   };
 
   return (
-    <div>
+    <div className='comment__thread'>
       {comment.isDeleted ? (
         <div className={'comment depth' + depth}>
           <i>Deleted comment</i>
         </div>
       ) : (
         <div className={'comment depth' + depth} id={comment.id}>
-          <div className='comment__author'>
-            <Link to={'../' + comment.author.url}>
-              {comment.author.username}
-            </Link>
+          <div className='comment__data'>
+            <div className='comment__author'>
+              <div className='material-icons'>person</div>{' '}
+              <Link to={'../' + comment.author.url}>
+                {comment.author.username}
+              </Link>
+            </div>
+            <div
+              className='comment__createTime'
+              title={DateTime.fromISO(comment.createTime).toLocaleString(
+                DateTime.DATETIME_MED
+              )}
+            >
+              &nbsp;· {DateTime.fromISO(comment.createTime).toRelative()}{' '}
+            </div>
+            {comment.editTime.includes('1970-01-01') ? null : (
+              // Conditional rendering. 1970-01-01 is considered a null date.
+              <div
+                className='comment__editTime'
+                title={DateTime.fromISO(comment.editTime).toLocaleString(
+                  DateTime.DATETIME_MED
+                )}
+              >
+                &nbsp;· edited {DateTime.fromISO(comment.editTime).toRelative()}
+              </div>
+            )}
           </div>
-          <div className='comment__createTime'>On: {comment.createTime}</div>
-          {comment.editTime.includes('1970-01-01') ? null : (
-            // Conditional rendering. 1970-01-01 is considered a null date.
-            <div className='comment__editTime'>Edited {comment.editTime}</div>
-          )}
-          <div className='comment__title'>Karma: {comment.karma}</div>
           {isEditing ? (
             <input
               type='text'
@@ -135,52 +152,60 @@ function Comment(props) {
           ) : (
             <div className='comment__text'>{comment.text}</div>
           )}
-          {/* Since depth of 2 onwards, the reply button will not be shown */}
-          {depth > 2 ? null : (
-            <div>
-              <div className='comment__reply' onClick={toggleReply}>
-                Reply
+          <div className='comment__options'>
+            {/* Since depth of 2 onwards, the reply button will not be shown */}
+            {depth > 2 ? null : (
+              <div className='comment__options__replySection'>
+                <div className='material-icons'>reply</div>
+                <div className='comment__reply' onClick={toggleReply}>
+                  Reply
+                </div>
               </div>
-              {showReply ? (
-                <div className='replySection'>
-                  <input
-                    name='text'
-                    type='text'
-                    placeholder='What do you think?'
-                    required
-                    onChange={handleReplyFormChange}
-                  />
+            )}
+            {currentUser.id === comment.author.id ? (
+              <div>
+                {isEditing ? (
                   <div>
-                    <button className='cancel__button' onClick={toggleReply}>
+                    <button className='OKButton' onClick={submitEditComment}>
+                      OK
+                    </button>
+                    <button
+                      className='cancelButton'
+                      onClick={toggleCommentEdit}
+                    >
                       Cancel
                     </button>
-                    <button className='comment__button' onClick={submitReply}>
-                      Reply
-                    </button>
                   </div>
-                </div>
-              ) : null}
-            </div>
-          )}
-          {currentUser.id === comment.author.id ? (
-            <div>
+                ) : (
+                  <div className='comment__edit' onClick={toggleCommentEdit}>
+                    Edit
+                  </div>
+                )}
+              </div>
+            ) : null}
+            {currentUser.id === comment.author.id ? (
               <div className='comment__delete' onClick={submitDeleteComment}>
                 Delete
               </div>
-              {isEditing ? (
-                <div>
-                  <button className='OKButton' onClick={submitEditComment}>
-                    OK
-                  </button>
-                  <button className='cancelButton' onClick={toggleCommentEdit}>
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <div className='comment__edit' onClick={toggleCommentEdit}>
-                  Edit
-                </div>
-              )}
+            ) : null}
+          </div>
+          {showReply ? (
+            <div className='replyArea'>
+              <input
+                name='text'
+                type='text'
+                placeholder='What do you think?'
+                required
+                onChange={handleReplyFormChange}
+              />
+              <div>
+                <button className='cancel__button' onClick={toggleReply}>
+                  Cancel
+                </button>
+                <button className='comment__button' onClick={submitReply}>
+                  Reply
+                </button>
+              </div>
             </div>
           ) : null}
         </div>

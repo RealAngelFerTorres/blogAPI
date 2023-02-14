@@ -253,6 +253,7 @@ function SinglePost() {
           <div className='commentContainer'>
             <button
               className='material-icons commentIcon'
+              title='Jump to comments'
               onClick={goToComments}
             >
               mode_comment
@@ -288,19 +289,28 @@ function SinglePost() {
             {post.editTime.includes('1970-01-01') ? null : (
               // Conditional rendering. 1970-01-01 is considered a null date.
               <div className='post__editTime'>
-                - Edited:{' '}
+                &nbsp;· Edited:{' '}
                 {DateTime.fromISO(post.editTime).toLocaleString(
                   DateTime.DATETIME_MED
                 )}
               </div>
             )}
           </div>
+          {isEditing ? (
+            <input
+              type='text'
+              name='text'
+              value={postForm.text}
+              onChange={handlePostFormChange}
+            ></input>
+          ) : (
+            <div className='post__text'>{post.text}</div>
+          )}
           {currentUser.id === post.author.id ? (
             <div>
               <button className='deleteButton' onClick={toggleDeleteModal}>
                 Delete post
               </button>
-
               <div
                 className={`modalBackground ${isModalOpen ? 'show' : ''}`}
                 onClick={toggleDeleteModal}
@@ -315,7 +325,6 @@ function SinglePost() {
                   <button onClick={toggleDeleteModal}>Cancel</button>
                 </div>
               </div>
-
               {isEditing ? (
                 <div>
                   <input
@@ -340,21 +349,25 @@ function SinglePost() {
               )}
             </div>
           ) : null}
-
-          {isEditing ? (
-            <input
-              type='text'
-              name='text'
-              value={postForm.text}
-              onChange={handlePostFormChange}
-            ></input>
-          ) : (
-            <div className='post__text'>{post.text}</div>
-          )}
-
-          <div className='post__comments'>{post.commentQuantity} Comments</div>
+          <div className='singlePost__interactions'>
+            <div className='post__interactions--karma'>
+              <div>
+                <div className='material-icons'>swap_vert</div>
+                {post.karma}{' '}
+                {post.karma === 1 || post.karma === -1 ? 'point' : 'points'}
+              </div>
+            </div>
+            <div className='post__interactions--comments'>
+              <div>
+                <div className='material-icons'>mode_comment</div>
+                {post.commentQuantity}{' '}
+                {post.commentQuantity === 1 ? 'comment' : 'comments'}
+              </div>
+            </div>
+          </div>
           <div className='commentSection'>
-            <input
+            <textarea
+              className='comment__input'
               name='text'
               type='text'
               placeholder='What do you think?'
@@ -362,8 +375,8 @@ function SinglePost() {
               maxLength={500}
               required
               onChange={handleCommentFormChange}
-            ></input>
-            <button className='comment__button' onClick={submitComment}>
+            ></textarea>
+            <button className='button comment__button' onClick={submitComment}>
               Comment post
             </button>
           </div>
