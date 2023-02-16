@@ -4,6 +4,7 @@ import '../styles/style.css';
 import Comment from './Comment';
 import { useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
+import TextareaAutosize from 'react-textarea-autosize';
 import UserContext from '../services/UserContext';
 import {
   getSinglePost,
@@ -235,6 +236,7 @@ function SinglePost() {
               onClick={manageVote}
               value={1}
               disabled={isTogglingVote}
+              title='Upvote this post'
             >
               shift
             </button>
@@ -246,6 +248,7 @@ function SinglePost() {
               onClick={manageVote}
               value={-1}
               disabled={isTogglingVote}
+              title='Downvote this post'
             >
               shift
             </button>
@@ -260,6 +263,82 @@ function SinglePost() {
             </button>
             <div className=''>{post.commentQuantity}</div>
           </div>
+          {currentUser.id === post.author.id ? (
+            <div className='postOptionsContainer'>
+              {isEditing ? (
+                <div className='editContainer'>
+                  {postForm.published ? (
+                    <label
+                      className='material-icons icon'
+                      title='This post is published. Click to toggle.'
+                      htmlFor='published'
+                    >
+                      visibility
+                    </label>
+                  ) : (
+                    <label
+                      className='material-icons icon'
+                      title='This post is unpublished. Click to toggle.'
+                      htmlFor='published'
+                    >
+                      visibility_off
+                    </label>
+                  )}
+                  <input
+                    className='hidden'
+                    type='checkbox'
+                    id='published'
+                    name='published'
+                    onChange={handleCheckboxChange}
+                    checked={postForm.published}
+                  />
+                  <button
+                    className='material-icons icon acceptButton'
+                    title='Finish editing'
+                    onClick={submitEditPost}
+                  >
+                    done
+                  </button>
+                  <button
+                    className='material-icons icon cancelButton'
+                    title='Cancel editing'
+                    onClick={toggleEditPost}
+                  >
+                    close
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className='material-icons icon editButton'
+                  title='Edit post'
+                  onClick={toggleEditPost}
+                >
+                  edit
+                </button>
+              )}
+              <button
+                className='material-icons icon deleteButton'
+                title='Delete post'
+                onClick={toggleDeleteModal}
+              >
+                delete
+              </button>
+              <div
+                className={`modalBackground ${isModalOpen ? 'show' : ''}`}
+                onClick={toggleDeleteModal}
+              >
+                <div
+                  className='modalContent'
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button onClick={toggleDeleteModal}>X</button>
+                  <div>Are you sure you want to delete this post?</div>
+                  <button onClick={submitDeletePost}>Delete post</button>
+                  <button onClick={toggleDeleteModal}>Cancel</button>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
         <div className='post' id={post.id}>
           <div className='post__author'>
@@ -268,17 +347,24 @@ function SinglePost() {
               <Link to={post.author.url}>{post.author.username}</Link>
             </div>
           </div>
+
           <div className='post__title'>
-            {isEditing ? (
-              <input
-                type='text'
-                name='title'
-                value={postForm.title}
-                onChange={handlePostFormChange}
-              ></input>
-            ) : (
-              <Link to={post.url}>{post.title}</Link>
-            )}
+            <Link
+              to={post.url}
+              style={{ display: `${isEditing ? 'none' : ''}` }}
+            >
+              {post.title}
+            </Link>
+            <TextareaAutosize
+              className='edit__title edit'
+              type='text'
+              name='title'
+              maxLength={120}
+              required
+              value={postForm.title}
+              onChange={handlePostFormChange}
+              style={{ display: `${isEditing ? '' : 'none'}` }}
+            ></TextareaAutosize>
           </div>
           <div className='post__dates'>
             <div className='post__createTime'>
@@ -296,59 +382,25 @@ function SinglePost() {
               </div>
             )}
           </div>
-          {isEditing ? (
-            <input
+          <div className='post__text'>
+            <div
+              className='text'
+              style={{ display: `${isEditing ? 'none' : ''}` }}
+            >
+              {post.text}
+            </div>
+            <TextareaAutosize
+              className='edit__text edit'
               type='text'
               name='text'
+              maxLength={5000}
+              required
               value={postForm.text}
               onChange={handlePostFormChange}
-            ></input>
-          ) : (
-            <div className='post__text'>{post.text}</div>
-          )}
-          {currentUser.id === post.author.id ? (
-            <div>
-              <button className='deleteButton' onClick={toggleDeleteModal}>
-                Delete post
-              </button>
-              <div
-                className={`modalBackground ${isModalOpen ? 'show' : ''}`}
-                onClick={toggleDeleteModal}
-              >
-                <div
-                  className='modalContent'
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button onClick={toggleDeleteModal}>X</button>
-                  <div>Are you sure you want to delete this post?</div>
-                  <button onClick={submitDeletePost}>Delete post</button>
-                  <button onClick={toggleDeleteModal}>Cancel</button>
-                </div>
-              </div>
-              {isEditing ? (
-                <div>
-                  <input
-                    type='checkbox'
-                    id='published'
-                    name='published'
-                    onChange={handleCheckboxChange}
-                    checked={postForm.published}
-                  />
-                  <label htmlFor='published'>Published</label>
-                  <button className='OKButton' onClick={submitEditPost}>
-                    OK
-                  </button>
-                  <button className='cancelButton' onClick={toggleEditPost}>
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <button className='editButton' onClick={toggleEditPost}>
-                  Edit post
-                </button>
-              )}
-            </div>
-          ) : null}
+              style={{ display: `${isEditing ? '' : 'none'}` }}
+            ></TextareaAutosize>
+          </div>
+
           <div className='singlePost__interactions'>
             <div className='post__interactions--karma'>
               <div>
@@ -366,7 +418,7 @@ function SinglePost() {
             </div>
           </div>
           <div className='commentSection'>
-            <textarea
+            <TextareaAutosize
               className='comment__input'
               name='text'
               type='text'
@@ -375,7 +427,7 @@ function SinglePost() {
               maxLength={500}
               required
               onChange={handleCommentFormChange}
-            ></textarea>
+            ></TextareaAutosize>
             <button className='button comment__button' onClick={submitComment}>
               Comment post
             </button>

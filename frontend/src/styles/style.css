@@ -124,13 +124,24 @@ a:hover {
   color: grey;
 }
 
-.karmaContainer {
+.karmaContainer,
+.commentContainer,
+.postOptionsContainer {
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 150px;
   gap: 5px;
   text-align: center;
+}
+
+.commentContainer {
+  top: 300px;
+}
+
+.postOptionsContainer {
+  top: 410px;
+  row-gap: 35px;
 }
 
 .upvoteArrow,
@@ -144,16 +155,19 @@ a:hover {
   cursor: pointer;
 }
 
-.downvoteArrow {
+.downvoteArrow,
+.reply {
   transform: rotate(180deg);
 }
 
-.upvoteArrow:hover {
+.upvoteArrow:hover,
+.cancelButton:hover {
   color: var(--icons-color);
   background-color: #ecd8e4;
 }
 
-.downvoteArrow:hover {
+.downvoteArrow:hover,
+.acceptButton:hover {
   color: var(--links-color);
   background-color: #ccdef3;
 }
@@ -174,21 +188,35 @@ a:hover {
   color: gray;
 }
 
-.commentContainer {
+.commentIcon:hover,
+.editButton:hover,
+.deleteButton:hover,
+.icon:hover {
+  background-color: rgb(227, 227, 227);
+}
+
+.acceptButton,
+.cancelButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.acceptButton {
+  color: #377ed2;
+}
+
+.cancelButton {
+  color: #b51675;
+}
+
+.editContainer {
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 300px;
-  gap: 5px;
-  text-align: center;
 }
 
-.commentIcon {
-  color: grey;
-}
-
-.commentIcon:hover {
-  background-color: rgb(227, 227, 227);
+.hidden {
+  display: none;
 }
 
 .post {
@@ -200,6 +228,7 @@ a:hover {
   border: 1px solid;
   border-radius: 10px;
   border-color: #dedede;
+  width: 100%;
 }
 
 .post__author {
@@ -209,12 +238,14 @@ a:hover {
   padding-top: 40px;
 }
 
-.post__title {
+.post__title,
+.edit__title {
   font-size: xx-large;
   font-weight: bold;
   color: black;
   padding-left: 40px;
   padding-right: 40px;
+  white-space: pre-line;
 }
 
 .post__author div,
@@ -246,11 +277,23 @@ a:hover {
   cursor: help;
 }
 
-.post__text {
-  font-size: larger;
+.post__text,
+.edit__text {
+  font-size: 22px;
   line-height: 36px;
   padding-left: 40px;
   padding-right: 40px;
+  text-align: justify;
+  white-space: pre-line;
+}
+
+.edit {
+  font-family: var(--main-font);
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  resize: vertical;
+  white-space: pre-line;
 }
 
 .post__comments--indicator {
@@ -396,10 +439,6 @@ a:hover {
   display: flex;
   height: 100%;
   align-items: center;
-}
-
-.reply {
-  transform: rotate(180deg);
 }
 
 div.comment.depth1 {
