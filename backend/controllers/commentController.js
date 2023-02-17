@@ -11,14 +11,12 @@ exports.comment_on_post_post = [
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
     .isLength({ max: 500 })
-    .withMessage('Comment content max. characters is 500.')
-    .escape(),
-
+    .withMessage('Comment content max. characters is 500.'),
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    // Create a Comment object with escaped and trimmed data.
+    // Create a Comment object with trimmed data.
     var comment = new Comment({
       text: req.body.text,
       createTime: new Date(),
@@ -83,14 +81,12 @@ exports.comment_on_comment_post = [
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
     .isLength({ max: 500 })
-    .withMessage('Comment content max. characters is 500.')
-    .escape(),
-
+    .withMessage('Comment content max. characters is 500.'),
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    // Create a Comment object with escaped and trimmed data.
+    // Create a Comment object with trimmed data.
     var comment = new Comment({
       text: req.body.text,
       createTime: new Date(),
@@ -167,14 +163,12 @@ exports.comment_edit_put = [
     .isLength({ min: 1 })
     .withMessage('Comment content area must not be empty.')
     .isLength({ max: 500 })
-    .withMessage('Comment content max. characters is 500.')
-    .escape(),
-
+    .withMessage('Comment content max. characters is 500.'),
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    // Create a Comment object with escaped and trimmed data.
+    // Create a Comment object with trimmed data.
     var comment = new Comment({
       text: req.body.text,
       editTime: new Date(),

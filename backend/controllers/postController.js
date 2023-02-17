@@ -12,21 +12,18 @@ exports.post_create_post = [
     .isLength({ min: 1 })
     .withMessage('Title must not be empty.')
     .isLength({ max: 120 })
-    .withMessage('Title max. characters is 120.')
-    .escape(),
+    .withMessage('Title max. characters is 120.'),
   body('text')
     .trim()
     .isLength({ min: 1 })
     .withMessage('Post content area must not be empty.')
     .isLength({ max: 5000 })
-    .withMessage('Post content max. characters is 5000.')
-    .escape(),
-
+    .withMessage('Post content max. characters is 5000.'),
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    // Create a Post object with escaped and trimmed data.
+    // Create a Post object with trimmed data.
     var post = new Post({
       title: req.body.title,
       text: req.body.text,
@@ -173,21 +170,18 @@ exports.post_edit_put = [
     .isLength({ min: 1 })
     .withMessage('Title must not be empty.')
     .isLength({ max: 120 })
-    .withMessage('Title max. characters is 120.')
-    .escape(),
+    .withMessage('Title max. characters is 120.'),
   body('text')
     .trim()
     .isLength({ min: 1 })
     .withMessage('Post content area must not be empty.')
     .isLength({ max: 5000 })
-    .withMessage('Post content max. characters is 5000.')
-    .escape(),
-
+    .withMessage('Post content max. characters is 5000.'),
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    // Create a Post object with escaped and trimmed data.
+    // Create a Post object with trimmed data.
     var post = new Post({
       title: req.body.title,
       text: req.body.text,
