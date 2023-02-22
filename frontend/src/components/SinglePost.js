@@ -5,6 +5,8 @@ import Comment from './Comment';
 import { useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useRef } from 'react';
+import { Editor } from '@tinymce/tinymce-react';
 import UserContext from '../services/UserContext';
 import {
   getSinglePost,
@@ -34,6 +36,8 @@ function SinglePost() {
 
   let navigate = useNavigate();
   let url = useParams();
+
+  const editorRef = useRef(null);
 
   const manageResponse = (response) => {
     if (response.user === false) {
@@ -118,6 +122,17 @@ function SinglePost() {
     copyState = {
       ...copyState,
       [key]: input,
+    };
+    setPostForm(copyState);
+  };
+
+  const handleEditorChange = (e) => {
+    let input = editorRef.current.getContent();
+    let copyState = postForm;
+
+    copyState = {
+      ...copyState,
+      text: input,
     };
     setPostForm(copyState);
   };
@@ -347,7 +362,22 @@ function SinglePost() {
               <Link to={post.author.url}>{post.author.username}</Link>
             </div>
           </div>
-
+          <div className='post__dates'>
+            <div className='post__createTime'>
+              {DateTime.fromISO(post.createTime).toLocaleString(
+                DateTime.DATE_FULL
+              )}
+            </div>
+            {post.editTime.includes('1970-01-01') ? null : (
+              // Conditional rendering. 1970-01-01 is considered a null date.
+              <div className='post__editTime'>
+                &nbsp;· Edited:{' '}
+                {DateTime.fromISO(post.editTime).toLocaleString(
+                  DateTime.DATETIME_MED
+                )}
+              </div>
+            )}
+          </div>
           <div className='post__title'>
             <Link
               to={post.url}
@@ -366,41 +396,56 @@ function SinglePost() {
               style={{ display: `${isEditing ? '' : 'none'}` }}
             ></TextareaAutosize>
           </div>
-          <div className='post__dates'>
-            <div className='post__createTime'>
-              {DateTime.fromISO(post.createTime).toLocaleString(
-                DateTime.DATE_FULL
-              )}
-            </div>
-            {post.editTime.includes('1970-01-01') ? null : (
-              // Conditional rendering. 1970-01-01 is considered a null date.
-              <div className='post__editTime'>
-                &nbsp;· Edited:{' '}
-                {DateTime.fromISO(post.editTime).toLocaleString(
-                  DateTime.DATETIME_MED
-                )}
-              </div>
+          <div className='post__text'>
+            {isEditing ? (
+              <Editor
+                apiKey='your-api-key'
+                onInit={(evt, editor) => (editorRef.current = editor)}
+                initialValue={post.text}
+                name='text'
+                value={postForm.text}
+                maxLength={5000}
+                onEditorChange={handleEditorChange}
+                init={{
+                  menubar: false,
+                  plugins: [
+                    'advlist',
+                    'autolink',
+                    'lists',
+                    'link',
+                    'image',
+                    'charmap',
+                    'preview',
+                    'anchor',
+                    'searchreplace',
+                    'visualblocks',
+                    'code',
+                    'fullscreen',
+                    'insertdatetime',
+                    'media',
+                    'table',
+                    'code',
+                    'help',
+                    'wordcount',
+                  ],
+                  toolbar:
+                    'undo redo | blocks | ' +
+                    'bold italic forecolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
+                  content_style:
+                    'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                }}
+              />
+            ) : (
+              <div
+                className='text'
+                dangerouslySetInnerHTML={{
+                  __html: post.text,
+                }}
+              ></div>
             )}
           </div>
-          <div className='post__text'>
-            <div
-              className='text'
-              style={{ display: `${isEditing ? 'none' : ''}` }}
-            >
-              {post.text}
-            </div>
-            <TextareaAutosize
-              className='edit__text edit'
-              type='text'
-              name='text'
-              maxLength={5000}
-              required
-              value={postForm.text}
-              onChange={handlePostFormChange}
-              style={{ display: `${isEditing ? '' : 'none'}` }}
-            ></TextareaAutosize>
-          </div>
-
           <div className='singlePost__interactions'>
             <div className='post__interactions--karma'>
               <div>

@@ -21,6 +21,11 @@ body {
   font-size: 30px;
 }
 
+/* Hides 'invalid API key' message */
+.tox-notifications-container {
+  display: none !important;
+}
+
 a {
   text-decoration: none;
   color: black;

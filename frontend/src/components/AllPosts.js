@@ -26,9 +26,6 @@ function AllPosts() {
                   <div className='material-icons'>person</div>{' '}
                   <Link to={post.author.url}>{post.author.username}</Link>
                 </div>
-              </div>{' '}
-              <div className='post__title'>
-                <Link to={post.url}>{post.title}</Link>
               </div>
               <div className='post__dates'>
                 <div className='post__createTime'>
@@ -45,6 +42,9 @@ function AllPosts() {
                     )}
                   </div>
                 )}
+              </div>
+              <div className='post__title'>
+                <Link to={post.url}>{post.title}</Link>
               </div>
               <div className='post__text'>{post.text}</div>
               <div className='post__interactions'>
