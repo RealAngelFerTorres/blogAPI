@@ -117,7 +117,7 @@ function Comment(props) {
           <div className='comment__data'>
             <div className='comment__author'>
               <div className='material-icons'>person</div>{' '}
-              <Link to={'../' + comment.author.url}>
+              <Link className='username' to={'../' + comment.author.url}>
                 {comment.author.username}
               </Link>
             </div>
@@ -142,53 +142,53 @@ function Comment(props) {
             )}
           </div>
           {isEditing ? (
-            <input
-              type='text'
-              name='text'
-              value={commentForm.text}
-              maxLength={500}
-              required
-              onChange={handleCommentFormChange}
-            ></input>
+            <div className='editArea'>
+              <textarea
+                className='comment__input'
+                type='text'
+                name='text'
+                value={commentForm.text}
+                maxLength={500}
+                required
+                onChange={handleCommentFormChange}
+              ></textarea>
+            </div>
           ) : (
             <div className='comment__text'>{comment.text}</div>
           )}
           <div className='comment__options'>
             {/* Since depth of 2 onwards, the reply button will not be shown */}
-            {depth > 2 ? null : (
+            {depth > 2 ? null : isEditing ? null : (
               <div
-                className='comment__options__replySection'
+                className='comment__options__replySection button--grey'
                 onClick={toggleReply}
               >
-                <div className='material-icons icon reply'>reply</div>
+                <div className='material-icons reply button--grey'>reply</div>
                 <div className='comment__reply'>Reply</div>
               </div>
             )}
             {currentUser.id === comment.author.id ? (
-              <div>
-                {isEditing ? (
-                  <div>
-                    <button className='OKButton' onClick={submitEditComment}>
-                      OK
-                    </button>
-                    <button
-                      className='cancelButton'
-                      onClick={toggleCommentEdit}
-                    >
-                      Cancel
-                    </button>
+              isEditing ? (
+                <div className='bottomOption'>
+                  <div className='button--grey' onClick={toggleCommentEdit}>
+                    Cancel
                   </div>
-                ) : (
-                  <div className='comment__edit' onClick={toggleCommentEdit}>
-                    Edit
-                  </div>
-                )}
-              </div>
+                  <button className='button' onClick={submitEditComment}>
+                    Save edit
+                  </button>
+                </div>
+              ) : showReply ? null : (
+                <div className='button--grey' onClick={toggleCommentEdit}>
+                  Edit
+                </div>
+              )
             ) : null}
             {currentUser.id === comment.author.id ? (
-              <div className='comment__delete' onClick={submitDeleteComment}>
-                Delete
-              </div>
+              isEditing ? null : showReply ? null : (
+                <div className='button--grey' onClick={submitDeleteComment}>
+                  Delete
+                </div>
+              )
             ) : null}
           </div>
           {showReply ? (
@@ -201,11 +201,11 @@ function Comment(props) {
                 required
                 onChange={handleReplyFormChange}
               />
-              <div className='bottomReply'>
-                <div className='cancel__button' onClick={toggleReply}>
+              <div className='bottomOption'>
+                <div className='button--grey' onClick={toggleReply}>
                   Cancel
                 </div>
-                <button className='reply__button button' onClick={submitReply}>
+                <button className='button' onClick={submitReply}>
                   Reply
                 </button>
               </div>

@@ -370,7 +370,9 @@ function SinglePost() {
           <div className='post__author'>
             <div>
               <div className='material-icons'>person</div>{' '}
-              <Link to={post.author.url}>{post.author.username}</Link>
+              <Link className='username' to={post.author.url}>
+                {post.author.username}
+              </Link>
             </div>
           </div>
           <div className='post__dates'>

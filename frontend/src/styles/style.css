@@ -261,6 +261,10 @@ a:hover {
   column-gap: 5px;
 }
 
+.username {
+  font-weight: bold;
+}
+
 .post__dates {
   display: flex;
   flex-direction: row;
@@ -416,6 +420,7 @@ a:hover {
 .comment__text {
   margin-left: 35px;
   line-height: 30px;
+  white-space: pre-line;
 }
 
 .comment__options {
@@ -436,23 +441,19 @@ a:hover {
   padding: 0 3px 0 3px;
 }
 
-.comment__options div:hover {
-  background-color: #e7e7e7;
-  cursor: pointer;
-  border-radius: 10px;
-}
-
 .comment__options__replySection {
   display: flex;
   height: 100%;
   align-items: center;
 }
 
-.replyArea {
+.replyArea,
+.editArea {
   margin-left: 30px;
 }
 
-.bottomReply {
+.bottomOption {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -461,7 +462,7 @@ a:hover {
   height: 20px;
 }
 
-.cancel__button {
+.button--grey {
   color: #878a8c;
   font-weight: 500;
   cursor: pointer;
@@ -469,7 +470,7 @@ a:hover {
   border-radius: 10px;
 }
 
-.cancel__button:hover {
+.button--grey:hover {
   background-color: #e3e3e3;
 }
 
