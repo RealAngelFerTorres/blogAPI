@@ -448,6 +448,31 @@ a:hover {
   align-items: center;
 }
 
+.replyArea {
+  margin-left: 30px;
+}
+
+.bottomReply {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 15px;
+  margin-top: 10px;
+  height: 20px;
+}
+
+.cancel__button {
+  color: #878a8c;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.cancel__button:hover {
+  background-color: #e3e3e3;
+}
+
 div.comment.depth1 {
   margin-left: 35px;
 }

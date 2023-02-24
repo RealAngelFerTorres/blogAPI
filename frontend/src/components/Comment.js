@@ -193,18 +193,19 @@ function Comment(props) {
           </div>
           {showReply ? (
             <div className='replyArea'>
-              <input
+              <textarea
+                className='comment__input'
                 name='text'
                 type='text'
                 placeholder='What do you think?'
                 required
                 onChange={handleReplyFormChange}
               />
-              <div>
-                <button className='cancel__button' onClick={toggleReply}>
+              <div className='bottomReply'>
+                <div className='cancel__button' onClick={toggleReply}>
                   Cancel
-                </button>
-                <button className='comment__button' onClick={submitReply}>
+                </div>
+                <button className='reply__button button' onClick={submitReply}>
                   Reply
                 </button>
               </div>
