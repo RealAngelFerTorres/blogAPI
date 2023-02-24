@@ -165,6 +165,7 @@ function SinglePost() {
   };
 
   const toggleDeleteModal = (e) => {
+    e.stopPropagation();
     isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
   };
 
@@ -242,6 +243,30 @@ function SinglePost() {
   } else {
     return (
       <div className='postContainer'>
+        <div
+          className={`modalBackground ${isModalOpen ? 'show' : ''}`}
+          onClick={toggleDeleteModal}
+        >
+          <div className='modalContent' onClick={(e) => e.stopPropagation()}>
+            <div className='upper' title='Close' onClick={toggleDeleteModal}>
+              <button className='material-icons icon'>close</button>
+            </div>
+            <div className='middle'>
+              Are you sure you want to delete this post?
+            </div>
+            <div className='bottom'>
+              <button
+                className='button deletePostButton'
+                onClick={submitDeletePost}
+              >
+                Delete post
+              </button>
+              <button className='button' onClick={toggleDeleteModal}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
         <div className='leftBar'>
           <div className='karmaContainer'>
             <button
@@ -338,20 +363,6 @@ function SinglePost() {
               >
                 delete
               </button>
-              <div
-                className={`modalBackground ${isModalOpen ? 'show' : ''}`}
-                onClick={toggleDeleteModal}
-              >
-                <div
-                  className='modalContent'
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button onClick={toggleDeleteModal}>X</button>
-                  <div>Are you sure you want to delete this post?</div>
-                  <button onClick={submitDeletePost}>Delete post</button>
-                  <button onClick={toggleDeleteModal}>Cancel</button>
-                </div>
-              </div>
             </div>
           ) : null}
         </div>
@@ -434,7 +445,7 @@ function SinglePost() {
                     'alignright alignjustify | bullist numlist outdent indent | ' +
                     'removeformat | help',
                   content_style:
-                    'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    'body { font-family:Helvetica,Arial,sans-serif; font-size:22px;text-align: justify;line-height:36px; }',
                 }}
               />
             ) : (

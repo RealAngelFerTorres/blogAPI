@@ -46,7 +46,7 @@ a:hover {
   background-color: white;
   height: 8vh;
   border-bottom: #e2e2e2 solid 1px;
-  z-index: 99;
+  z-index: 2;
 }
 
 .mainTitle {
@@ -373,6 +373,8 @@ a:hover {
 }
 
 .button {
+  display: flex;
+  align-items: center;
   height: 70%;
   color: var(--links-color);
   background-color: transparent;
@@ -459,15 +461,18 @@ div.comment.depth3 {
 }
 
 .modalBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  position: fixed;
   opacity: 0;
+  overflow: auto;
   transition: all 0.3s ease-in-out;
   pointer-events: none;
 }
@@ -478,14 +483,39 @@ div.comment.depth3 {
 }
 
 .modalContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 15px;
   width: 400px;
   height: 100px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
   transform: translateY(-200px);
   transition: all 0.3s ease-in-out;
   background-color: rgba(255, 255, 255, 1);
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.upper {
+  display: flex;
+  align-self: flex-end;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.deletePostButton {
+  color: var(--icons-color);
+  border-color: var(--icons-color);
+}
+
+.deletePostButton:hover {
+  background-color: var(--icons-color);
 }
 
 .modalBackground.show .modalContent {
