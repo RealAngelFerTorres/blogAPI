@@ -29,6 +29,7 @@ body {
 a {
   text-decoration: none;
   color: black;
+  word-break: break-word;
 }
 
 a:hover {
@@ -227,7 +228,7 @@ a:hover {
 .post {
   display: flex;
   flex-direction: column;
-  row-gap: 25px;
+  row-gap: 15px;
   text-align: justify;
   background-color: white;
   border: 1px solid;
@@ -294,6 +295,7 @@ a:hover {
   padding-right: 40px;
   text-align: justify;
   white-space: pre-line;
+  word-break: break-word;
 }
 
 .edit {
@@ -355,7 +357,7 @@ a:hover {
 }
 
 .comment__input {
-  min-width: 100%;
+  width: 100%;
   min-height: 100px;
   resize: vertical;
   border: solid 1px #dedede;
@@ -363,6 +365,12 @@ a:hover {
   font-size: medium;
   padding: 15px;
   font-family: var(--main-font);
+  box-sizing: border-box;
+  line-height: 30px;
+}
+
+.editing {
+  border: dashed 1px var(--icons-color);
 }
 
 .comment__input::placeholder {
@@ -421,6 +429,10 @@ a:hover {
   margin-left: 35px;
   line-height: 30px;
   white-space: pre-line;
+  border: solid 1px #e3e3e3;
+  border-radius: 10px;
+  padding: 15px;
+  word-break: break-word;
 }
 
 .comment__options {
@@ -432,6 +444,7 @@ a:hover {
   height: 36px;
   margin-left: 30px;
   font-weight: 500;
+  padding-left: 15px;
 }
 
 .comment__options div {
@@ -449,7 +462,7 @@ a:hover {
 
 .replyArea,
 .editArea {
-  margin-left: 30px;
+  margin-left: 35px;
 }
 
 .bottomOption {

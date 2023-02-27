@@ -399,7 +399,7 @@ function SinglePost() {
               {post.title}
             </Link>
             <TextareaAutosize
-              className='edit__title edit'
+              className='edit__title edit editing'
               type='text'
               name='title'
               maxLength={120}

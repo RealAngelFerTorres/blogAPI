@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DateTime } from 'luxon';
+import TextareaAutosize from 'react-textarea-autosize';
 import '../styles/style.css';
 import {
   deleteComment,
@@ -143,15 +144,15 @@ function Comment(props) {
           </div>
           {isEditing ? (
             <div className='editArea'>
-              <textarea
-                className='comment__input'
+              <TextareaAutosize
+                className='comment__input editing'
                 type='text'
                 name='text'
                 value={commentForm.text}
                 maxLength={500}
                 required
                 onChange={handleCommentFormChange}
-              ></textarea>
+              ></TextareaAutosize>
             </div>
           ) : (
             <div className='comment__text'>{comment.text}</div>
