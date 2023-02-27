@@ -21,7 +21,7 @@ body {
   font-size: 30px;
 }
 
-/* Hides 'invalid API key' message */
+/* Hides 'invalid API key' message from tinyMCE text editor */
 .tox-notifications-container {
   display: none !important;
 }
@@ -109,12 +109,17 @@ a:hover {
   background-color: #f5f5f5;
 }
 
-.allPosts {
+.allPosts,
+.createNewPost {
   width: 60%;
   display: flex;
   flex-direction: column;
   row-gap: 80px;
   margin-top: 50px;
+}
+
+.createNewPost {
+  row-gap: 30px;
 }
 
 .postContainer {
@@ -254,6 +259,10 @@ a:hover {
   white-space: pre-line;
 }
 
+.post__title::placeholder {
+  font-style: italic;
+}
+
 .post__author div,
 .comment__author {
   display: flex;
@@ -376,6 +385,7 @@ a:hover {
 .comment__input::placeholder {
   font-size: medium;
   font-family: var(--main-font);
+  font-style: italic;
 }
 
 .comment__button {
@@ -592,4 +602,9 @@ div.comment.depth3 {
 
 #upArrow {
   color: grey;
+}
+
+.creating {
+  padding-right: 0;
+  padding-left: 0;
 }

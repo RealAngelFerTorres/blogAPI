@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Editor } from '@tinymce/tinymce-react';
 import { createNewPost, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export default function Signup() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -16,6 +18,8 @@ export default function Signup() {
 
   let navigate = useNavigate();
 
+  const editorRef = useRef(null);
+
   const handleFormChange = (e) => {
     let input = e.target.value;
     let key = e.target.name;
@@ -28,9 +32,21 @@ export default function Signup() {
     setForm(copyState);
   };
 
+  const handleEditorChange = (e) => {
+    let input = editorRef.current.getContent();
+    let copyState = form;
+
+    copyState = {
+      ...copyState,
+      text: input,
+    };
+    setForm(copyState);
+  };
+
   const submitForm = async (e) => {
     e.preventDefault();
-    let published = e.nativeEvent.submitter.value === 'true'; // This is true or false depending on which button is clicked (draft or publish).
+    // This is true or false depending on which button is clicked (save draft or publish).
+    let published = e.target.value === 'true';
     let copyState = form;
 
     copyState = {
@@ -77,45 +93,78 @@ export default function Signup() {
     } else if (currentUser) {
       return (
         <div className='createNewPost'>
-          <form onSubmit={submitForm}>
-            <div>
-              <label>Title</label>
-              <input
-                type='text'
-                name='title'
-                maxLength={120}
-                required
-                onChange={handleFormChange}
-              />
-            </div>
-            <div>
-              <label>Text</label>
-
-              <input
-                type='text'
-                name='text'
-                maxLength={5000}
-                required
-                onChange={handleFormChange}
-              />
-            </div>
-            <button
-              className='submitButton'
-              type='submit'
+          <TextareaAutosize
+            className='edit__title edit'
+            type='text'
+            name='title'
+            placeholder='Title'
+            maxLength={120}
+            required
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+            onChange={handleFormChange}
+          />
+          <div className='post__text creating'>
+            <Editor
+              apiKey='your-api-key'
+              onInit={(evt, editor) => (editorRef.current = editor)}
+              name='text'
+              value={form.text}
+              maxLength={5000}
+              onEditorChange={handleEditorChange}
+              init={{
+                placeholder: 'Text body',
+                menubar: false,
+                plugins: [
+                  'advlist',
+                  'autolink',
+                  'lists',
+                  'link',
+                  'image',
+                  'charmap',
+                  'preview',
+                  'anchor',
+                  'searchreplace',
+                  'visualblocks',
+                  'code',
+                  'fullscreen',
+                  'insertdatetime',
+                  'media',
+                  'table',
+                  'code',
+                  'help',
+                  'wordcount',
+                ],
+                toolbar:
+                  'undo redo | blocks | ' +
+                  'bold italic forecolor | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist outdent indent | ' +
+                  'removeformat | help',
+                content_style: `body { font-family:Helvetica,Arial,sans-serif; font-size:22px;text-align: justify;line-height:36px;} .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
+                        font-style: italic;
+                        }}`,
+              }}
+            />
+          </div>
+          <div className='bottomOption'>
+            <div
+              className='submitButton button--grey'
               name='draft'
               value={false}
+              onClick={submitForm}
             >
               Save draft
-            </button>
+            </div>
             <button
-              className='submitButton'
-              type='submit'
+              className='submitButton button'
               name='publish'
               value={true}
+              onClick={submitForm}
             >
               Publish
             </button>
-          </form>
+          </div>
         </div>
       );
     }
