@@ -502,11 +502,11 @@ div.comment.depth1 {
 }
 
 div.comment.depth2 {
-  margin-left: 60px;
+  margin-left: 70px;
 }
 
 div.comment.depth3 {
-  margin-left: 85px;
+  margin-left: 105px;
 }
 
 .modalBackground {
@@ -607,4 +607,46 @@ div.comment.depth3 {
 .creating {
   padding-right: 0;
   padding-left: 0;
+}
+
+.cardContainer {
+  width: 50vh;
+  height: 25vh;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  border: solid 1px #dedede;
+  border-radius: 10px;
+  justify-content: space-around;
+  align-items: center;
+  padding: 25px;
+}
+
+.card--left,
+.card--right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+  justify-content: center;
+}
+
+.card--left {
+  align-items: center;
+}
+
+.card--right {
+  justify-content: space-around;
+}
+
+.card {
+  font-size: 150px;
+}
+
+.cardButton {
+  height: 20%;
+}
+
+.cardFont {
+  font-size: 22px;
 }

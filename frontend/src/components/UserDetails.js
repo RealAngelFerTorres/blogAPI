@@ -4,6 +4,7 @@ import '../styles/style.css';
 import { isAuthenticated, getUserDetails } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import { useParams } from 'react-router-dom';
+import { DateTime } from 'luxon';
 
 function UserDetails() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -43,19 +44,36 @@ function UserDetails() {
       return <div>You need to be logged-in to see this page.</div>;
     } else if (currentUser) {
       return (
-        <div className='user' id={user.id}>
-          <div className='user__name'>
-            <Link to={user.url}>{user.username}</Link>
+        <div className='cardContainer' id={user.id}>
+          <div className='card--left'>
+            <div className='material-icons card'>person</div>{' '}
+            <Link className='username' to={user.url}>
+              {user.username}
+            </Link>
           </div>
-          <div className='user__createTime'>Member since {user.createTime}</div>
-          <div className='user__title'>Karma: {user.karma}</div>
-          <div className='user__membershipStatus'>
-            Membership status: {user.membershipStatus}
+          <div className='card--right'>
+            <div className='user__createTime'>
+              <div>Member since:</div>
+              <div className='cardFont'>
+                {DateTime.fromISO(user.createTime).toLocaleString(
+                  DateTime.DATE_FULL
+                )}
+              </div>
+            </div>
+            <div className='user__title'>
+              <div>Karma:</div>
+              <div className='cardFont'>{user.karma}</div>
+            </div>
+            <div className='user__membershipStatus'>
+              <div>Membership status:</div>
+              <div className='cardFont'>{user.membershipStatus}</div>
+            </div>
+            {currentUser.id === user.id ? (
+              <button className='button cardButton' onClick={manageDrafts}>
+                View unpublished posts
+              </button>
+            ) : null}
           </div>
-
-          {currentUser.id === user.id ? (
-            <button onClick={manageDrafts}>View unpublished posts</button>
-          ) : null}
         </div>
       );
     }
