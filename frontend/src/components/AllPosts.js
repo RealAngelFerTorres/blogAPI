@@ -38,7 +38,7 @@ function AllPosts() {
                 {post.editTime.includes('1970-01-01') ? null : (
                   // Conditional rendering. 1970-01-01 is considered a null date.
                   <div className='post__editTime'>
-                    - Edited:{' '}
+                    &nbsp;· Edited:{' '}
                     {DateTime.fromISO(post.editTime).toLocaleString(
                       DateTime.DATETIME_MED
                     )}
@@ -48,7 +48,12 @@ function AllPosts() {
               <div className='post__title'>
                 <Link to={post.url}>{post.title}</Link>
               </div>
-              <div className='post__text'>{post.text}</div>
+              <div
+                className='post__text'
+                dangerouslySetInnerHTML={{
+                  __html: post.text,
+                }}
+              ></div>
               <div className='post__interactions'>
                 <div className='post__interactions--karma'>
                   <div>
