@@ -53,20 +53,20 @@ function UserDetails() {
           </div>
           <div className='card--right'>
             <div className='user__createTime'>
-              <div>Member since:</div>
-              <div className='cardFont'>
+              <div className='cardFont--small'>Member since:</div>
+              <div className='cardFont--medium'>
                 {DateTime.fromISO(user.createTime).toLocaleString(
                   DateTime.DATE_FULL
                 )}
               </div>
             </div>
             <div className='user__title'>
-              <div>Karma:</div>
-              <div className='cardFont'>{user.karma}</div>
+              <div className='cardFont--small'>Karma:</div>
+              <div className='cardFont--medium'>{user.karma}</div>
             </div>
             <div className='user__membershipStatus'>
-              <div>Membership status:</div>
-              <div className='cardFont'>{user.membershipStatus}</div>
+              <div className='cardFont--small'>Membership status:</div>
+              <div className='cardFont--medium'>{user.membershipStatus}</div>
             </div>
             {currentUser.id === user.id ? (
               <button className='button cardButton' onClick={manageDrafts}>

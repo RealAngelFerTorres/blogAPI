@@ -93,6 +93,8 @@ export default function Signup() {
     } else if (currentUser) {
       return (
         <div className='createNewPost'>
+          <div className='subtitle'>New post</div>
+
           <TextareaAutosize
             className='edit__title edit'
             type='text'
