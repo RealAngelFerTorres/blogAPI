@@ -51,11 +51,13 @@ export default function Signup() {
   }, []);
 
   return (
-    <div className='register'>
-      <form onSubmit={submitForm}>
+    <div className='cardContainer register'>
+      <div className='subtitle'>User registration</div>
+      <form className='card--center' onSubmit={submitForm}>
         <div>
-          <label>Username</label>
+          <div className='cardFont--small'>Username:</div>
           <input
+            className='cardFont--medium'
             type='text'
             name='username'
             required
@@ -63,8 +65,9 @@ export default function Signup() {
           />
         </div>
         <div>
-          <label>Email</label>
+          <div className='cardFont--small'>Email:</div>
           <input
+            className='cardFont--medium'
             type='email'
             name='email'
             maxLength={50}
@@ -73,8 +76,9 @@ export default function Signup() {
           />
         </div>
         <div>
-          <label>Password:</label>
+          <div className='cardFont--small'>Password:</div>
           <input
+            className='cardFont--medium'
             type='password'
             name='password'
             maxLength={100}
@@ -83,8 +87,9 @@ export default function Signup() {
           />
         </div>
         <div>
-          <label>Confirm password:</label>
+          <div className='cardFont--small'>Confirm password:</div>
           <input
+            className='cardFont--medium'
             type='password'
             name='confirmPassword'
             maxLength={100}
@@ -92,9 +97,11 @@ export default function Signup() {
             onChange={handleFormChange}
           />
         </div>
-        <button className='submitButton' type='submit'>
-          Register
-        </button>
+        <div className='bottomOption'>
+          <button className='button registerButton' type='submit'>
+            Register
+          </button>
+        </div>
       </form>
     </div>
   );
