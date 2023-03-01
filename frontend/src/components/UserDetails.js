@@ -69,7 +69,7 @@ function UserDetails() {
               <div className='cardFont--medium'>{user.membershipStatus}</div>
             </div>
             {currentUser.id === user.id ? (
-              <button className='button cardButton' onClick={manageDrafts}>
+              <button className='button userCardButton' onClick={manageDrafts}>
                 View unpublished posts
               </button>
             ) : null}

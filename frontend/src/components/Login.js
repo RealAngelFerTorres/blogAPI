@@ -53,27 +53,32 @@ function Login() {
   }, []);
 
   return (
-    <div className='login'>
-      <form onSubmit={submitForm}>
+    <div className='cardContainer login'>
+      <div className='subtitle'>User login</div>
+      <form className='card--center' onSubmit={submitForm}>
         <div>
-          <label>Username</label>
+          <div className='cardFont--small'>Username</div>
           <input
+            className='cardFont--medium'
             type='text'
             name='username'
             onChange={handleFormChange}
           ></input>
         </div>
         <div>
-          <label>Password:</label>
+          <div className='cardFont--small'>Password:</div>
           <input
+            className='cardFont--medium'
             type='password'
             name='password'
             onChange={handleFormChange}
           ></input>
         </div>
-        <button className='submitButton' type='submit'>
-          Login
-        </button>
+        <div className='bottomOption'>
+          <button className='button cardButton' type='submit'>
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -98,7 +98,7 @@ export default function Signup() {
           />
         </div>
         <div className='bottomOption'>
-          <button className='button registerButton' type='submit'>
+          <button className='button cardButton' type='submit'>
             Register
           </button>
         </div>
