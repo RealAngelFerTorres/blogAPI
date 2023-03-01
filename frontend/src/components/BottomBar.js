@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import githubIcon from '../images/GitHubIcon.png';
 
 function BottomBar() {
   const scrollToTop = () => {
@@ -31,7 +32,8 @@ function BottomBar() {
           onClick={goToGithub}
           title='https://github.com/RealAngelFerTorres'
         >
-          Web design by RealAngelFerTorres
+          Web created by RealAngelFerTorres
+          <img className='githubIcon' src={githubIcon} alt='GitHub icon' />
         </div>
         <div className='option' onClick={goToAbout}>
           ABOUT
@@ -45,6 +47,7 @@ function BottomBar() {
         <div
           className='option material-icons'
           id='upArrow'
+          title='Go to top'
           onClick={scrollToTop}
         >
           arrow_upward

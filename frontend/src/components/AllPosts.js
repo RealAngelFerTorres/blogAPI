@@ -49,11 +49,14 @@ function AllPosts() {
                 <Link to={post.url}>{post.title}</Link>
               </div>
               <div
-                className='post__text'
+                className='post__text gradient'
                 dangerouslySetInnerHTML={{
                   __html: post.text,
                 }}
               ></div>
+              <Link className='button--grey continue' to={post.url}>
+                Continue reading »
+              </Link>
               <div className='post__interactions'>
                 <div className='post__interactions--karma'>
                   <div>

@@ -309,6 +309,12 @@ a:hover {
   text-align: justify;
   white-space: pre-line;
   word-break: break-word;
+  overflow-y: hidden;
+}
+
+.gradient {
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent);
+  max-height: 25vh;
 }
 
 .edit {
@@ -501,6 +507,15 @@ a:hover {
   background-color: #e3e3e3;
 }
 
+.continue {
+  width: fit-content;
+  margin-left: 34px;
+}
+
+.continue:hover {
+  color: #878a8c;
+}
+
 div.comment.depth1 {
   margin-left: 35px;
 }
@@ -606,6 +621,11 @@ div.comment.depth3 {
 
 #upArrow {
   color: grey;
+}
+
+.githubIcon {
+  height: 25px;
+  margin-left: 5px;
 }
 
 .creating {
