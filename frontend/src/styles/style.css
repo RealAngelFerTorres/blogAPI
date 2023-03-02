@@ -246,6 +246,7 @@ input {
   border-radius: 10px;
   border-color: #dedede;
   width: 100%;
+  box-shadow: rgba(228, 228, 228, 0.384) 3px 3px;
 }
 
 .post__author {
@@ -640,7 +641,8 @@ div.comment.depth3 {
   padding-left: 0;
 }
 
-.cardContainer {
+.cardContainer,
+.about {
   width: 50vh;
   height: 45vh;
   display: flex;
@@ -654,16 +656,47 @@ div.comment.depth3 {
   background-color: white;
 }
 
+.userDetails {
+  flex-direction: row;
+  height: 25vh;
+}
+
 .register {
-  display: flex;
-  flex-direction: column;
   height: 45vh;
 }
 
 .login {
+  height: 30vh;
+}
+
+.about {
+  height: 55vh;
+  width: 60vh;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+}
+
+.card {
   display: flex;
   flex-direction: column;
-  height: 35vh;
+  border: solid 1px #dedede;
+  border-radius: 10px;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  row-gap: 10px;
+  flex: 1 1 0;
+}
+
+.card__upper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 5px;
 }
 
 .cardButton {
@@ -695,7 +728,7 @@ div.comment.depth3 {
   justify-content: space-around;
 }
 
-.card {
+.icon--big {
   font-size: 150px;
 }
 

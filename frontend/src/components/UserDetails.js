@@ -44,9 +44,9 @@ function UserDetails() {
       return <div>You need to be logged-in to see this page.</div>;
     } else if (currentUser) {
       return (
-        <div className='cardContainer' id={user.id}>
+        <div className='cardContainer userDetails' id={user.id}>
           <div className='card--left'>
-            <div className='material-icons card'>person</div>{' '}
+            <div className='material-icons icon--big'>person</div>{' '}
             <Link className='username' to={user.url}>
               {user.username}
             </Link>

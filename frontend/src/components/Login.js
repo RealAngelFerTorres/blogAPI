@@ -57,7 +57,7 @@ function Login() {
       <div className='subtitle'>User login</div>
       <form className='card--center' onSubmit={submitForm}>
         <div>
-          <div className='cardFont--small'>Username</div>
+          <div className='cardFont--small'>Username:</div>
           <input
             className='cardFont--medium'
             type='text'

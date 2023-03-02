@@ -38,9 +38,6 @@ function BottomBar() {
         <div className='option' onClick={goToAbout}>
           ABOUT
         </div>
-        <div className='option' onClick={goToFAQ}>
-          FAQ
-        </div>
         <div className='option' onClick={goToContact}>
           CONTACT
         </div>
