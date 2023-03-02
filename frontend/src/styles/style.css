@@ -642,7 +642,8 @@ div.comment.depth3 {
 }
 
 .cardContainer,
-.about {
+.about,
+.contact {
   width: 50vh;
   height: 45vh;
   display: flex;
@@ -654,6 +655,11 @@ div.comment.depth3 {
   align-items: center;
   padding: 35px;
   background-color: white;
+}
+
+.githubIcon--contact {
+  color: var(--icons-color);
+  font-size: 30px;
 }
 
 .userDetails {
@@ -672,6 +678,11 @@ div.comment.depth3 {
 .about {
   height: 55vh;
   width: 60vh;
+}
+
+.contact {
+  height: 35vh;
+  width: 40vh;
 }
 
 .cardsContainer {
@@ -726,6 +737,21 @@ div.comment.depth3 {
 
 .card--right {
   justify-content: space-around;
+}
+
+.card__contact {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.card__contact div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .icon--big {

@@ -52,7 +52,7 @@ export default function Signup() {
 
   return (
     <div className='cardContainer register'>
-      <div className='subtitle'>User registration</div>
+      <div className='subtitle'>Registration</div>
       <form className='card--center' onSubmit={submitForm}>
         <div>
           <div className='cardFont--small'>Username:</div>

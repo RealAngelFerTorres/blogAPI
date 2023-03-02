@@ -54,7 +54,7 @@ function Login() {
 
   return (
     <div className='cardContainer login'>
-      <div className='subtitle'>User login</div>
+      <div className='subtitle'>Login</div>
       <form className='card--center' onSubmit={submitForm}>
         <div>
           <div className='cardFont--small'>Username:</div>

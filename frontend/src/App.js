@@ -10,6 +10,7 @@ import UserDetails from './components/UserDetails';
 import UserDrafts from './components/UserDrafts';
 import NavBar from './components/NavBar';
 import About from './components/About';
+import Contact from './components/Contact';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Error from './components/Error';
@@ -33,6 +34,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/error' element={<Error />} />
+            <Route path='/contact' element={<Contact />} />
           </Routes>
         </div>
         <BottomBar></BottomBar>

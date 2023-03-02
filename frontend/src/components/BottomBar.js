@@ -14,9 +14,6 @@ function BottomBar() {
   const goToAbout = () => {
     navigate('/about');
   };
-  const goToFAQ = () => {
-    navigate('/faq');
-  };
   const goToContact = () => {
     navigate('/contact');
   };
