@@ -109,6 +109,7 @@ function SinglePost() {
         comments: copyArray,
       };
       setPost(copyState);
+      setCommentForm({ text: '' });
       return;
     }
     manageResponse(response);
@@ -484,6 +485,7 @@ function SinglePost() {
               minLength={1}
               maxLength={500}
               required
+              value={commentForm.text}
               onChange={handleCommentFormChange}
             ></TextareaAutosize>
             <button className='button comment__button' onClick={submitComment}>
