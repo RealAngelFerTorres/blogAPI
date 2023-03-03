@@ -280,10 +280,14 @@ input {
 
 .username {
   font-weight: bold;
-  overflow-x: scroll;
   white-space: nowrap;
-  max-width: 80%;
   text-overflow: ellipsis;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+.comment__author {
+  max-width: 50%;
 }
 
 .post__dates {
