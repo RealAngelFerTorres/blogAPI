@@ -49,9 +49,14 @@ function NavBar(props) {
         <Link to='/about' className='option'>
           <div>About</div>
         </Link>
-        {!currentUser ? (
+        {currentUser ? null : (
           <Link to='/signup' className='option'>
             <div>Register</div>
+          </Link>
+        )}
+        {currentUser ? (
+          <Link to={currentUser.url} className='option'>
+            <div>Profile</div>
           </Link>
         ) : null}
         {currentUser ? (
