@@ -178,6 +178,7 @@ function SinglePost() {
 
     const form = {
       postID: post.id,
+      postAuthor: post.author.id,
       voteType: e.target.value,
       userID: currentUser.id,
     };

@@ -292,7 +292,7 @@ exports.post_vote_post = function (req, res, next) {
       );
     }
 
-    // Update post votes quantity based on user input.
+    // Prepare updateType variable to update post's votes quantity based on user input.
     let updateType = foundVote
       ? foundVote.voteType === parseInt(req.body.voteType)
         ? req.body.voteType === '1'
@@ -305,16 +305,41 @@ exports.post_vote_post = function (req, res, next) {
       ? { upvotes: 1 }
       : { downvotes: 1 };
 
-    Post.findByIdAndUpdate(req.params.id, {
-      $inc: updateType,
+    // Prepare karmaUpdater variable to update author's post karma.
+    if (
+      JSON.stringify(updateType) === JSON.stringify({ upvotes: 1 }) ||
+      JSON.stringify(updateType) === JSON.stringify({ downvotes: 1 })
+    ) {
+      karmaUpdater = parseInt(req.body.voteType);
+    } else if (
+      JSON.stringify(updateType) === JSON.stringify({ upvotes: -1 }) ||
+      JSON.stringify(updateType) === JSON.stringify({ downvotes: -1 })
+    ) {
+      karmaUpdater = -parseInt(req.body.voteType);
+    } else {
+      karmaUpdater = parseInt(req.body.voteType) * 2;
+    }
+
+    User.findByIdAndUpdate(req.body.postAuthor, {
+      $inc: { karmaPosts: karmaUpdater },
     }).exec(function (err, results) {
       if (err || results == null) {
-        var err = new Error('Post not found!');
+        var err = new Error('User not found!');
         err.status = 404;
-        console.error('Error - Post not found!');
+        console.error('Error - User not found!');
         return next(err);
       }
-      res.status(200).json({ status: 'OK', data: results });
+      Post.findByIdAndUpdate(req.params.id, {
+        $inc: updateType,
+      }).exec(function (err, results) {
+        if (err || results == null) {
+          var err = new Error('Post not found!');
+          err.status = 404;
+          console.error('Error - Post not found!');
+          return next(err);
+        }
+        res.status(200).json({ status: 'OK', data: results });
+      });
     });
   });
 };
