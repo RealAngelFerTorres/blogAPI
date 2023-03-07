@@ -108,6 +108,7 @@ exports.post_detail_get = function (req, res, next) {
           commentQuantity: commentQuantity,
         };
         res.json({
+          status: 'OK',
           data: results,
         });
       });

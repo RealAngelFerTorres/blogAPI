@@ -25,6 +25,7 @@ function SinglePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDownvote, setIsDownvote] = useState(false);
   const [isUpvote, setIsUpvote] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [postForm, setPostForm] = useState({
     title: '',
     text: '',
@@ -234,15 +235,23 @@ function SinglePost() {
   }, [currentUser, post]);
 
   useEffect(() => {
-    getSinglePost(url.id).then((e) => {
-      setPost(e.data);
-      setUpdatedKarma(e.data.karma);
-    });
+    const async = async () => {
+      const response = await getSinglePost(url.id);
+      if (response.status === 'OK') {
+        setPost(response.data);
+        setUpdatedKarma(response.data.karma);
+      }
+      setIsLoading(false);
+    };
+    async();
   }, []);
 
-  if (!post) {
+  if (isLoading) {
     return <div>Loading post...</div>;
   } else {
+    if (!post) {
+      return <div>Post not found.</div>;
+    }
     return (
       <div className='postContainer'>
         <div
