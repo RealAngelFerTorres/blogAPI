@@ -108,6 +108,7 @@ function SinglePost() {
       copyState = {
         ...copyState,
         comments: copyArray,
+        commentQuantity: copyState.commentQuantity + 1,
       };
       setPost(copyState);
       setCommentForm({ text: '' });
