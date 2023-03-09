@@ -6,7 +6,7 @@ function Logout() {
 
   useEffect(() => {
     localStorage.removeItem('token');
-    navigate('/');
+    navigate('/login'); //TODING ACA
   }, []);
 
   return <div className='logout'>{`See you! :)`}</div>;
