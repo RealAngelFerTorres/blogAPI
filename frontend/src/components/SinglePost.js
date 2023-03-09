@@ -235,16 +235,20 @@ function SinglePost() {
   }, [currentUser, post]);
 
   useEffect(() => {
-    const async = async () => {
-      const response = await getSinglePost(url.id);
-      if (response.status === 'OK') {
-        setPost(response.data);
-        setUpdatedKarma(response.data.karma);
-      }
-      setIsLoading(false);
-    };
-    async();
-  }, []);
+    if (currentUser !== undefined) {
+      const async = async () => {
+        const response = await getSinglePost(url.id, {
+          userID: currentUser.id ?? null,
+        });
+        if (response.status === 'OK') {
+          setPost(response.data);
+          setUpdatedKarma(response.data.karma);
+        }
+        setIsLoading(false);
+      };
+      async();
+    }
+  }, [currentUser]);
 
   if (isLoading) {
     return <div>Loading post...</div>;

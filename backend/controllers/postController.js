@@ -52,7 +52,7 @@ exports.post_create_post = [
 ];
 
 // Handle Post detail on GET.
-exports.post_detail_get = function (req, res, next) {
+exports.post_detail_post = function (req, res, next) {
   Post.findById(req.params.id)
     .populate('author', 'username')
     .populate({
@@ -83,7 +83,12 @@ exports.post_detail_get = function (req, res, next) {
       ],
     })
     .exec(function (err, results) {
-      if (err || results == null) {
+      // The third statement: check is for show drafts (unpublished) only to post's author
+      if (
+        err ||
+        results == null ||
+        (!results.published && results.author.id !== req.body.userID)
+      ) {
         var err = new Error('Post not found!');
         err.status = 404;
         console.error('Error - Post not found!');

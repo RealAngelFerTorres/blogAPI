@@ -20,9 +20,15 @@ export async function getAllPosts() {
   }
 }
 
-export async function getSinglePost(id) {
+export async function getSinglePost(id, form) {
   try {
-    const response = await fetch(`/post/${id}`);
+    const response = await fetch(`/post/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
     return await response.json();
   } catch (error) {
     console.log('There was a problem fetching the data:', error);
