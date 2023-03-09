@@ -17,7 +17,7 @@ function NavBar(props) {
     e.preventDefault();
     localStorage.removeItem('token');
     setCurrentUser('');
-    navigate(0);
+    navigate('/login');
   };
 
   useEffect(() => {
