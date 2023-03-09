@@ -10,7 +10,10 @@ const jwt = require('jsonwebtoken');
 
 // Handle User detail on GET.
 exports.user_detail_get = function (req, res, next) {
-  User.findById(req.params.id).exec(function (err, results) {
+  User.findById(
+    req.params.id,
+    'username createTime membershipStatus karmaComments karmaPosts votedPosts'
+  ).exec(function (err, results) {
     if (err || results == null) {
       var err = new Error('User not found!');
       err.status = 404;
