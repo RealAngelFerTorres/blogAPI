@@ -49,8 +49,12 @@ exports.user_signup_post = [
     .withMessage('Username must not be empty.')
     .isLength({ max: 40 })
     .withMessage('Username max. characters is 40.')
+    .isAlphanumeric()
+    .withMessage(`Username can have only alphanumeric characters.`)
     .custom(async (value) => {
-      const results = await User.find({ username: value });
+      const results = await User.find({
+        username: { $regex: value, $options: 'i' }, // i = case insensitive
+      });
       if (results.length > 0) {
         return Promise.reject();
       }
@@ -59,12 +63,15 @@ exports.user_signup_post = [
     .escape(),
   body('email')
     .trim()
+    .normalizeEmail()
     .isEmail()
     .withMessage('Please input a valid e-mail.')
     .isLength({ max: 50 })
     .withMessage('E-mail max. characters is 50.')
     .custom(async (value) => {
-      const results = await User.find({ email: value });
+      const results = await User.find({
+        email: { $regex: value, $options: 'i' }, // i = case insensitive
+      });
       if (results.length > 0) {
         return Promise.reject();
       }

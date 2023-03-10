@@ -12,26 +12,29 @@ var SESSION_SECRET = process.env.SESSION_SECRET;
 // PassportJS Local strategy.
 passport.use(
   new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
-      }
-      bcrypt.compare(password, user.password, (err, res) => {
-        if (res) {
-          // Removes sensitive data before returning the json.
-          user.password = undefined;
-          user.email = undefined;
-          // Passwords match. Log user in
-          return done(null, user, { message: 'Logged in successfully' });
-        } else {
-          // Passwords do not match.
-          return done(null, false, { message: 'Incorrect password' });
+    User.findOne(
+      { username: { $regex: username, $options: 'i' } }, // i = case insensitive
+      (err, user) => {
+        if (err) {
+          return done(err);
         }
-      });
-    });
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username' });
+        }
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (res) {
+            // Removes sensitive data before returning the json.
+            user.password = undefined;
+            user.email = undefined;
+            // Passwords match. Log user in
+            return done(null, user, { message: 'Logged in successfully' });
+          } else {
+            // Passwords do not match.
+            return done(null, false, { message: 'Incorrect password' });
+          }
+        });
+      }
+    );
   })
 );
 
