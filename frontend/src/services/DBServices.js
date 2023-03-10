@@ -22,7 +22,7 @@ export async function getAllPosts() {
 
 export async function getSinglePost(id, form) {
   try {
-    const response = await fetch(`/post/${id}`, {
+    const response = await fetch(`/post/${id}/detail`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

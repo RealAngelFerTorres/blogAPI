@@ -51,7 +51,7 @@ exports.post_create_post = [
   },
 ];
 
-// Handle Post detail on GET.
+// Handle Post detail on POST.
 exports.post_detail_post = function (req, res, next) {
   Post.findById(req.params.id)
     .populate('author', 'username')

@@ -13,7 +13,7 @@ router.route('/home').get(home_controller.home_get);
 
 // POST ROUTES
 
-router.route('/post/:id').post(post_controller.post_detail_post);
+router.route('/post/:id/detail').post(post_controller.post_detail_post);
 
 router
   .route('/post/:id/vote')
