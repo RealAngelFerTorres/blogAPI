@@ -82,6 +82,7 @@ function SinglePost() {
         ...copyState,
         title: postForm.title,
         text: postForm.text,
+        published: postForm.published,
       };
       setPost(copyState);
       setIsEditing(false);
