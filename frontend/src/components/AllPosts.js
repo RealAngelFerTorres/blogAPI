@@ -5,15 +5,17 @@ import { getAllPosts } from '../services/DBServices';
 import { DateTime } from 'luxon';
 
 function AllPosts() {
+  const [isLoading, setIsLoading] = useState(true);
   const [allPosts, setAllPosts] = useState([]);
 
   useEffect(() => {
     getAllPosts().then((e) => {
       setAllPosts(e.data);
+      setIsLoading(false);
     });
   }, []);
 
-  if (!allPosts) {
+  if (isLoading) {
     return <div>Loading all posts...</div>;
   } else {
     return (
