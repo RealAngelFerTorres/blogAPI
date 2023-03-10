@@ -31,7 +31,7 @@ function Comment(props) {
     }
     if (response.errors) {
       response.errors.forEach((error) => {
-        console.log(error.msg);
+        alert(error.msg);
       });
     }
   };

@@ -33,7 +33,7 @@ export default function Signup() {
     response.status === 'OK'
       ? navigate('/login')
       : response.errors.forEach((error) => {
-          console.log(error.msg);
+          alert(error.msg);
         });
   };
 

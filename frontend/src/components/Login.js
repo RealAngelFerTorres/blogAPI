@@ -35,7 +35,7 @@ function Login() {
       setCurrentUser(response.user);
       navigate('/');
     } else {
-      console.log('Incorrect username and/or password.');
+      alert('Incorrect username and/or password.');
     }
   };
 
