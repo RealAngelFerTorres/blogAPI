@@ -62,6 +62,7 @@ function Login() {
             className='cardFont--medium'
             type='text'
             name='username'
+            required
             onChange={handleFormChange}
           ></input>
         </div>
@@ -71,6 +72,7 @@ function Login() {
             className='cardFont--medium'
             type='password'
             name='password'
+            required
             onChange={handleFormChange}
           ></input>
         </div>
