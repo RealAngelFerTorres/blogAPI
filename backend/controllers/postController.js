@@ -41,11 +41,32 @@ exports.post_create_post = [
         if (err) {
           return next(err);
         }
-        // Successful - Send URL.
-        res.status(200).json({
-          status: 'OK',
-          url: newPost.url,
-        });
+        // Upvote the created post
+        User.findByIdAndUpdate(
+          req.body.author,
+          {
+            $push: {
+              votedPosts: {
+                postID: newPost.id,
+                voteType: 1,
+              },
+            },
+          },
+          { safe: true },
+          function (err, results) {
+            if (err || results == null) {
+              return res.status(404).json({
+                err,
+              });
+            }
+            // Successful - Send URL.
+            res.status(200).json({
+              status: 'OK',
+              url: newPost.url,
+              newID: newPost.id,
+            });
+          }
+        );
       });
     }
   },

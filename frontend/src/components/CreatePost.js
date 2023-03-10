@@ -58,6 +58,16 @@ export default function Signup() {
 
     const response = await createNewPost(copyState);
     if (response.url) {
+      // Creation is OK. Upvote the post
+      let copy = currentUser;
+      copy = {
+        ...copy,
+        votedPosts: copy.votedPosts.concat({
+          postID: response.newID,
+          voteType: 1,
+        }),
+      };
+      setCurrentUser(copy);
       navigate(response.url);
       return;
     }
