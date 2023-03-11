@@ -5,6 +5,7 @@ import { isAuthenticated, getUserDetails } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import { useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
+import Spinner from './Spinner';
 
 function UserDetails() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -36,7 +37,7 @@ function UserDetails() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading user data...</div>;
+    return <Spinner></Spinner>;
   } else {
     if (user === false) {
       return <div>User not found.</div>;

@@ -4,6 +4,7 @@ import '../styles/style.css';
 import { getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import { DateTime } from 'luxon';
+import Spinner from './Spinner';
 
 export default function UserDrafts() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -35,7 +36,7 @@ export default function UserDrafts() {
   }, [currentUser]);
 
   if (isLoading) {
-    return <div>Loading drafts...</div>;
+    return <Spinner></Spinner>;
   } else if (currentUser && allDrafts.length === 0) {
     return <div>You don't have any drafts...</div>;
   } else {

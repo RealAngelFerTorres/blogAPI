@@ -8,6 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import UserContext from '../services/UserContext';
+import Spinner from './Spinner';
 import {
   getSinglePost,
   createNewComment,
@@ -253,7 +254,7 @@ function SinglePost() {
   }, [currentUser]);
 
   if (isLoading) {
-    return <div>Loading post...</div>;
+    return <Spinner></Spinner>;
   } else {
     if (!post) {
       return <div>Post not found.</div>;

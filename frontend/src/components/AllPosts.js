@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/style.css';
 import { getAllPosts } from '../services/DBServices';
 import { DateTime } from 'luxon';
+import Spinner from './Spinner';
 
 function AllPosts() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +17,7 @@ function AllPosts() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading all posts...</div>;
+    return <Spinner></Spinner>;
   } else {
     return (
       <div className='allPosts'>

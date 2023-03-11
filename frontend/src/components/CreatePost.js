@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { createNewPost, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import TextareaAutosize from 'react-textarea-autosize';
+import Spinner from './Spinner';
 
 export default function Signup() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -96,7 +97,7 @@ export default function Signup() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading page...</div>;
+    return <Spinner></Spinner>;
   } else {
     if (currentUser === '') {
       return <div>You need to be logged-in to see this page.</div>;
