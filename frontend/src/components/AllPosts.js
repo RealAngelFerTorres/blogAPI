@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 import { getAllPosts } from '../services/DBServices';
 import { DateTime } from 'luxon';
@@ -8,12 +8,20 @@ import Spinner from './Spinner';
 function AllPosts() {
   const [isLoading, setIsLoading] = useState(true);
   const [allPosts, setAllPosts] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
-    getAllPosts().then((e) => {
-      setAllPosts(e.data);
+    const async = async () => {
+      let response = await getAllPosts();
+      if (!response) {
+        navigate('/error');
+        return;
+      }
+      setAllPosts(response.data);
       setIsLoading(false);
-    });
+    };
+
+    async();
   }, []);
 
   if (isLoading) {

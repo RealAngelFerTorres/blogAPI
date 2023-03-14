@@ -784,7 +784,18 @@ div.comment.depth3 {
   font-size: 50px;
 }
 
-/* Loading spinner */
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.cloud {
+  font-size: 200px;
+}
+
+/* Loading spinner ↓↓↓ */
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -840,4 +851,4 @@ div.comment.depth3 {
     transform: translate(24px, 0);
   }
 }
-/* Loading spinner ^ */
+/* Loading spinner ↑↑↑ */

@@ -86,6 +86,11 @@ export default function Signup() {
   useEffect(() => {
     const checkLoggedIn = async () => {
       let response = await isAuthenticated();
+      if (!response) {
+        setCurrentUser('');
+        navigate('/error');
+        return;
+      }
       if (response.user === false) {
         response.user = '';
       }

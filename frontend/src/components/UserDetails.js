@@ -22,6 +22,11 @@ function UserDetails() {
   useEffect(() => {
     const async = async () => {
       const response = await getUserDetails(url.id);
+      if (!response) {
+        setCurrentUser('');
+        navigate('/error');
+        return;
+      }
       if (response.status === 'OK') {
         setUser(response.data);
       }

@@ -7,7 +7,7 @@ export async function isAuthenticated() {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to authenticate:', error);
+    console.debug('There was a problem when trying to authenticate.', error);
   }
 }
 
@@ -16,7 +16,7 @@ export async function getAllPosts() {
     const response = await fetch('/home');
     return await response.json();
   } catch (error) {
-    alert('There was a problem fetching the data:', error);
+    console.debug('There was a problem fetching the data.', error);
   }
 }
 
@@ -31,7 +31,7 @@ export async function getSinglePost(id, form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem fetching the data:', error);
+    console.debug('There was a problem fetching the data.', error);
   }
 }
 
@@ -47,7 +47,7 @@ export async function createNewPost(form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to create new post:', error);
+    console.debug('There was a problem when trying to create new post.', error);
   }
 }
 
@@ -63,7 +63,10 @@ export async function createNewComment(form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to create new comment:', error);
+    console.debug(
+      'There was a problem when trying to create new comment.',
+      error
+    );
   }
 }
 
@@ -79,7 +82,10 @@ export async function createNewReply(form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to create new comment:', error);
+    console.debug(
+      'There was a problem when trying to create new comment.',
+      error
+    );
   }
 }
 
@@ -118,7 +124,7 @@ export async function deletePost(id) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to delete post:', error);
+    console.debug('There was a problem when trying to delete post.', error);
   }
 }
 
@@ -133,7 +139,7 @@ export async function deleteComment(id) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to delete post:', error);
+    console.debug('There was a problem when trying to delete post.', error);
   }
 }
 
@@ -147,7 +153,7 @@ export async function getUserDetails(id) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem fetching the data:', error);
+    console.debug('There was a problem fetching the data.', error);
   }
 }
 
@@ -161,7 +167,7 @@ export async function getAllDrafts(id) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem fetching the data:', error);
+    console.debug('There was a problem fetching the data.', error);
   }
 }
 
@@ -176,7 +182,7 @@ export async function loginUser(form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to login:', error);
+    console.debug('There was a problem when trying to login.', error);
   }
 }
 
@@ -191,7 +197,7 @@ export async function signupUser(form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to signup:', error);
+    console.debug('There was a problem when trying to signup.', error);
   }
 }
 
@@ -207,6 +213,6 @@ export async function sendVote(form) {
     });
     return await response.json();
   } catch (error) {
-    alert('There was a problem when trying to vote:', error);
+    console.debug('There was a problem when trying to vote.', error);
   }
 }

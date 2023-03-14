@@ -17,6 +17,11 @@ export default function UserDrafts() {
     if (currentUser !== undefined) {
       const async = async () => {
         const response = await getAllDrafts(currentUser.id);
+        if (!response) {
+          setCurrentUser('');
+          navigate('/error');
+          return;
+        }
         setIsLoading(false);
 
         if (response.status === 'OK') {

@@ -243,6 +243,11 @@ function SinglePost() {
         const response = await getSinglePost(url.id, {
           userID: currentUser.id ?? null,
         });
+        if (!response) {
+          setCurrentUser('');
+          navigate('/error');
+          return;
+        }
         if (response.status === 'OK') {
           setPost(response.data);
           setUpdatedKarma(response.data.karma);

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { loginUser, isAuthenticated } from '../services/DBServices';
-
 import UserContext from '../services/UserContext';
+import Spinner from './Spinner';
 
 function Login() {
+  const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useContext(UserContext);
 
   const [form, setForm] = useState({
@@ -42,48 +42,58 @@ function Login() {
   useEffect(() => {
     const checkLoggedIn = async () => {
       let response = await isAuthenticated();
+      if (!response) {
+        setCurrentUser('');
+        navigate('/error');
+        return;
+      }
       if (response.user === false) {
         response.user = '';
       }
       setCurrentUser(response.user);
       if (response.user) navigate('/');
+      setIsLoading(false);
     };
 
     checkLoggedIn();
   }, []);
 
-  return (
-    <div className='cardContainer login'>
-      <div className='subtitle'>Login</div>
-      <form className='card--center' onSubmit={submitForm}>
-        <div>
-          <div className='cardFont--small'>Username:</div>
-          <input
-            className='cardFont--medium'
-            type='text'
-            name='username'
-            required
-            onChange={handleFormChange}
-          ></input>
-        </div>
-        <div>
-          <div className='cardFont--small'>Password:</div>
-          <input
-            className='cardFont--medium'
-            type='password'
-            name='password'
-            required
-            onChange={handleFormChange}
-          ></input>
-        </div>
-        <div className='bottomOption'>
-          <button className='button cardButton' type='submit'>
-            Login
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+  if (isLoading) {
+    return <Spinner></Spinner>;
+  } else {
+    return (
+      <div className='cardContainer login'>
+        <div className='subtitle'>Login</div>
+        <form className='card--center' onSubmit={submitForm}>
+          <div>
+            <div className='cardFont--small'>Username:</div>
+            <input
+              className='cardFont--medium'
+              type='text'
+              name='username'
+              required
+              onChange={handleFormChange}
+            ></input>
+          </div>
+          <div>
+            <div className='cardFont--small'>Password:</div>
+            <input
+              className='cardFont--medium'
+              type='password'
+              name='password'
+              required
+              onChange={handleFormChange}
+            ></input>
+          </div>
+          <div className='bottomOption'>
+            <button className='button cardButton' type='submit'>
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 }
 
 export default Login;
