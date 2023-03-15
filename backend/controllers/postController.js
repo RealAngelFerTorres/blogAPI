@@ -18,7 +18,9 @@ exports.post_create_post = [
     .isLength({ min: 1 })
     .withMessage('Post content area must not be empty.')
     .isLength({ max: 5000 })
-    .withMessage('Post content max. characters is 5000.'),
+    .withMessage(
+      'Post content max. characters is 5000 (formatting is expensive).'
+    ),
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.

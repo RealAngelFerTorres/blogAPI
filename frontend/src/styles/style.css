@@ -795,6 +795,16 @@ div.comment.depth3 {
   font-size: 200px;
 }
 
+.errorPopupContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #ecd8e4;
+}
+
+.errorMessages {
+  color: var(--icons-color);
+}
+
 /* Loading spinner ↓↓↓ */
 .lds-ellipsis {
   display: inline-block;

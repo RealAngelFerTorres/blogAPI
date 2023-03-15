@@ -50,7 +50,9 @@ exports.user_signup_post = [
     .isLength({ max: 40 })
     .withMessage('Username max. characters is 40.')
     .isAlphanumeric()
-    .withMessage(`Username can have only alphanumeric characters.`)
+    .withMessage(
+      `Username can only have alphanumeric characters (numbers and letters only).`
+    )
     .custom(async (value) => {
       const results = await User.find({
         username: { $regex: value, $options: 'i' }, // i = case insensitive

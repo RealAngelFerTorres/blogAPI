@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import Spinner from './Spinner';
+import ErrorMessages from './ErrorMessages';
 
 function Login() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const [form, setForm] = useState({
     username: '',
@@ -35,8 +38,14 @@ function Login() {
       setCurrentUser(response.user);
       navigate('/');
     } else {
-      alert('Incorrect username and/or password.');
+      // This is the same format of errors array when trying to sign up
+      setErrors([{ msg: response.message }]);
+      setShowErrors(true);
     }
+  };
+
+  const closePopup = (e) => {
+    setShowErrors(false);
   };
 
   useEffect(() => {
@@ -91,6 +100,14 @@ function Login() {
             </button>
           </div>
         </form>
+        {showErrors ? (
+          <div className='errorPopupContainer'>
+            <div className='upper' title='Close' onClick={closePopup}>
+              <button className='material-icons icon'>close</button>
+            </div>
+            <ErrorMessages errors={errors}></ErrorMessages>
+          </div>
+        ) : null}
       </div>
     );
   }

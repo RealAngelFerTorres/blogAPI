@@ -9,6 +9,7 @@ import {
   editComment,
 } from '../services/DBServices';
 import UserContext from '../services/UserContext';
+import ErrorMessages from './ErrorMessages';
 
 function Comment(props) {
   const { comment, postID, depth } = props;
@@ -21,6 +22,8 @@ function Comment(props) {
   const [commentForm, setCommentForm] = useState({
     text: '',
   });
+  const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   let navigate = useNavigate();
 
@@ -31,7 +34,8 @@ function Comment(props) {
     }
     if (response.errors) {
       response.errors.forEach((error) => {
-        alert(error.msg);
+        setErrors(response.errors);
+        setShowErrors(true);
       });
     }
   };
@@ -104,6 +108,10 @@ function Comment(props) {
   const submitDeleteComment = async (e) => {
     const response = await deleteComment(comment.id);
     response.status === 'OK' ? navigate(0) : manageResponse(response);
+  };
+
+  const closePopup = (e) => {
+    setShowErrors(false);
   };
 
   return (
@@ -210,6 +218,14 @@ function Comment(props) {
                   Reply
                 </button>
               </div>
+            </div>
+          ) : null}
+          {showErrors ? (
+            <div className='errorPopupContainer'>
+              <div className='upper' title='Close' onClick={closePopup}>
+                <button className='material-icons icon'>close</button>
+              </div>
+              <ErrorMessages errors={errors}></ErrorMessages>
             </div>
           ) : null}
         </div>

@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { signupUser, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import Spinner from './Spinner';
+import ErrorMessages from './ErrorMessages';
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  const [errors, setErrors] = useState([]);
+  const [showErrors, setShowErrors] = useState(false);
 
   const [form, setForm] = useState({
     username: '',
@@ -30,11 +33,15 @@ export default function Signup() {
   const submitForm = async (e) => {
     e.preventDefault();
     const response = await signupUser(form);
-    response.status === 'OK'
-      ? navigate('/login')
-      : response.errors.forEach((error) => {
-          alert(error.msg);
-        });
+    if (response.status === 'OK') navigate('/login');
+    else {
+      setErrors(response.errors);
+      setShowErrors(true);
+    }
+  };
+
+  const closePopup = (e) => {
+    setShowErrors(false);
   };
 
   useEffect(() => {
@@ -112,6 +119,14 @@ export default function Signup() {
             </button>
           </div>
         </form>
+        {showErrors ? (
+          <div className='errorPopupContainer'>
+            <div className='upper' title='Close' onClick={closePopup}>
+              <button className='material-icons icon'>close</button>
+            </div>
+            <ErrorMessages errors={errors}></ErrorMessages>
+          </div>
+        ) : null}
       </div>
     );
   }

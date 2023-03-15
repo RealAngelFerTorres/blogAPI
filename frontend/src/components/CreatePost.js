@@ -5,10 +5,13 @@ import { createNewPost, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import TextareaAutosize from 'react-textarea-autosize';
 import Spinner from './Spinner';
+import ErrorMessages from './ErrorMessages';
 
 export default function Signup() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const [form, setForm] = useState({
     title: '',
@@ -77,10 +80,13 @@ export default function Signup() {
       return;
     }
     if (response.errors) {
-      response.errors.forEach((error) => {
-        alert(error.msg);
-      });
+      setErrors(response.errors);
+      setShowErrors(true);
     }
+  };
+
+  const closePopup = (e) => {
+    setShowErrors(false);
   };
 
   useEffect(() => {
@@ -183,6 +189,14 @@ export default function Signup() {
               Publish
             </button>
           </div>
+          {showErrors ? (
+            <div className='errorPopupContainer'>
+              <div className='upper' title='Close' onClick={closePopup}>
+                <button className='material-icons icon'>close</button>
+              </div>
+              <ErrorMessages errors={errors}></ErrorMessages>
+            </div>
+          ) : null}
         </div>
       );
     }
