@@ -541,7 +541,8 @@ div.comment.depth3 {
   margin-left: 105px;
 }
 
-.modalBackground {
+.modalBackground,
+.errorPopupContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -558,12 +559,14 @@ div.comment.depth3 {
   pointer-events: none;
 }
 
-.modalBackground.show {
+.modalBackground.show,
+.errorPopupContainer.show {
   opacity: 1;
   pointer-events: visible;
 }
 
-.modalContent {
+.modalContent,
+.errorPopupContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -599,7 +602,8 @@ div.comment.depth3 {
   background-color: var(--icons-color);
 }
 
-.modalBackground.show .modalContent {
+.modalBackground.show .modalContent,
+.errorPopupContainer.show {
   transform: translateY(0);
 }
 
@@ -796,9 +800,11 @@ div.comment.depth3 {
 }
 
 .errorPopupContainer {
-  display: flex;
-  flex-direction: column;
   background-color: #ecd8e4;
+  position: fixed;
+  transform: translateY(200px);
+  top: 80%;
+  align-self: center;
 }
 
 .errorMessages {

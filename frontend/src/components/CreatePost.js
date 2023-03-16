@@ -5,7 +5,7 @@ import { createNewPost, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import TextareaAutosize from 'react-textarea-autosize';
 import Spinner from './Spinner';
-import ErrorMessages from './ErrorMessages';
+import ErrorPopup from './ErrorPopup';
 
 export default function Signup() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -189,14 +189,11 @@ export default function Signup() {
               Publish
             </button>
           </div>
-          {showErrors ? (
-            <div className='errorPopupContainer'>
-              <div className='upper' title='Close' onClick={closePopup}>
-                <button className='material-icons icon'>close</button>
-              </div>
-              <ErrorMessages errors={errors}></ErrorMessages>
-            </div>
-          ) : null}
+          <ErrorPopup
+            errors={errors}
+            showErrors={showErrors}
+            stateChanger={setShowErrors}
+          ></ErrorPopup>
         </div>
       );
     }

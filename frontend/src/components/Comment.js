@@ -9,7 +9,7 @@ import {
   editComment,
 } from '../services/DBServices';
 import UserContext from '../services/UserContext';
-import ErrorMessages from './ErrorMessages';
+import ErrorPopup from './ErrorPopup';
 
 function Comment(props) {
   const { comment, postID, depth } = props;
@@ -220,14 +220,11 @@ function Comment(props) {
               </div>
             </div>
           ) : null}
-          {showErrors ? (
-            <div className='errorPopupContainer'>
-              <div className='upper' title='Close' onClick={closePopup}>
-                <button className='material-icons icon'>close</button>
-              </div>
-              <ErrorMessages errors={errors}></ErrorMessages>
-            </div>
-          ) : null}
+          <ErrorPopup
+            errors={errors}
+            showErrors={showErrors}
+            stateChanger={setShowErrors}
+          ></ErrorPopup>
         </div>
       )}
       {comment.comments.length >= 1

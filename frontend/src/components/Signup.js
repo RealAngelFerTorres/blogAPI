@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { signupUser, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import Spinner from './Spinner';
-import ErrorMessages from './ErrorMessages';
+import ErrorPopup from './ErrorPopup';
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(true);
@@ -119,14 +119,11 @@ export default function Signup() {
             </button>
           </div>
         </form>
-        {showErrors ? (
-          <div className='errorPopupContainer'>
-            <div className='upper' title='Close' onClick={closePopup}>
-              <button className='material-icons icon'>close</button>
-            </div>
-            <ErrorMessages errors={errors}></ErrorMessages>
-          </div>
-        ) : null}
+        <ErrorPopup
+          errors={errors}
+          showErrors={showErrors}
+          stateChanger={setShowErrors}
+        ></ErrorPopup>
       </div>
     );
   }
