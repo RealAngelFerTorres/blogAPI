@@ -110,10 +110,6 @@ function Comment(props) {
     response.status === 'OK' ? navigate(0) : manageResponse(response);
   };
 
-  const closePopup = (e) => {
-    setShowErrors(false);
-  };
-
   return (
     <div className='comment__thread'>
       {comment.isDeleted ? (

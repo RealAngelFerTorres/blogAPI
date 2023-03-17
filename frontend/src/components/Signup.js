@@ -40,10 +40,6 @@ export default function Signup() {
     }
   };
 
-  const closePopup = (e) => {
-    setShowErrors(false);
-  };
-
   useEffect(() => {
     const checkLoggedIn = async () => {
       let response = await isAuthenticated();

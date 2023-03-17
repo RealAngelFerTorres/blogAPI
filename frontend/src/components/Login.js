@@ -44,10 +44,6 @@ function Login() {
     }
   };
 
-  const closePopup = (e) => {
-    setShowErrors(false);
-  };
-
   useEffect(() => {
     const checkLoggedIn = async () => {
       let response = await isAuthenticated();

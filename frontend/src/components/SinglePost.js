@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import UserContext from '../services/UserContext';
 import Spinner from './Spinner';
+import ErrorPopup from './ErrorPopup';
 import {
   getSinglePost,
   createNewComment,
@@ -27,6 +28,8 @@ function SinglePost() {
   const [isDownvote, setIsDownvote] = useState(false);
   const [isUpvote, setIsUpvote] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState([]);
   const [postForm, setPostForm] = useState({
     title: '',
     text: '',
@@ -47,9 +50,8 @@ function SinglePost() {
       return;
     }
     if (response.errors) {
-      response.errors.forEach((error) => {
-        alert(error.msg);
-      });
+      setErrors(response.errors);
+      setShowErrors(true);
     }
   };
 
@@ -290,6 +292,11 @@ function SinglePost() {
             </div>
           </div>
         </div>
+        <ErrorPopup
+          errors={errors}
+          showErrors={showErrors}
+          stateChanger={setShowErrors}
+        ></ErrorPopup>
         <div className='leftBar'>
           <div className='karmaContainer'>
             <button
