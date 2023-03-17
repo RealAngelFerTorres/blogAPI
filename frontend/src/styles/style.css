@@ -542,7 +542,7 @@ div.comment.depth3 {
 }
 
 .modalBackground,
-.errorPopupContainer {
+.popupModalBackground {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -560,7 +560,7 @@ div.comment.depth3 {
 }
 
 .modalBackground.show,
-.errorPopupContainer.show {
+.popupModalBackground.show {
   opacity: 1;
   pointer-events: visible;
 }
@@ -796,14 +796,19 @@ div.comment.depth3 {
   font-size: 200px;
 }
 
+.popupModalBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: unset;
+}
+
 .errorPopupContainer {
+  margin-top: 65vh;
   width: fit-content;
-  top: 75%;
-  left: inherit;
   flex-direction: row;
   background-color: #ecd8e4;
   transform: translateY(200px);
-  overflow-y: hidden;
   padding: 15px;
   border: 1px solid var(--icons-color);
 }

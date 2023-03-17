@@ -6,18 +6,23 @@ function ErrorPopup(props) {
   };
 
   return (
-    <div className={`errorPopupContainer ${showErrors ? 'show' : ''}`}>
-      <div className='errorMessages'>
-        {errors.map((error, index) => {
-          return (
-            <div className='error' key={index}>
-              • {error.msg}
-            </div>
-          );
-        })}
-      </div>
-      <div className='right' title='Close' onClick={closePopup}>
-        <button className='material-icons icon'>close</button>
+    <div
+      className={`popupModalBackground ${showErrors ? 'show' : ''}`}
+      onClick={closePopup}
+    >
+      <div className={`errorPopupContainer ${showErrors ? 'show' : ''}`}>
+        <div className='errorMessages'>
+          {errors.map((error, index) => {
+            return (
+              <div className='error' key={index}>
+                • {error.msg}
+              </div>
+            );
+          })}
+        </div>
+        <div className='right' title='Close' onClick={closePopup}>
+          <button className='material-icons icon'>close</button>
+        </div>
       </div>
     </div>
   );
