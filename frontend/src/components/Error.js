@@ -1,9 +1,11 @@
-function Error() {
+function Error(props) {
+  const { icon, error } = props;
+
   return (
     <div className='error'>
-      <div className='material-icons cloud'>cloud_off</div>
+      <div className='material-icons icon--XL'>{icon ?? 'cloud_off'}</div>
       <div className='text'>
-        Server is currently offline. Sorry for the inconvenience.
+        {error ?? 'Server is currently offline. Sorry for the inconvenience.'}
       </div>
     </div>
   );

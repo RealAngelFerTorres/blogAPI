@@ -565,29 +565,38 @@ div.comment.depth3 {
   pointer-events: visible;
 }
 
+.modalBackground.show .modalContent,
+.errorPopupContainer.show {
+  transform: translateY(0);
+}
+
 .modalContent,
 .errorPopupContainer {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  row-gap: 15px;
-  width: 400px;
-  height: 100px;
   transform: translateY(-200px);
   transition: all 0.3s ease-in-out;
-  background-color: rgba(255, 255, 255, 1);
   border-radius: 10px;
-  padding: 30px;
 }
 
 .modalContent {
+  width: 400px;
+  height: 140px;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 1);
   border: 1px solid black;
 }
 
-.upper {
-  display: flex;
+.modalContent--upper {
   align-self: flex-end;
+}
+
+.modalContent--middle {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
 }
 
 .bottom {
@@ -604,11 +613,6 @@ div.comment.depth3 {
 
 .deletePostButton:hover {
   background-color: var(--icons-color);
-}
-
-.modalBackground.show .modalContent,
-.errorPopupContainer.show {
-  transform: translateY(0);
 }
 
 .bottomBar {
@@ -792,8 +796,13 @@ div.comment.depth3 {
   font-size: 50px;
 }
 
-.cloud {
+.icon--XL {
   font-size: 200px;
+  text-align: center;
+}
+
+.text {
+  color: black;
 }
 
 .popupModalBackground {
@@ -804,9 +813,10 @@ div.comment.depth3 {
 }
 
 .errorPopupContainer {
+  width: fit-content;
+  height: fit-content;
   margin-top: 65vh;
   width: fit-content;
-  flex-direction: row;
   background-color: #ecd8e4;
   transform: translateY(200px);
   padding: 15px;
@@ -817,10 +827,14 @@ div.comment.depth3 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: flex-start;
   row-gap: 10px;
 }
 
 .error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--icons-color);
 }
 

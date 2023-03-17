@@ -5,6 +5,7 @@ import { getAllDrafts } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import { DateTime } from 'luxon';
 import Spinner from './Spinner';
+import Error from './Error';
 
 export default function UserDrafts() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -43,7 +44,9 @@ export default function UserDrafts() {
   if (isLoading) {
     return <Spinner></Spinner>;
   } else if (currentUser && allDrafts.length === 0) {
-    return <div>You don't have any drafts...</div>;
+    return (
+      <Error icon='edit_note' error={`You don't have any drafts.`}></Error>
+    );
   } else {
     return (
       <div className='allPosts'>

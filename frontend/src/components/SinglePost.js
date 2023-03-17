@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import UserContext from '../services/UserContext';
 import Spinner from './Spinner';
+import Error from './Error';
 import ErrorPopup from './ErrorPopup';
 import {
   getSinglePost,
@@ -264,7 +265,7 @@ function SinglePost() {
     return <Spinner></Spinner>;
   } else {
     if (!post) {
-      return <div>Post not found.</div>;
+      return <Error icon='search_off' error='Post not found.'></Error>;
     }
     return (
       <div className='postContainer'>
@@ -273,22 +274,28 @@ function SinglePost() {
           onClick={toggleDeleteModal}
         >
           <div className='modalContent' onClick={(e) => e.stopPropagation()}>
-            <div className='upper' title='Close' onClick={toggleDeleteModal}>
+            <div
+              className='modalContent--upper'
+              title='Close'
+              onClick={toggleDeleteModal}
+            >
               <button className='material-icons icon'>close</button>
             </div>
-            <div className='middle'>
-              Are you sure you want to delete this post?
-            </div>
-            <div className='bottom'>
-              <button
-                className='button deletePostButton'
-                onClick={submitDeletePost}
-              >
-                Delete post
-              </button>
-              <button className='button' onClick={toggleDeleteModal}>
-                Cancel
-              </button>
+            <div className='modalContent--middle'>
+              <div className='middle'>
+                Are you sure you want to delete this post?
+              </div>
+              <div className='bottom'>
+                <button
+                  className='button deletePostButton'
+                  onClick={submitDeletePost}
+                >
+                  Delete post
+                </button>
+                <button className='button' onClick={toggleDeleteModal}>
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>

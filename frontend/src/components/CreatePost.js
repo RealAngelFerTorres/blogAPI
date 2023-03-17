@@ -5,6 +5,7 @@ import { createNewPost, isAuthenticated } from '../services/DBServices';
 import UserContext from '../services/UserContext';
 import TextareaAutosize from 'react-textarea-autosize';
 import Spinner from './Spinner';
+import Error from './Error';
 import ErrorPopup from './ErrorPopup';
 
 export default function Signup() {
@@ -107,7 +108,12 @@ export default function Signup() {
     return <Spinner></Spinner>;
   } else {
     if (currentUser === '') {
-      return <div>You need to be logged-in to see this page.</div>;
+      return (
+        <Error
+          icon='login'
+          error='You need to be logged-in to see this page.'
+        ></Error>
+      );
     } else if (currentUser) {
       return (
         <div className='createNewPost'>

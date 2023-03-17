@@ -6,6 +6,7 @@ import UserContext from '../services/UserContext';
 import { useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import Spinner from './Spinner';
+import Error from './Error';
 
 function UserDetails() {
   const [currentUser, setCurrentUser] = useContext(UserContext);
@@ -45,9 +46,14 @@ function UserDetails() {
     return <Spinner></Spinner>;
   } else {
     if (user === false) {
-      return <div>User not found.</div>;
+      return <Error icon='person_off' error='User not found.'></Error>;
     } else if (currentUser === '' || user === 'Not logged in') {
-      return <div>You need to be logged-in to see this page.</div>;
+      return (
+        <Error
+          icon='login'
+          error='You need to be logged-in to see this page.'
+        ></Error>
+      );
     } else if (currentUser) {
       return (
         <div className='cardContainer userDetails' id={user.id}>
