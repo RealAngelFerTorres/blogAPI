@@ -581,6 +581,10 @@ div.comment.depth3 {
   padding: 30px;
 }
 
+.modalContent {
+  border: 1px solid black;
+}
+
 .upper {
   display: flex;
   align-self: flex-end;
@@ -788,27 +792,35 @@ div.comment.depth3 {
   font-size: 50px;
 }
 
-.error {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 .cloud {
   font-size: 200px;
 }
 
 .errorPopupContainer {
+  width: fit-content;
+  top: 75%;
+  left: inherit;
+  flex-direction: row;
   background-color: #ecd8e4;
-  position: fixed;
   transform: translateY(200px);
-  top: 80%;
-  align-self: center;
+  overflow-y: hidden;
+  padding: 15px;
+  border: 1px solid var(--icons-color);
 }
 
 .errorMessages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  row-gap: 10px;
+}
+
+.error {
   color: var(--icons-color);
+}
+
+.right {
+  padding-left: 15px;
 }
 
 /* Loading spinner ↓↓↓ */

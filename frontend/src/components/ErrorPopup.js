@@ -7,17 +7,17 @@ function ErrorPopup(props) {
 
   return (
     <div className={`errorPopupContainer ${showErrors ? 'show' : ''}`}>
-      <div className='upper' title='Close' onClick={closePopup}>
-        <button className='material-icons icon'>close</button>
-      </div>
-      <div className='middle'>
+      <div className='errorMessages'>
         {errors.map((error, index) => {
           return (
-            <div className='errorMessages' key={index}>
+            <div className='error' key={index}>
               • {error.msg}
             </div>
           );
         })}
+      </div>
+      <div className='right' title='Close' onClick={closePopup}>
+        <button className='material-icons icon'>close</button>
       </div>
     </div>
   );

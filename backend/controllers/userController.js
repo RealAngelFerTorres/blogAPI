@@ -67,9 +67,9 @@ exports.user_signup_post = [
     .trim()
     .normalizeEmail()
     .isEmail()
-    .withMessage('Please input a valid e-mail.')
+    .withMessage('Please input a valid email.')
     .isLength({ max: 50 })
-    .withMessage('E-mail max. characters is 50.')
+    .withMessage('Email max. characters is 50.')
     .custom(async (value) => {
       const results = await User.find({
         email: { $regex: value, $options: 'i' }, // i = case insensitive
@@ -78,7 +78,7 @@ exports.user_signup_post = [
         return Promise.reject();
       }
     })
-    .withMessage('E-mail already in use.')
+    .withMessage('Email already in use.')
     .escape(),
   body('password')
     .trim()
@@ -89,7 +89,7 @@ exports.user_signup_post = [
     .escape(),
   body(
     'confirmPassword',
-    'Password confirmation field must have the same value as the password field'
+    'Password confirmation field must have the same value as the password field.'
   )
     .trim()
     .exists()
