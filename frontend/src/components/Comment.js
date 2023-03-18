@@ -85,6 +85,10 @@ function Comment(props) {
     setReplyForm(copyState);
 
     const response = await createNewReply(copyState);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     response.status === 'OK' ? navigate(0) : manageResponse(response);
   };
 
@@ -97,6 +101,10 @@ function Comment(props) {
     setCommentForm(copyState);
 
     const response = await editComment(copyState);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.status === 'OK') {
       comment.text = copyState.text;
       setIsEditing(false);
@@ -107,6 +115,10 @@ function Comment(props) {
 
   const submitDeleteComment = async (e) => {
     const response = await deleteComment(comment.id);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     response.status === 'OK' ? navigate(0) : manageResponse(response);
   };
 

@@ -33,6 +33,10 @@ export default function Signup() {
   const submitForm = async (e) => {
     e.preventDefault();
     const response = await signupUser(form);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.status === 'OK') navigate('/login');
     else {
       setErrors(response.errors);

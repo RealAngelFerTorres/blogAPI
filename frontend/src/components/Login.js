@@ -33,6 +33,10 @@ function Login() {
   const submitForm = async (e) => {
     e.preventDefault();
     const response = await loginUser(form);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.token) {
       localStorage.setItem('token', response.token);
       setCurrentUser(response.user);

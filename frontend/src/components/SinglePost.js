@@ -64,6 +64,10 @@ function SinglePost() {
 
   const submitDeletePost = async (e) => {
     const response = await deletePost(post.id);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.url) {
       navigate(response.url);
       return;
@@ -80,6 +84,10 @@ function SinglePost() {
     setPostForm(copyState);
 
     const response = await editPost(copyState);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.status === 'OK') {
       let copyState = post;
       copyState = {
@@ -105,6 +113,10 @@ function SinglePost() {
     setCommentForm(copyState);
 
     const response = await createNewComment(copyState);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.status === 'OK') {
       let copyArray = post.comments;
       copyArray.unshift(response.data);
@@ -190,6 +202,10 @@ function SinglePost() {
       userID: currentUser.id,
     };
     const response = await sendVote(form);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.status !== 'OK') manageResponse(response);
 
     toggleVote(e.target.value);

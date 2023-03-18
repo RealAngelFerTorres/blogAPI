@@ -12,7 +12,7 @@ function AllPosts() {
 
   useEffect(() => {
     const async = async () => {
-      let response = await getAllPosts();
+      const response = await getAllPosts();
       if (!response) {
         navigate('/error');
         return;

@@ -62,6 +62,10 @@ export default function Signup() {
     setForm(copyState);
 
     const response = await createNewPost(copyState);
+    if (!response) {
+      navigate('/error');
+      return;
+    }
     if (response.url) {
       // Creation is OK. Upvote the post
       let copy = currentUser;
