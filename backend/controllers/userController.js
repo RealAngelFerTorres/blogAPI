@@ -65,9 +65,9 @@ exports.user_signup_post = [
     .escape(),
   body('email')
     .trim()
-    .normalizeEmail()
     .isEmail()
     .withMessage('Please input a valid email.')
+    .normalizeEmail()
     .isLength({ max: 50 })
     .withMessage('Email max. characters is 50.')
     .custom(async (value) => {
