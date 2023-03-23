@@ -119,7 +119,7 @@ function SinglePost() {
     }
     if (response.status === 'OK') {
       let copyArray = post.comments;
-      copyArray.unshift(response.data);
+      copyArray.push(response.data);
 
       let copyState = post;
       copyState = {
@@ -129,6 +129,16 @@ function SinglePost() {
       };
       setPost(copyState);
       setCommentForm({ text: '' });
+
+      const scrollToBottom = () => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          left: 0,
+          behavior: 'smooth',
+        });
+      };
+      scrollToBottom();
+
       return;
     }
     manageResponse(response);
