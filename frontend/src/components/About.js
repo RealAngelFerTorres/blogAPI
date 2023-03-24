@@ -9,32 +9,43 @@ function About() {
       <div className='cardsContainer'>
         <div className='card'>
           <div className='card__upper'>
-            <div className='material-icons'>edit_note</div>
-            <div className='cardFont--medium'>Post</div>
+            <div className='material-icons'>person</div>
+            <div className='cardFont--medium'>Users</div>
           </div>
           <div className='cardFont--small'>
-            The community can share content by posting news, stories, links,
-            announcements, life-hacks, etc.
+            Users can navigate the page without login or register. Registered
+            users can interact with the community.
+          </div>
+        </div>
+        <div className='card'>
+          <div className='card__upper'>
+            <div className='material-icons'>edit_note</div>
+            <div className='cardFont--medium'>Posts</div>
+          </div>
+          <div className='cardFont--small'>
+            Registered users can make posts about anything they want. Also, they
+            can make drafts (to publish them later), edit or delete created
+            posts.
           </div>
         </div>
         <div className='card'>
           <div className='card__upper'>
             <div className='material-icons'>forum</div>
-            <div className='cardFont--medium'>Comment</div>
+            <div className='cardFont--medium'>Comments</div>
           </div>
           <div className='cardFont--small'>
-            The community comments on posts. Comments provide discussion and
-            often humor.
+            Users can comment on posts and reply to that comments. Edit or
+            delete comments are available options too.
           </div>
         </div>
         <div className='card'>
           <div className='card__upper'>
             <div className='material-icons'>shift</div>
-            <div className='cardFont--medium'>Upvote</div>
+            <div className='cardFont--medium'>Votes</div>
           </div>
           <div className='cardFont--small'>
-            Posts can be upvoted or downvoted. The most interesting content
-            rises to the top.
+            Posts can be upvoted or downvoted. User's karma is defined by votes
+            received (positives and negatives).
           </div>
         </div>
       </div>

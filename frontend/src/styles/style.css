@@ -1,3 +1,7 @@
+html {
+  font-size: 16px;
+}
+
 body {
   --main-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -12,13 +16,21 @@ body {
   --main-color: #377ed2;
   --links-color: #377ed2;
   --links-color-hover: #fbcc6a;
-  --icons-color: #b51675;
+  --icons-color: #d2377e;
+  --clickable-icons-color: grey;
+  --border-lightgrey: solid 1px #dedede;
+  --bg-main-style: #f5f5f5;
+  --bg-sub-style: white;
+  --option-style: grey;
+  --main-button-font-color: white;
+  --bg-button-lightgrey: rgb(227, 227, 227);
+  --indicators-color: grey;
 }
 
 .material-icons {
   font-family: 'Material Symbols Rounded';
   color: var(--icons-color);
-  font-size: 30px;
+  font-size: 2rem;
 }
 
 /* Hides 'invalid API key' message from tinyMCE text editor */
@@ -40,7 +52,7 @@ input {
   border-radius: 10px;
   padding: 5px;
   padding-left: 10px;
-  border: 1px solid #dedede;
+  border: var(--border-lightgrey);
 }
 
 .navBar {
@@ -48,13 +60,13 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  height: 8vh;
+  width: 100%;
   position: fixed;
   top: 0;
-  width: 100%;
-  background-color: white;
-  height: 8vh;
-  border-bottom: #e2e2e2 solid 1px;
   z-index: 2;
+  background-color: var(--bg-sub-style);
+  border-bottom: var(--border-lightgrey);
 }
 
 .mainTitle {
@@ -75,7 +87,7 @@ input {
 
 .option {
   font-size: 25px;
-  color: grey;
+  color: var(--option-style);
 }
 
 .option > div {
@@ -103,7 +115,7 @@ input {
 
 #createButton:hover {
   background-color: var(--links-color);
-  color: white;
+  color: var(--main-button-font-color);
 }
 
 .mainDisplay {
@@ -113,7 +125,7 @@ input {
   padding-bottom: 5vh;
   min-height: 77vh;
   width: 100vw;
-  background-color: #f5f5f5;
+  background-color: var(--bg-main-style);
 }
 
 .allPosts,
@@ -139,7 +151,7 @@ input {
   display: flex;
   margin-right: 25px;
   flex-direction: column;
-  color: grey;
+  color: var(--indicators-color);
 }
 
 .karmaContainer,
@@ -168,7 +180,7 @@ input {
 .icon {
   border: 1px solid transparent;
   background-color: transparent;
-  color: grey;
+  color: var(--clickable-icons-color);
   border-radius: 10px;
   cursor: pointer;
 }
@@ -195,22 +207,18 @@ input {
 }
 
 .upvoteArrow.voted {
-  color: #b51675;
+  color: var(--icons-color);
 }
 
 .downvoteArrow.voted {
-  color: #377ed2;
-}
-
-.post__karma {
-  color: gray;
+  color: var(--main-color);
 }
 
 .commentIcon:hover,
 .editButton:hover,
 .deleteButton:hover,
 .icon:hover {
-  background-color: rgb(227, 227, 227);
+  background-color: var(--bg-button-lightgrey);
 }
 
 .acceptButton,
@@ -221,11 +229,11 @@ input {
 }
 
 .acceptButton {
-  color: #377ed2;
+  color: var(--main-color);
 }
 
 .cancelButton {
-  color: #b51675;
+  color: var(--icons-color);
 }
 
 .editContainer {
@@ -242,16 +250,14 @@ input {
   flex-direction: column;
   row-gap: 15px;
   text-align: justify;
-  background-color: white;
-  border: 1px solid;
+  background-color: var(--bg-sub-style);
+  border: var(--border-lightgrey);
   border-radius: 10px;
-  border-color: #dedede;
   width: 100%;
   box-shadow: rgba(228, 228, 228, 0.384) 3px 3px;
 }
 
 .post__author {
-  color: grey;
   padding-left: 40px;
   padding-right: 40px;
   padding-top: 40px;
@@ -261,7 +267,6 @@ input {
 .edit__title {
   font-size: xx-large;
   font-weight: bold;
-  color: black;
   padding-left: 40px;
   padding-right: 40px;
   white-space: pre-line;
@@ -302,7 +307,7 @@ input {
 .comment__createTime,
 .post__editTime,
 .comment__editTime {
-  color: grey;
+  color: var(--indicators-color);
   font-style: italic;
   font-size: small;
 }
@@ -338,12 +343,6 @@ input {
   white-space: pre-line;
 }
 
-.post__comments--indicator {
-  border-top: solid 1px #dedede;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
 .post__interactions {
   padding-bottom: 40px;
 }
@@ -352,13 +351,13 @@ input {
 .singlePost__interactions {
   display: flex;
   justify-content: left;
-  color: grey;
+  color: var(--indicators-color);
   padding-left: 40px;
   padding-right: 40px;
 }
 
 .singlePost__interactions {
-  border-top: 1px solid #dedede;
+  border-top: var(--border-lightgrey);
   padding-top: 20px;
 }
 
@@ -391,7 +390,7 @@ input {
   width: 100%;
   min-height: 100px;
   resize: vertical;
-  border: solid 1px #dedede;
+  border: var(--border-lightgrey);
   border-radius: 10px;
   font-size: medium;
   padding: 15px;
@@ -432,7 +431,7 @@ input {
 
 .button:hover {
   background-color: var(--links-color);
-  color: white;
+  color: var(--main-button-font-color);
 }
 
 .post__comments {
@@ -462,7 +461,7 @@ input {
   margin-left: 35px;
   line-height: 30px;
   white-space: pre-line;
-  border: solid 1px #e3e3e3;
+  border: var(--border-lightgrey);
   border-radius: 10px;
   padding: 15px;
   word-break: break-word;
@@ -473,10 +472,8 @@ input {
   flex-direction: row;
   align-items: center;
   column-gap: 10px;
-  color: #878a8c;
   height: 36px;
   margin-left: 30px;
-  font-weight: 500;
   padding-left: 15px;
 }
 
@@ -509,7 +506,7 @@ input {
 }
 
 .button--grey {
-  color: #878a8c;
+  color: var(--clickable-icons-color);
   font-weight: 500;
   cursor: pointer;
   padding: 6px;
@@ -517,7 +514,7 @@ input {
 }
 
 .button--grey:hover {
-  background-color: #e3e3e3;
+  background-color: var(--bg-button-lightgrey);
 }
 
 .continue {
@@ -526,7 +523,7 @@ input {
 }
 
 .continue:hover {
-  color: #878a8c;
+  color: var(--clickable-icons-color);
 }
 
 div.comment.depth1 {
@@ -622,7 +619,7 @@ div.comment.depth3 {
   width: 100%;
   height: 5vh;
   background-color: #e5e5e5;
-  color: grey;
+  color: var(--option-style);
 }
 
 .bottomBarOptions {
@@ -645,7 +642,7 @@ div.comment.depth3 {
 }
 
 #upArrow {
-  color: grey;
+  color: var(--option-style);
 }
 
 .githubIcon {
@@ -666,12 +663,12 @@ div.comment.depth3 {
   display: flex;
   flex-direction: column;
   align-self: center;
-  border: solid 1px #dedede;
+  border: var(--border-lightgrey);
   border-radius: 10px;
   justify-content: space-around;
   align-items: center;
   padding: 35px;
-  background-color: white;
+  background-color: var(--bg-sub-style);
 }
 
 .githubIcon--contact {
@@ -694,7 +691,7 @@ div.comment.depth3 {
 
 .about {
   height: 55vh;
-  width: 60vh;
+  width: 80vh;
 }
 
 .contact {
@@ -711,7 +708,7 @@ div.comment.depth3 {
 .card {
   display: flex;
   flex-direction: column;
-  border: solid 1px #dedede;
+  border: var(--border-lightgrey);
   border-radius: 10px;
   align-items: center;
   text-align: center;
