@@ -50,8 +50,8 @@ a:hover {
 
 input {
   border-radius: 10px;
-  padding: 5px;
-  padding-left: 10px;
+  padding: 0.313em;
+  padding-left: 0.625em;
   border: var(--border-lightgrey);
 }
 
@@ -60,33 +60,36 @@ input {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 8vh;
+  height: fit-content;
   width: 100%;
   position: fixed;
   top: 0;
+  padding: 0.8em 0 0.8em 0;
+  row-gap: 1em;
   z-index: 2;
   background-color: var(--bg-sub-style);
   border-bottom: var(--border-lightgrey);
 }
 
 .mainTitle {
-  font-size: 40px;
-  margin-left: 20px;
+  font-size: 3rem;
+  margin-left: 0.5em;
   cursor: pointer;
   color: var(--links-color);
 }
 
 .navigationOptions {
-  margin-right: 20px;
   display: flex;
-  flex-direction: row;
-  width: 550px;
   justify-content: space-between;
+  flex-direction: row;
+  width: fit-content;
   height: 100%;
+  column-gap: 2.5em;
+  margin-right: 1.5em;
 }
 
 .option {
-  font-size: 25px;
+  font-size: 1.563em;
   color: var(--option-style);
 }
 
@@ -106,10 +109,9 @@ input {
 #createButton {
   border: var(--links-color) 1px solid;
   border-radius: 10px;
-  font-size: medium;
-  height: 70%;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-size: 1.2rem;
+  height: 60%;
+  padding: 0.625em;
   color: var(--links-color);
 }
 
@@ -133,12 +135,12 @@ input {
   width: 60%;
   display: flex;
   flex-direction: column;
-  row-gap: 80px;
-  margin-top: 50px;
+  row-gap: 5em;
+  margin-top: 3.125em;
 }
 
 .createNewPost {
-  row-gap: 30px;
+  row-gap: 1.875em;
 }
 
 .postContainer {
@@ -149,7 +151,7 @@ input {
 
 .leftBar {
   display: flex;
-  margin-right: 25px;
+  margin-right: 1.563em;
   flex-direction: column;
   color: var(--indicators-color);
 }
@@ -160,18 +162,18 @@ input {
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 150px;
-  gap: 5px;
+  top: 9.375em;
+  gap: 0.313em;
   text-align: center;
 }
 
 .commentContainer {
-  top: 300px;
+  top: 18.75em;
 }
 
 .postOptionsContainer {
-  top: 410px;
-  row-gap: 35px;
+  top: 25.625em;
+  row-gap: 2.188em;
 }
 
 .upvoteArrow,
@@ -179,9 +181,9 @@ input {
 .commentIcon,
 .icon {
   border: 1px solid transparent;
+  border-radius: 20px;
   background-color: transparent;
   color: var(--clickable-icons-color);
-  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -248,27 +250,27 @@ input {
 .post {
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
+  row-gap: 0.938em;
   text-align: justify;
   background-color: var(--bg-sub-style);
   border: var(--border-lightgrey);
   border-radius: 10px;
   width: 100%;
-  box-shadow: rgba(228, 228, 228, 0.384) 3px 3px;
+  box-shadow: rgba(228, 228, 228, 0.384) 0.188em 0.188em;
 }
 
 .post__author {
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 40px;
+  padding-left: 2.5em;
+  padding-right: 2.5em;
+  padding-top: 2.5em;
 }
 
 .post__title,
 .edit__title {
-  font-size: xx-large;
+  font-size: 2.3rem;
   font-weight: bold;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 1.08em;
+  padding-right: 1.08em;
   white-space: pre-line;
 }
 
@@ -281,7 +283,7 @@ input {
   display: flex;
   flex-direction: row;
   align-items: center;
-  column-gap: 5px;
+  column-gap: 0.313em;
 }
 
 .username {
@@ -299,8 +301,8 @@ input {
 .post__dates {
   display: flex;
   flex-direction: row;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 2.5em;
+  padding-right: 2.5em;
 }
 
 .post__createTime,
@@ -319,10 +321,10 @@ input {
 
 .post__text,
 .edit__text {
-  font-size: 22px;
-  line-height: 36px;
-  padding-left: 40px;
-  padding-right: 40px;
+  font-size: 1.375rem;
+  line-height: 2.0625em;
+  padding-left: 1.82em;
+  padding-right: 1.82em;
   text-align: justify;
   white-space: pre-line;
   word-break: break-word;
@@ -344,7 +346,7 @@ input {
 }
 
 .post__interactions {
-  padding-bottom: 40px;
+  padding-bottom: 2.5em;
 }
 
 .post__interactions,
@@ -352,51 +354,51 @@ input {
   display: flex;
   justify-content: left;
   color: var(--indicators-color);
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 2.5em;
+  padding-right: 2.5em;
 }
 
 .singlePost__interactions {
   border-top: var(--border-lightgrey);
-  padding-top: 20px;
+  padding-top: 1.25em;
 }
 
 .post__interactions--karma {
-  margin-right: 50px;
+  margin-right: 3.125em;
 }
 
 .post__interactions--karma div {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 0.2em;
 }
 
 .post__interactions--comments div {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 0.2em;
 }
 
 .commentSection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 50px 0 50px;
+  padding: 0 3.125em 0 3.125em;
 }
 
 .comment__input {
   width: 100%;
-  min-height: 100px;
+  min-height: 6.25em;
   resize: vertical;
   border: var(--border-lightgrey);
   border-radius: 10px;
-  font-size: medium;
-  padding: 15px;
+  font-size: 1.1rem;
+  padding: 0.938em;
   font-family: var(--main-font);
   box-sizing: border-box;
-  line-height: 30px;
+  line-height: 1.875em;
 }
 
 .editing {
@@ -405,14 +407,14 @@ input {
 }
 
 .comment__input::placeholder {
-  font-size: medium;
+  font-size: 1.1rem;
   font-family: var(--main-font);
   font-style: italic;
 }
 
 .comment__button {
-  margin-top: 15px;
-  max-height: 55px;
+  margin-top: 0.938em;
+  max-height: 3.438em;
   align-self: flex-end;
 }
 
@@ -424,8 +426,8 @@ input {
   background-color: transparent;
   border: var(--links-color) 1px solid;
   border-radius: 10px;
-  font-size: medium;
-  padding: 15px;
+  font-size: 1rem;
+  padding: 0.938em;
   cursor: pointer;
 }
 
@@ -437,8 +439,8 @@ input {
 .post__comments {
   display: flex;
   flex-direction: column;
-  row-gap: 40px;
-  padding: 0 40px 40px 40px;
+  row-gap: 2.5em;
+  padding: 0 2.5em 2.5em 2.5em;
 }
 
 .deleted {
@@ -448,7 +450,7 @@ input {
 .comment__thread {
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 1.25em;
 }
 
 .comment__data {
@@ -458,12 +460,12 @@ input {
 }
 
 .comment__text {
-  margin-left: 35px;
-  line-height: 30px;
+  margin-left: 2.188em;
+  line-height: 1.875em;
   white-space: pre-line;
   border: var(--border-lightgrey);
   border-radius: 10px;
-  padding: 15px;
+  padding: 0.938em;
   word-break: break-word;
 }
 
@@ -471,17 +473,17 @@ input {
   display: flex;
   flex-direction: row;
   align-items: center;
-  column-gap: 10px;
-  height: 36px;
-  margin-left: 30px;
-  padding-left: 15px;
+  column-gap: 0.625em;
+  height: 2.25em;
+  margin-left: 1.875em;
+  padding-left: 0.938em;
 }
 
 .comment__options div {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 3px 0 3px;
+  padding: 0 0.188em 0 0.188em;
 }
 
 .comment__options__replySection {
@@ -492,7 +494,7 @@ input {
 
 .replyArea,
 .editArea {
-  margin-left: 35px;
+  margin-left: 2.188em;
 }
 
 .bottomOption {
@@ -500,16 +502,16 @@ input {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  column-gap: 15px;
-  margin-top: 10px;
-  height: 20px;
+  column-gap: 0.938em;
+  margin-top: 0.625em;
+  height: 1.25em;
 }
 
 .button--grey {
   color: var(--clickable-icons-color);
   font-weight: 500;
   cursor: pointer;
-  padding: 6px;
+  padding: 0.375em;
   border-radius: 10px;
 }
 
@@ -519,7 +521,7 @@ input {
 
 .continue {
   width: fit-content;
-  margin-left: 34px;
+  margin-left: 2.125em;
 }
 
 .continue:hover {
@@ -527,15 +529,15 @@ input {
 }
 
 div.comment.depth1 {
-  margin-left: 35px;
+  margin-left: 2.188em;
 }
 
 div.comment.depth2 {
-  margin-left: 70px;
+  margin-left: 4.375em;
 }
 
 div.comment.depth3 {
-  margin-left: 105px;
+  margin-left: 6.563em;
 }
 
 .modalBackground,
@@ -578,8 +580,8 @@ div.comment.depth3 {
 }
 
 .modalContent {
-  width: 400px;
-  height: 140px;
+  width: 25em;
+  height: 8.75em;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
   border: 1px solid black;
@@ -636,9 +638,9 @@ div.comment.depth3 {
   display: flex;
   align-items: center;
   height: 100%;
-  font-size: 15px;
-  padding-left: 25px;
-  padding-right: 25px;
+  font-size: 1rem;
+  padding-left: 1.563em;
+  padding-right: 1.563em;
 }
 
 #upArrow {
@@ -646,8 +648,8 @@ div.comment.depth3 {
 }
 
 .githubIcon {
-  height: 25px;
-  margin-left: 5px;
+  height: 1.563em;
+  margin-left: 0.313em;
 }
 
 .creating {
@@ -667,13 +669,13 @@ div.comment.depth3 {
   border-radius: 10px;
   justify-content: space-around;
   align-items: center;
-  padding: 35px;
+  padding: 2.188em;
   background-color: var(--bg-sub-style);
 }
 
 .githubIcon--contact {
   color: var(--icons-color);
-  font-size: 30px;
+  font-size: 1.875em;
 }
 
 .userDetails {
@@ -702,7 +704,7 @@ div.comment.depth3 {
 .cardsContainer {
   display: flex;
   flex-direction: row;
-  column-gap: 20px;
+  column-gap: 1.25em;
 }
 
 .card {
@@ -712,8 +714,8 @@ div.comment.depth3 {
   border-radius: 10px;
   align-items: center;
   text-align: center;
-  padding: 20px;
-  row-gap: 10px;
+  padding: 1.25em;
+  row-gap: 0.625em;
   flex: 1 1 0;
 }
 
@@ -721,18 +723,18 @@ div.comment.depth3 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  column-gap: 5px;
+  column-gap: 0.313em;
 }
 
 .cardButton {
-  margin-top: 20px;
+  margin-top: 1.25em;
 }
 
 .card--center {
   display: flex;
   flex-direction: column;
   height: fit-content;
-  row-gap: 10px;
+  row-gap: 0.625em;
   justify-content: center;
 }
 
@@ -758,7 +760,7 @@ div.comment.depth3 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  column-gap: 20px;
+  column-gap: 1.25em;
 }
 
 .card__contact div {
@@ -769,7 +771,7 @@ div.comment.depth3 {
 }
 
 .icon--big {
-  font-size: 150px;
+  font-size: 9.375rem;
 }
 
 .userCardButton {
@@ -777,24 +779,24 @@ div.comment.depth3 {
 }
 
 .cardFont--medium {
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 
 .cardFont--small {
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 .draft {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 1.25em;
+  padding-bottom: 1.25em;
 }
 
 .subtitle {
-  font-size: 50px;
+  font-size: 3.125rem;
 }
 
 .icon--XL {
-  font-size: 200px;
+  font-size: 12.5rem;
   text-align: center;
 }
 
@@ -816,7 +818,7 @@ div.comment.depth3 {
   width: fit-content;
   background-color: #ecd8e4;
   transform: translateY(200px);
-  padding: 15px;
+  padding: 0.938em;
   border: 1px solid var(--icons-color);
 }
 
@@ -825,7 +827,7 @@ div.comment.depth3 {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  row-gap: 10px;
+  row-gap: 0.625em;
 }
 
 .error {
@@ -836,7 +838,7 @@ div.comment.depth3 {
 }
 
 .right {
-  padding-left: 15px;
+  padding-left: 0.938em;
 }
 
 /* Loading spinner ↓↓↓ */
@@ -845,6 +847,7 @@ div.comment.depth3 {
   position: relative;
   width: 80px;
   height: 80px;
+  margin-top: 10vh;
 }
 .lds-ellipsis div {
   position: absolute;
