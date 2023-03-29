@@ -2,7 +2,7 @@ function About() {
   return (
     <div className='about'>
       <div className='subtitle'>About</div>
-      <div className='post__text'>
+      <div className='about__text'>
         This project was made from scratch by RealAngelFerTorres for The Odin
         Project. The page usage is as follows:
       </div>

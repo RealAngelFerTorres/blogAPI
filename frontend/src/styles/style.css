@@ -58,14 +58,15 @@ input {
 .navBar {
   display: flex;
   flex-direction: row;
+  row-gap: 1em;
   justify-content: space-between;
-  align-items: center;
   height: fit-content;
   width: 100%;
+  min-width: 360px;
+  align-items: center;
   position: fixed;
   top: 0;
   padding: 0.8em 0 0.8em 0;
-  row-gap: 1em;
   z-index: 2;
   background-color: var(--bg-sub-style);
   border-bottom: var(--border-lightgrey);
@@ -127,6 +128,7 @@ input {
   padding-bottom: 5vh;
   min-height: 77vh;
   width: 100vw;
+  min-width: 360px;
   background-color: var(--bg-main-style);
 }
 
@@ -311,16 +313,20 @@ input {
 .comment__editTime {
   color: var(--indicators-color);
   font-style: italic;
-  font-size: small;
+  font-size: 1rem;
 }
 
 .comment__createTime,
 .comment__editTime {
   cursor: help;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: scroll;
 }
 
 .post__text,
-.edit__text {
+.edit__text,
+.about__text {
   font-size: 1.375rem;
   line-height: 2.0625em;
   padding-left: 1.82em;
@@ -329,6 +335,10 @@ input {
   white-space: pre-line;
   word-break: break-word;
   overflow-y: hidden;
+}
+
+.about__text {
+  padding: 0;
 }
 
 .gradient {
@@ -628,10 +638,9 @@ div.comment.depth3 {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  width: 60%;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 
 .bottomBarOptions > .option {
@@ -641,6 +650,7 @@ div.comment.depth3 {
   font-size: 1rem;
   padding-left: 1.563em;
   padding-right: 1.563em;
+  cursor: pointer;
 }
 
 #upArrow {
@@ -680,25 +690,24 @@ div.comment.depth3 {
 
 .userDetails {
   flex-direction: row;
-  height: 25vh;
+  height: fit-content;
+  width: fit-content;
+  column-gap: 2em;
 }
 
-.register {
-  height: 45vh;
-}
-
-.login {
-  height: 30vh;
+.register,
+.login,
+.contact {
+  height: fit-content;
+  width: fit-content;
+  row-gap: 1em;
 }
 
 .about {
-  height: 55vh;
-  width: 80vh;
-}
-
-.contact {
-  height: 35vh;
-  width: 40vh;
+  height: fit-content;
+  width: 60%;
+  margin-top: 5vh;
+  row-gap: 2em;
 }
 
 .cardsContainer {
@@ -744,6 +753,7 @@ div.comment.depth3 {
   flex-direction: column;
   height: 100%;
   justify-content: center;
+  row-gap: 1em;
 }
 
 .card--left {
@@ -752,6 +762,7 @@ div.comment.depth3 {
 }
 
 .card--right {
+  width: 60%;
   justify-content: space-around;
 }
 
@@ -899,3 +910,140 @@ div.comment.depth3 {
   }
 }
 /* Loading spinner ↑↑↑ */
+
+@media (min-width: 1400px) {
+  html {
+    font-size: 20px;
+  }
+
+  .mainDisplay {
+    padding-top: 16vh;
+  }
+
+  .postContainer {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .navBar {
+    flex-direction: column;
+  }
+
+  .mainDisplay {
+    padding-top: 22vh;
+  }
+
+  .postContainer {
+    width: 90%;
+  }
+
+  .allPosts,
+  .createNewPost {
+    width: 95%;
+  }
+
+  .post__text,
+  .edit__text {
+    line-height: 1.7em;
+  }
+
+  .karmaContainer {
+    top: 11em;
+  }
+
+  .commentContainer {
+    top: 20em;
+  }
+
+  .cardsContainer {
+    flex-direction: column;
+    row-gap: 1.25em;
+  }
+}
+
+@media (max-width: 650px) {
+  html {
+    font-size: 13px;
+  }
+
+  .mainTitle {
+    font-size: 2.5rem;
+  }
+
+  #createButton {
+    font-size: 0.8rem;
+  }
+
+  .navigationOptions {
+    font-size: 0.7rem;
+    column-gap: 1em;
+  }
+
+  .mainDisplay {
+    padding-top: 13vh;
+  }
+
+  .allPosts,
+  .createNewPost {
+    width: 95%;
+  }
+
+  .post__text,
+  .edit__text {
+    line-height: 1.7em;
+  }
+
+  .postContainer {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .leftBar {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .leftBar,
+  .karmaContainer,
+  .commentContainer,
+  .postOptionsContainer,
+  .editContainer {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 1em;
+  }
+
+  .bottomBarOptions > .option {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
+  }
+
+  .navigationOptions {
+    font-size: 0.7rem;
+  }
+
+  #createButton {
+    font-size: 1rem;
+  }
+
+  .allPosts,
+  .createNewPost {
+    width: 98%;
+  }
+
+  .post__text,
+  .edit__text {
+    line-height: 1.6em;
+  }
+
+  .bottomBarOptions > .option {
+    font-size: 0.7rem;
+  }
+}

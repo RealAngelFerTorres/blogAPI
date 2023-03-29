@@ -140,9 +140,9 @@ function Comment(props) {
             </div>
             <div
               className='comment__createTime'
-              title={DateTime.fromISO(comment.createTime).toLocaleString(
-                DateTime.DATETIME_MED
-              )}
+              title={`Created: ${DateTime.fromISO(
+                comment.createTime
+              ).toLocaleString(DateTime.DATETIME_MED)}`}
             >
               &nbsp;· {DateTime.fromISO(comment.createTime).toRelative()}{' '}
             </div>
@@ -150,9 +150,9 @@ function Comment(props) {
               // Conditional rendering. 1970-01-01 is considered a null date.
               <div
                 className='comment__editTime'
-                title={DateTime.fromISO(comment.editTime).toLocaleString(
-                  DateTime.DATETIME_MED
-                )}
+                title={`Edited: ${DateTime.fromISO(
+                  comment.editTime
+                ).toLocaleString(DateTime.DATETIME_MED)}`}
               >
                 &nbsp;· edited {DateTime.fromISO(comment.editTime).toRelative()}
               </div>
