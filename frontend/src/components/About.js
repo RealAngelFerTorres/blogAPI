@@ -3,8 +3,8 @@ function About() {
     <div className='about'>
       <div className='subtitle'>About</div>
       <div className='about__text'>
-        This project was made from scratch by RealAngelFerTorres for The Odin
-        Project. The page usage is as follows:
+        This project was made from the ground up by RealAngelFerTorres for The
+        Odin Project. The page usage is as follows:
       </div>
       <div className='cardsContainer'>
         <div className='card'>
