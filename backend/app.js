@@ -23,13 +23,16 @@ app.use(logger('dev'));
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static('build'));
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Cors.
 app.use(cors({ origin: true, credentials: true }));
 
 app.use('/', indexRouter);
+app.use(express.static(path.join(__dirname, 'build'))); // Change to 'public' when in dev.
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 // Catch 404 and forward to error handler.
 app.use(function (req, res, next) {
