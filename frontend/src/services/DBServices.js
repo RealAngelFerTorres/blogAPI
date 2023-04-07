@@ -143,7 +143,7 @@ export async function deleteComment(id) {
 
 export async function getUserDetails(id) {
   try {
-    const response = await fetch(`/user/${id}`, {
+    const response = await fetch(`/user/${id}/detail`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export async function getUserDetails(id) {
 
 export async function getAllDrafts(id) {
   try {
-    const response = await fetch(`/user/${id}/drafts`, {
+    const response = await fetch(`/user/${id}/drafts/detail`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',

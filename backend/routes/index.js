@@ -63,11 +63,11 @@ router
 // USER ROUTES
 
 router
-  .route('/user/:id')
+  .route('/user/:id/detail')
   .get(user_controller.user_authentication, user_controller.user_detail_get);
 
 router
-  .route('/user/:id/drafts')
+  .route('/user/:id/drafts/detail')
   .get(user_controller.user_authentication, user_controller.user_drafts_get);
 
 router.route('/user/login').post(user_controller.user_login_post);
