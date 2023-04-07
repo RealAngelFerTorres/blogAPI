@@ -13,7 +13,7 @@ var SESSION_SECRET = process.env.SESSION_SECRET;
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne(
-      { username: { $regex: username, $options: 'i' } }, // i = case insensitive
+      { username: { $regex: new RegExp('^' + username + '$', 'i') } }, // i = case insensitive
       (err, user) => {
         if (err) {
           return done(err);
