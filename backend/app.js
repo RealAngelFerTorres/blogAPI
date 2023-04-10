@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
 
 app.use('/', indexRouter);
-app.use(express.static(path.join(__dirname, 'build'))); // Change to 'public' when in dev.
+app.use(express.static(path.join(__dirname, 'public'))); // Change to 'public' when in dev.
 
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

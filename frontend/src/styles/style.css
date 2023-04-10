@@ -293,7 +293,7 @@ input {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 100%;
-  overflow-x: scroll;
+  overflow-x: hidden;
 }
 
 .comment__author {
@@ -321,7 +321,7 @@ input {
   cursor: help;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow-x: scroll;
+  overflow-x: hidden;
 }
 
 .post__text,
@@ -787,6 +787,7 @@ div.comment.depth3 {
 
 .userCardButton {
   height: 20%;
+  justify-content: center;
 }
 
 .cardFont--medium {

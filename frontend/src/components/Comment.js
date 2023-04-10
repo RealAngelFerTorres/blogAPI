@@ -144,7 +144,7 @@ function Comment(props) {
                 comment.createTime
               ).toLocaleString(DateTime.DATETIME_MED)}`}
             >
-              &nbsp;· {DateTime.fromISO(comment.createTime).toRelative()}{' '}
+              &nbsp;· {DateTime.fromISO(comment.createTime).toRelative()}&nbsp;
             </div>
             {comment.editTime.includes('1970-01-01') ? null : (
               // Conditional rendering. 1970-01-01 is considered a null date.
@@ -154,7 +154,7 @@ function Comment(props) {
                   comment.editTime
                 ).toLocaleString(DateTime.DATETIME_MED)}`}
               >
-                &nbsp;· edited {DateTime.fromISO(comment.editTime).toRelative()}
+                · edited&nbsp;
               </div>
             )}
           </div>
