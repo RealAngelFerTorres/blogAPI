@@ -8,7 +8,7 @@ This app is a community blog with some functions from reddit, like a vote system
 
 ## Live Demo
 
-[Link](https://github.com/RealAngelFerTorres/blogAPI)
+[Link](https://thepublicblog.fly.dev/)
 
 ## Built using
 
@@ -17,11 +17,10 @@ This app is a community blog with some functions from reddit, like a vote system
 - React
 - NodeJS
 - JavaScript
-- CSS3
 - HTML5
+- CSS3
 - Mongoose
 - PassportJS
-- Webpack
 - Git
 - Visual Studio Code
 - Deployed using [fly.io](https://fly.io/)
