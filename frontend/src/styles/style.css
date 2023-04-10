@@ -963,6 +963,41 @@ div.comment.depth3 {
   }
 }
 
+@media (max-width: 1100px) and (orientation: landscape) {
+  .navBar {
+    position: unset;
+  }
+
+  .postContainer {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .leftBar {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .leftBar,
+  .karmaContainer,
+  .commentContainer,
+  .postOptionsContainer,
+  .editContainer {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 1em;
+  }
+
+  .mainDisplay {
+    padding-top: 8vh;
+  }
+
+  .bottomBar {
+    height: 10vh;
+  }
+}
+
 @media (max-width: 650px) {
   html {
     font-size: 13px;
