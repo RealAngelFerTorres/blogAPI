@@ -931,6 +931,14 @@ div.comment.depth3 {
     flex-direction: column;
   }
 
+  .mainTitle {
+    margin-left: 0;
+  }
+
+  .navigationOptions {
+    margin-right: 0;
+  }
+
   .mainDisplay {
     padding-top: 22vh;
   }
