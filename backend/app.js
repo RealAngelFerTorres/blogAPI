@@ -5,9 +5,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var cors = require('cors');
-
+const helmet = require('helmet');
 var indexRouter = require('./routes/index');
 
 // Set up mongoose connection.
@@ -23,6 +22,18 @@ app.use(logger('dev'));
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Add helmet for security headers. Options allow to load tinyMCE
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: { policy: 'credentialless' },
+    contentSecurityPolicy: {
+      directives: {
+        'script-src': ["'self'", '*.tinymce.com', '*.tiny.cloud'],
+      },
+    },
+  })
+);
 
 // Cors.
 app.use(cors({ origin: true, credentials: true }));
