@@ -127,7 +127,6 @@ input {
   padding-top: 13vh;
   padding-bottom: 5vh;
   min-height: 77vh;
-  width: 100vw;
   min-width: 360px;
   background-color: var(--bg-main-style);
 }
